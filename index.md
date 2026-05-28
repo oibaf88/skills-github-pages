@@ -581,6 +581,86 @@
         bottom: 8px;
       }
     }
+  
+    /* ==========================================================
+       FINAL FIX: hero layout
+       Prevents the right status card from covering the name/title.
+       Keeps the same visual style, glow, colors and content.
+       ========================================================== */
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 540px) minmax(300px, 380px);
+      gap: clamp(56px, 8vw, 104px);
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero-grid > div:first-child {
+      min-width: 0;
+      max-width: 540px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-grid > .status-card {
+      width: 100%;
+      max-width: 380px;
+      min-width: 0;
+      justify-self: end;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      max-width: 100%;
+      font-size: clamp(2.7rem, 5.2vw, 4.9rem);
+      line-height: 0.96;
+      letter-spacing: -0.075em;
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: none;
+    }
+
+    .hero-text {
+      max-width: 520px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .hero-grid > div:first-child {
+        max-width: 720px;
+      }
+
+      .hero-grid > .status-card {
+        max-width: 520px;
+        justify-self: start;
+      }
+
+      .hero h1 {
+        max-width: 720px;
+        font-size: clamp(2.8rem, 10vw, 5.2rem);
+      }
+
+      .hero-text {
+        max-width: 680px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero h1 {
+        font-size: clamp(2.6rem, 14vw, 4.4rem);
+        letter-spacing: -0.065em;
+      }
+
+      .hero-grid > .status-card {
+        max-width: none;
+      }
+    }
+
   </style>
 </head>
 
