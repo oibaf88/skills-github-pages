@@ -697,6 +697,6 @@
     <div class="container">
       <p>© 2026 B. Fabio Mejías Fernández. Built as a work in progress.</p>
     </div>
-  </footer> 
+  </footer>
 </body>
 </html>
