@@ -399,12 +399,12 @@
       --bg: #000000;
       --bg-soft: #05070a;
       --card: rgba(2, 8, 14, 0.82);
-      --card-border: rgba(0, 255, 170, 0.28);
+      --card-border: rgba(0, 255, 156, 0.28);
       --text: #f8fbff;
       --muted: #8ca0b8;
       --accent: #00f5ff;
       --accent-2: #00ff9c;
-      --warning: #faff00;
+      --warning: #b8ff3d;
       --shadow: 0 0 50px rgba(0, 245, 255, 0.18);
     }
 
@@ -441,6 +441,11 @@
       box-shadow: 0 0 26px rgba(0, 245, 255, 0.12);
     }
 
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+      align-items: center;
+    }
+
     .brand,
     .nav-links,
     .eyebrow,
@@ -465,7 +470,7 @@
     }
 
     .gradient-text {
-      background: linear-gradient(90deg, #00f5ff, #00ff9c, #faff00);
+      background: linear-gradient(90deg, #00f5ff, #00ff9c, #eaffb8);
       background-clip: text;
       -webkit-background-clip: text;
     }
@@ -479,14 +484,28 @@
       box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 42px rgba(0, 245, 255, 0.12);
     }
 
+    .status-card {
+      width: 100%;
+      min-width: 0;
+      max-width: 380px;
+      justify-self: end;
+      overflow: hidden;
+    }
+
+    .status-card h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      overflow-wrap: anywhere;
+    }
+
     .status-card::before {
       background: rgba(0, 245, 255, 0.18);
     }
 
     .profile-frame {
       position: relative;
-      width: 180px;
-      height: 180px;
+      width: min(180px, 100%);
+      aspect-ratio: 1 / 1;
+      height: auto;
       margin: 0 0 24px auto;
       border-radius: 30px;
       padding: 3px;
@@ -529,10 +548,36 @@
       background: rgba(0, 255, 156, 0.04);
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .status-card {
+        max-width: none;
+        justify-self: stretch;
+      }
+
       .profile-frame {
         margin-left: 0;
         margin-right: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .status-card {
+        padding: 22px;
+      }
+
+      .profile-frame {
+        width: min(160px, 100%);
+      }
+
+      .profile-frame::after {
+        left: 8px;
+        bottom: 8px;
       }
     }
   </style>
