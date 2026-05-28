@@ -1,8 +1,554 @@
-title: "Welcome to my eHealth dev. portfolio"
-date: 2025-05-18
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal portfolio website for an eHealth developer focused on digital health application development." />
+  <title>Welcome to my eHealth dev. portfolio</title>
 
-Welcome to my personal website portfolio where you'll be able to keep track and hint a glimpse into my progress in the art of digital health application development.
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0d1b2e;
+      --card: rgba(255, 255, 255, 0.075);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #f4f7fb;
+      --muted: #b7c2d6;
+      --accent: #38bdf8;
+      --accent-2: #2dd4bf;
+      --warning: #fbbf24;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --max-width: 1100px;
+    }
 
---Work in progress--
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-coming soon...
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.22), transparent 34%),
+        radial-gradient(circle at 80% 20%, rgba(45, 212, 191, 0.16), transparent 30%),
+        linear-gradient(135deg, #06101d 0%, #08111e 48%, #0b1020 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, 0.76);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: #06101d;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 14px 40px rgba(56, 189, 248, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 96px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 999px;
+      color: #c8f6ff;
+      background: rgba(56, 189, 248, 0.1);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 18px var(--accent-2);
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(2.6rem, 7vw, 5.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), #e0f2fe);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-text {
+      max-width: 700px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      margin-bottom: 32px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #06101d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 18px 60px rgba(56, 189, 248, 0.25);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .status-card {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.055));
+      box-shadow: var(--shadow);
+    }
+
+    .status-card::before {
+      content: "";
+      position: absolute;
+      inset: -60px -80px auto auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(45, 212, 191, 0.16);
+      filter: blur(4px);
+    }
+
+    .status-label {
+      color: var(--warning);
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+    }
+
+    .status-card h2 {
+      font-size: 2rem;
+      letter-spacing: -0.05em;
+      margin-bottom: 12px;
+    }
+
+    .status-card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .meta-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--muted);
+    }
+
+    .meta-item strong {
+      color: var(--text);
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      letter-spacing: -0.06em;
+      margin-bottom: 14px;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 220px;
+      padding: 24px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: #06101d;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      padding: 22px;
+      border-left: 3px solid var(--accent-2);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.055);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .timeline-item time {
+      display: block;
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+    }
+
+    .contact-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 32px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(45,212,191,0.08));
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    footer {
+      padding: 36px 0;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 48px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .cards,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        display: grid;
+      }
+
+      .cards {
+        display: grid;
+      }
+
+      .contact-box {
+        display: grid;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand" aria-label="Homepage">
+        <span class="brand-mark">eH</span>
+        <span>eHealth Dev Portfolio</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#focus">Focus</a>
+        <a href="#progress">Progress</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Digital health application development</span>
+          </div>
+
+          <h1>
+            Welcome to my <span class="gradient-text">eHealth dev.</span> portfolio
+          </h1>
+
+          <p class="hero-text">
+            Welcome to my personal website portfolio where you'll be able to keep track and hint a glimpse into my progress in the art of digital health application development.
+          </p>
+
+          <div class="actions">
+            <a class="button button-primary" href="#progress">View progress</a>
+            <a class="button button-secondary" href="#focus">Explore focus areas</a>
+          </div>
+        </div>
+
+        <aside class="status-card" aria-label="Portfolio status">
+          <p class="status-label">Work in progress</p>
+          <h2>Coming soon...</h2>
+          <p>
+            This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.
+          </p>
+
+          <div class="meta-list">
+            <div class="meta-item">
+              <span>Published</span>
+              <strong>2025-05-18</strong>
+            </div>
+            <div class="meta-item">
+              <span>Status</span>
+              <strong>Building</strong>
+            </div>
+            <div class="meta-item">
+              <span>Domain</span>
+              <strong>eHealth</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About this portfolio</h2>
+        <p class="section-intro">
+          This website is a living record of my learning path, experiments and projects in digital health. It is designed as a simple but professional starting point that can grow into a complete developer portfolio.
+        </p>
+      </div>
+    </section>
+
+    <section id="focus">
+      <div class="container">
+        <h2 class="section-title">Focus areas</h2>
+        <p class="section-intro">
+          The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">01</div>
+            <h3>Clinical software</h3>
+            <p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">02</div>
+            <h3>Health data</h3>
+            <p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">03</div>
+            <h3>AI for eHealth</h3>
+            <p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="progress">
+      <div class="container">
+        <h2 class="section-title">Development progress</h2>
+        <p class="section-intro">
+          A minimal roadmap for what will appear here as the portfolio evolves.
+        </p>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <time datetime="2025-05-18">2025-05-18</time>
+            <h3>Portfolio initialized</h3>
+            <p>First public version of the personal eHealth developer portfolio.</p>
+          </article>
+
+          <article class="timeline-item">
+            <time>Next</time>
+            <h3>Project gallery</h3>
+            <p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p>
+          </article>
+
+          <article class="timeline-item">
+            <time>Soon</time>
+            <h3>Technical notes</h3>
+            <p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <h2 class="section-title">Coming soon...</h2>
+            <p>
+              Contact links, GitHub repositories and selected projects will be added as the portfolio grows.
+            </p>
+          </div>
+          <a class="button button-primary" href="mailto:your.email@example.com">Contact me</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 eHealth Dev Portfolio. Built as a work in progress.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
