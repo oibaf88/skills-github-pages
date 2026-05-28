@@ -596,6 +596,7 @@
         <a href="#about">About</a>
         <a href="#focus">Focus</a>
         <a href="#progress">Progress</a>
+        <a href="#blog">Blog</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -719,6 +720,29 @@
             <time>Soon</time>
             <h3>Technical notes</h3>
             <p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog">
+      <div class="container">
+        <h2 class="section-title">Blog</h2>
+        <p class="section-intro">
+          Notes, experiments and small development logs from my eHealth and software learning path.
+        </p>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <time datetime="2026-05-28">2026-05-28</time>
+            <h3>
+              <a href="skills-github-pages/_posts/2026-05-28/small_user_validation_function.md">
+                Small user validation function
+              </a>
+            </h3>
+            <p>
+              A short development note about implementing a small user validation function.
+            </p>
           </article>
         </div>
       </div>
