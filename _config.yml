@@ -1,5 +1,89 @@
-theme: minima
-title: bFab.iO
-description: Personal Portfolio of eHealth app projects
-author: B. Fabio Mejías Fernández
-permalink: /posts/:year/:month/:day/:title/
+# Site settings for GitHub Pages + Jekyll
+# Main site: bfab.io
+# Repository/project: skills-github-pages
+
+title: "B. Fabio Mejías Fernández"
+email: "mejias@bfab.io"
+description: >-
+  Personal eHealth developer portfolio by B. Fabio Mejías Fernández.
+  A work-in-progress digital health development portfolio from Madrid, European Union.
+
+author:
+  name: "B. Fabio Mejías Fernández"
+  email: "mejias@bfab.io"
+  location: "Madrid, European Union"
+
+# Custom domain configuration
+url: "https://bfab.io"
+baseurl: ""
+
+# If you are NOT using the custom domain and the site is served as:
+# https://YOUR_USERNAME.github.io/skills-github-pages/
+# then replace the two lines above with:
+# url: "https://YOUR_USERNAME.github.io"
+# baseurl: "/skills-github-pages"
+
+lang: "en"
+timezone: "Europe/Madrid"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# The site uses custom standalone HTML/CSS, not a Jekyll theme.
+theme: null
+
+# Post URL structure
+# Example:
+# _posts/2026-05-28-uservalidation.html
+# becomes:
+# /blog/uservalidation/
+permalink: /blog/:title/
+
+# Default metadata
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: null
+
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: null
+      author: "B. Fabio Mejías Fernández"
+      category: "blog"
+
+# Files and folders Jekyll should not publish
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
+  - .git
+  - .github
+  - .vscode
+  - package.json
+  - package-lock.json
+  - "*.pyc"
+  - "__pycache__"
+
+# Jekyll-reserved folders
+include:
+  - _posts
+
+# Optional project metadata
+github:
+  repository_name: "skills-github-pages"
+
+portfolio:
+  domain: "eHealth"
+  status: "Work in progress"
+  location: "Madrid, European Union"
+  contact_email: "mejias@bfab.io"
+  blog_path: "/blog/"
