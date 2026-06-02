@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "uservalidation"
-date: 2026-06-02 hh: 18:00:00 -0000
+date: 2026-06-02 18:00:00 -0000
 permalink: /blog/uservalidation/
 categories: login
 ---
