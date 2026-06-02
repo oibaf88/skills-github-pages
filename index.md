@@ -816,7 +816,7 @@
           <article class="timeline-item">
             <time datetime="2026-05-28">2026-05-28</time>
             <h3>
-              <a href="blog/uservalidation.md">
+              <a href="blog/uservalidation">
                 Small user validation function
               </a>
             </h3>
