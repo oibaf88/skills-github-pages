@@ -1,11 +1,3 @@
-from pathlib import Path
-
-html = """---
-layout: null
-title: signup
-permalink: /signup/
----
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,159 +5,470 @@ permalink: /signup/
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Static signup validation demo for B. Fabio Mejías Fernández eHealth developer portfolio." />
   <title>Signup | B. Fabio Mejías Fernández</title>
+
   <style>
     :root {
-      --bg:#000; --card:rgba(2,8,14,.82); --card-border:rgba(0,255,156,.28);
-      --text:#f8fbff; --muted:#8ca0b8; --accent:#00f5ff; --accent-2:#00ff9c;
-      --warning:#b8ff3d; --danger:#ff173d; --danger-soft:#ff5b6d;
-      --radius:24px; --max-width:1100px;
+      --bg: #000000;
+      --bg-soft: #05070a;
+      --card: rgba(2, 8, 14, 0.82);
+      --card-border: rgba(0, 255, 156, 0.28);
+      --text: #f8fbff;
+      --muted: #8ca0b8;
+      --accent: #00f5ff;
+      --accent-2: #00ff9c;
+      --warning: #b8ff3d;
+      --danger: #ff173d;
+      --success: #00ff9c;
+      --code-bg: rgba(0, 0, 0, 0.64);
+      --shadow: 0 0 50px rgba(0, 245, 255, 0.18);
+      --radius: 24px;
+      --max-width: 1100px;
     }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      min-height:100vh;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color:var(--text);
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
       background:
-        linear-gradient(rgba(0,255,156,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,245,255,.04) 1px, transparent 1px),
-        radial-gradient(circle at 20% 10%, rgba(0,245,255,.22), transparent 28%),
-        radial-gradient(circle at 85% 20%, rgba(0,255,156,.16), transparent 26%),
-        #000;
-      background-size:42px 42px, 42px 42px, auto, auto, auto;
-      line-height:1.6;
-      overflow-x:hidden;
+        linear-gradient(rgba(0, 255, 156, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at 20% 10%, rgba(0, 245, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(0, 255, 156, 0.16), transparent 26%),
+        #000000;
+      background-size: 42px 42px, 42px 42px, auto, auto, auto;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
+
     body::before {
-      content:""; position:fixed; inset:0; pointer-events:none;
-      background:repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0, rgba(255,255,255,.035) 1px, transparent 1px, transparent 7px);
-      mix-blend-mode:screen; opacity:.35; z-index:0;
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 0,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px,
+        transparent 7px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.35;
+      z-index: 0;
     }
-    a { color:inherit; text-decoration:none; }
-    .container { width:min(100% - 32px, var(--max-width)); margin:0 auto; position:relative; z-index:1; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
     .site-header {
-      position:sticky; top:0; z-index:10; backdrop-filter:blur(18px);
-      background:rgba(0,0,0,.82); border-bottom:1px solid rgba(0,255,156,.22);
-      box-shadow:0 0 26px rgba(0,245,255,.12);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(0, 0, 0, 0.82);
+      border-bottom: 1px solid rgba(0, 255, 156, 0.22);
+      box-shadow: 0 0 26px rgba(0, 245, 255, 0.12);
     }
-    .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-    .brand, .nav-links, .eyebrow, label, .button, .notice, .result-card h3, .rules-card h2 {
-      font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
     }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
     .brand-mark {
-      width:40px; height:40px; display:grid; place-items:center; border-radius:14px;
-      color:#06101d; font-weight:900; background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      box-shadow:0 0 24px rgba(0,245,255,.35), 0 0 44px rgba(0,255,156,.18);
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: #06101d;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(0, 245, 255, 0.35), 0 0 44px rgba(0, 255, 156, 0.18);
     }
-    .nav-links { display:flex; align-items:center; gap:18px; color:var(--muted); font-size:.95rem; }
-    .nav-links a { color:#8ca0b8; transition:color .18s ease, text-shadow .18s ease; }
-    .nav-links a:hover { color:var(--text); text-shadow:0 0 16px rgba(0,245,255,.75); }
 
-    main { padding:clamp(58px,8vw,92px) 0 80px; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .nav-links a {
+      color: #8ca0b8;
+      transition: color 180ms ease, text-shadow 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      text-shadow: 0 0 16px rgba(0, 245, 255, 0.75);
+    }
+
+    main {
+      padding: clamp(58px, 8vw, 92px) 0 80px;
+    }
+
     .signup-layout {
-      display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,420px);
-      gap:clamp(42px,7vw,92px); align-items:center;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+      gap: clamp(42px, 7vw, 92px);
+      align-items: center;
     }
-    .copy { min-width:0; max-width:620px; }
+
+    .copy {
+      min-width: 0;
+      max-width: 620px;
+    }
+
     .eyebrow {
-      display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
-      border:1px solid rgba(0,245,255,.28); border-radius:999px;
-      color:#c8f6ff; background:rgba(0,245,255,.1); font-size:.9rem; margin-bottom:24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(0, 245, 255, 0.28);
+      border-radius: 999px;
+      color: #c8f6ff;
+      background: rgba(0, 245, 255, 0.1);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
     }
+
     .eyebrow-dot {
-      width:8px; height:8px; border-radius:50%; background:var(--accent-2);
-      box-shadow:0 0 18px var(--accent-2);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 18px var(--accent-2);
     }
+
     h1 {
-      max-width:620px; font-size:clamp(3rem,8vw,6.4rem); line-height:.92;
-      letter-spacing:-.08em; margin-bottom:24px; text-transform:uppercase;
-      text-shadow:0 0 28px rgba(0,245,255,.18); overflow-wrap:anywhere;
+      max-width: 620px;
+      font-size: clamp(3rem, 8vw, 6.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      text-shadow: 0 0 28px rgba(0, 245, 255, 0.18);
+      overflow-wrap: anywhere;
     }
+
     .gradient-text {
-      color:transparent; background:linear-gradient(90deg,#00f5ff,#00ff9c,#eaffb8);
-      background-clip:text; -webkit-background-clip:text;
+      color: transparent;
+      background: linear-gradient(90deg, #00f5ff, #00ff9c, #eaffb8);
+      background-clip: text;
+      -webkit-background-clip: text;
     }
-    .lead { max-width:620px; color:var(--muted); font-size:clamp(1.08rem,2vw,1.26rem); margin-bottom:30px; }
+
+    .lead {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.26rem);
+      margin-bottom: 30px;
+    }
+
     .notice {
-      max-width:620px; padding:18px 20px; border-radius:18px;
-      border:1px solid rgba(184,255,61,.28); background:rgba(184,255,61,.055);
-      color:var(--muted); font-size:.9rem;
+      max-width: 620px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(184, 255, 61, 0.28);
+      background: rgba(184, 255, 61, 0.055);
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.9rem;
     }
-    .notice strong { color:var(--warning); }
 
-    .signup-card, .result-card, .rules-card {
-      background:linear-gradient(180deg,rgba(0,12,20,.92),rgba(0,0,0,.86));
-      border:1px solid rgba(0,255,156,.24); border-radius:var(--radius);
-      box-shadow:0 0 0 1px rgba(0,245,255,.08), 0 0 42px rgba(0,245,255,.12);
+    .notice strong {
+      color: var(--warning);
     }
-    .signup-card { position:relative; overflow:hidden; padding:clamp(24px,4vw,32px); }
+
+    .signup-card,
+    .result-card,
+    .rules-card {
+      background: linear-gradient(180deg, rgba(0, 12, 20, 0.92), rgba(0, 0, 0, 0.86));
+      border: 1px solid rgba(0, 255, 156, 0.24);
+      border-radius: var(--radius);
+      box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 42px rgba(0, 245, 255, 0.12);
+    }
+
+    .signup-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(24px, 4vw, 32px);
+    }
+
     .signup-card::before {
-      content:""; position:absolute; inset:-70px -90px auto auto; width:220px; height:220px;
-      border-radius:50%; background:rgba(0,245,255,.18); filter:blur(4px); pointer-events:none;
+      content: "";
+      position: absolute;
+      inset: -70px -90px auto auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(0, 245, 255, 0.18);
+      filter: blur(4px);
+      pointer-events: none;
     }
-    .signup-card > * { position:relative; z-index:1; }
-    .form-header { margin-bottom:24px; }
-    .form-header h2 { font-size:clamp(1.7rem,4vw,2.6rem); line-height:1; letter-spacing:-.06em; text-transform:uppercase; margin-bottom:10px; }
-    .form-header p { color:var(--muted); font-size:.98rem; }
-    form { display:grid; gap:18px; }
-    label { display:grid; gap:8px; color:var(--text); font-size:.88rem; letter-spacing:.03em; }
-    input {
-      width:100%; min-height:48px; padding:0 14px; border-radius:14px;
-      border:1px solid rgba(0,245,255,.22); background:rgba(0,0,0,.48);
-      color:var(--text); outline:none; font:inherit;
-      box-shadow:inset 0 0 22px rgba(0,245,255,.035);
-      transition:border-color .16s ease, box-shadow .16s ease, background .16s ease;
-    }
-    input:focus {
-      border-color:rgba(0,255,156,.72);
-      box-shadow:0 0 0 3px rgba(0,255,156,.10), inset 0 0 22px rgba(0,245,255,.06);
-      background:rgba(0,0,0,.64);
-    }
-    input.invalid { border-color:rgba(255,23,61,.8); box-shadow:0 0 0 3px rgba(255,23,61,.10); }
-    input.valid { border-color:rgba(0,255,156,.72); }
-    .helper { color:var(--muted); font-family:inherit; font-size:.86rem; letter-spacing:0; }
-    .error-message { min-height:22px; color:var(--danger-soft); font-size:.9rem; font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; }
-    .button-row { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:4px; }
-    .button {
-      border:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-      min-height:48px; padding:0 20px; border-radius:999px; font-weight:800;
-      transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-    }
-    .button:hover { transform:translateY(-2px); }
-    .button-primary {
-      color:#06101d; background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      box-shadow:0 0 24px rgba(0,245,255,.35), 0 0 44px rgba(0,255,156,.18);
-    }
-    .button-secondary {
-      color:var(--text); border:1px solid rgba(0,245,255,.28); background:rgba(0,245,255,.06);
-    }
-    .result-card { display:none; margin-top:20px; padding:20px; color:var(--muted); }
-    .result-card.visible { display:block; }
-    .result-card.success { border-color:rgba(0,255,156,.34); }
-    .result-card.failure { border-color:rgba(255,23,61,.34); }
-    .result-card h3 { color:var(--text); font-size:1rem; margin-bottom:10px; text-transform:uppercase; letter-spacing:.08em; }
-    .result-card pre {
-      overflow-x:auto; padding:14px; border-radius:14px; background:rgba(0,0,0,.55);
-      color:#e8fbff; font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size:.86rem; line-height:1.55; border:1px solid rgba(0,245,255,.14);
-    }
-    .rules-card { margin-top:24px; padding:20px; }
-    .rules-card h2 { color:var(--accent-2); text-transform:uppercase; font-size:.85rem; letter-spacing:.14em; margin-bottom:16px; }
-    .rules-list { display:grid; gap:12px; color:var(--muted); font-size:.95rem; list-style:none; }
-    .rules-list li { display:flex; gap:10px; align-items:flex-start; }
-    .rules-list li::before { content:">"; color:var(--accent-2); font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; }
-    footer { padding:36px 0; color:var(--muted); border-top:1px solid rgba(0,245,255,.12); }
 
-    @media (max-width:980px) {
-      .signup-layout { grid-template-columns:1fr; }
-      .copy { max-width:760px; }
-      .signup-card { max-width:620px; }
+    .signup-card > * {
+      position: relative;
+      z-index: 1;
     }
-    @media (max-width:720px) {
-      .nav { align-items:flex-start; flex-direction:column; padding:18px 0; }
-      .nav-links { width:100%; overflow-x:auto; padding-bottom:4px; }
-      main { padding-top:54px; }
+
+    .form-header {
+      margin-bottom: 24px;
+    }
+
+    .form-header h2 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--text);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 245, 255, 0.22);
+      background: rgba(0, 0, 0, 0.48);
+      color: var(--text);
+      outline: none;
+      font: inherit;
+      box-shadow: inset 0 0 22px rgba(0, 245, 255, 0.035);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    input:focus {
+      border-color: rgba(0, 255, 156, 0.72);
+      box-shadow: 0 0 0 3px rgba(0, 255, 156, 0.10), inset 0 0 22px rgba(0, 245, 255, 0.06);
+      background: rgba(0, 0, 0, 0.64);
+    }
+
+    input.invalid {
+      border-color: rgba(255, 23, 61, 0.8);
+      box-shadow: 0 0 0 3px rgba(255, 23, 61, 0.10);
+    }
+
+    input.valid {
+      border-color: rgba(0, 255, 156, 0.72);
+    }
+
+    .helper {
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      letter-spacing: 0;
+    }
+
+    .error-message {
+      min-height: 22px;
+      color: var(--danger-soft);
+      font-size: 0.9rem;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .button {
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #06101d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(0, 245, 255, 0.35), 0 0 44px rgba(0, 255, 156, 0.18);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      border: 1px solid rgba(0, 245, 255, 0.28);
+      background: rgba(0, 245, 255, 0.06);
+    }
+
+    .result-card {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      color: var(--muted);
+    }
+
+    .result-card.visible {
+      display: block;
+    }
+
+    .result-card.success {
+      border-color: rgba(0, 255, 156, 0.34);
+    }
+
+    .result-card.failure {
+      border-color: rgba(255, 23, 61, 0.34);
+    }
+
+    .result-card h3 {
+      color: var(--text);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .result-card pre {
+      overflow-x: auto;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #e8fbff;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      border: 1px solid rgba(0, 245, 255, 0.14);
+    }
+
+    .rules-card {
+      margin-top: 24px;
+      padding: 20px;
+    }
+
+    .rules-card h2 {
+      color: var(--accent-2);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      margin-bottom: 16px;
+    }
+
+    .rules-list {
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      list-style: none;
+    }
+
+    .rules-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .rules-list li::before {
+      content: ">";
+      color: var(--accent-2);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    footer {
+      padding: 36px 0;
+      color: var(--muted);
+      border-top: 1px solid rgba(0, 245, 255, 0.12);
+    }
+
+    @media (max-width: 980px) {
+      .signup-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .copy {
+        max-width: 760px;
+      }
+
+      .signup-card {
+        max-width: 620px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      main {
+        padding-top: 54px;
+      }
     }
   </style>
 </head>
@@ -177,6 +480,7 @@ permalink: /signup/
         <span class="brand-mark">eH</span>
         <span>B. Fabio Mejías Fernández</span>
       </a>
+
       <nav class="nav-links" aria-label="Main navigation">
         <a href="{{ '/' | relative_url }}">Home</a>
         <a href="{{ '/' | relative_url }}#about">About</a>
@@ -191,18 +495,27 @@ permalink: /signup/
   <main>
     <div class="container signup-layout">
       <section class="copy">
-        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Static signup // Validation demo</span></div>
-        <h1><span class="gradient-text">Create</span> user</h1>
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Static signup // Validation demo</span>
+        </div>
+
+        <h1>
+          <span class="gradient-text">Create</span> user
+        </h1>
+
         <p class="lead">
           A front-end signup page based on the <strong>uservalidation</strong> Python exercise.
           It reproduces the same validation logic for name, email and password, adapted to a static
           GitHub Pages environment.
         </p>
+
         <div class="notice">
           <strong>Important:</strong> this is a static validation demo. GitHub Pages cannot create real users,
           store passwords or run Python server-side code by itself. For production signup, connect this form
           to a backend/API and hash passwords before storage.
         </div>
+
         <div class="rules-card" aria-label="Validation rules">
           <h2>Validation rules</h2>
           <ul class="rules-list">
@@ -220,28 +533,34 @@ permalink: /signup/
           <h2>User registration</h2>
           <p>Validate input before creating a local demo user object.</p>
         </div>
+
         <form id="signup-form" novalidate>
           <label for="name">
             Name
             <input id="name" name="name" type="text" autocomplete="name" placeholder="B. Fabio" required />
             <span class="helper">Minimum: 3 characters.</span>
           </label>
+
           <label for="email">
             Email
             <input id="email" name="email" type="email" autocomplete="email" placeholder="mejias@bfab.io" required />
             <span class="helper">Use a standard email format.</span>
           </label>
+
           <label for="password">
             Password
             <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Example123" required />
             <span class="helper">More than 8 characters, one capital letter and one number.</span>
           </label>
+
           <p id="error-message" class="error-message" aria-live="polite"></p>
+
           <div class="button-row">
             <button class="button button-primary" type="submit">Create user</button>
             <button class="button button-secondary" type="reset">Reset</button>
           </div>
         </form>
+
         <div id="result-card" class="result-card" aria-live="polite">
           <h3 id="result-title">Result</h3>
           <pre id="result-output"></pre>
@@ -268,31 +587,37 @@ permalink: /signup/
 
     function validatePassword(password) {
       if (typeof password !== "string") return false;
+
       const hasMinimumLength = password.length > 8;
       const hasCapitalLetter = /[A-Z]/.test(password);
       const hasNumber = /\\d/.test(password);
-      return hasMinimumLength && hasCapitalLetter && hasNumber;
-    }
 
-    class ValueError extends Error {
-      constructor(message) {
-        super(message);
-        this.name = "ValueError";
-      }
+      return hasMinimumLength && hasCapitalLetter && hasNumber;
     }
 
     function validateUser(name, email, password) {
       if (validateName(name) === false) {
         throw new ValueError("Please make sure your name is greater than 2 characters!");
       }
+
       if (validateEmail(email) === false) {
         throw new ValueError("Your email address is in the incorrect format, please enter a valid email.");
       }
+
       if (validatePassword(password) === false) {
-        throw new ValueError("Your password is too weak, ensure that your password is greater than 8 characters, contains a capital letter and a number.");
+        throw new ValueError(
+          "Your password is too weak, ensure that your password is greater than 8 characters, contains a capital letter and a number."
+        );
       }
+
       return true;
     }
+
+    function ValueError(message) {
+      this.name = "ValueError";
+      this.message = message;
+    }
+    ValueError.prototype = Object.create(Error.prototype);
 
     function registerUser(name, email, password) {
       try {
@@ -300,6 +625,7 @@ permalink: /signup/
       } catch (error) {
         return false;
       }
+
       return {
         name: name.trim(),
         email: email.trim(),
@@ -318,7 +644,11 @@ permalink: /signup/
 
     function setInputState(input, isValid) {
       input.classList.remove("valid", "invalid");
-      if (input.value.length === 0) return;
+
+      if (input.value.length === 0) {
+        return;
+      }
+
       input.classList.add(isValid ? "valid" : "invalid");
     }
 
@@ -334,25 +664,33 @@ permalink: /signup/
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+
       const name = nameInput.value;
       const email = emailInput.value;
       const password = passwordInput.value;
+
       refreshInputStates();
       errorMessage.textContent = "";
 
       try {
         validateUser(name, email, password);
+
         const user = registerUser(name, email, password);
+
         resultCard.className = "result-card visible success";
         resultTitle.textContent = "User validated";
         resultOutput.textContent = JSON.stringify(user, null, 2);
       } catch (error) {
         resultCard.className = "result-card visible failure";
         resultTitle.textContent = "Validation failed";
-        resultOutput.textContent = JSON.stringify({
-          error: error.name || "ValidationError",
-          message: error.message || "User validation failed."
-        }, null, 2);
+        resultOutput.textContent = JSON.stringify(
+          {
+            error: error.name || "ValidationError",
+            message: error.message || "User validation failed."
+          },
+          null,
+          2
+        );
         errorMessage.textContent = error.message || "User validation failed.";
       }
     });
@@ -362,6 +700,7 @@ permalink: /signup/
         [nameInput, emailInput, passwordInput].forEach((input) => {
           input.classList.remove("valid", "invalid");
         });
+
         errorMessage.textContent = "";
         resultCard.className = "result-card";
         resultTitle.textContent = "Result";
@@ -371,9 +710,9 @@ permalink: /signup/
   </script>
 </body>
 </html>
-"""
+'''
 
-Path("/mnt/data/signup.html").write_text(html, encoding="utf-8")
+Path("/mnt/data/signup.html").write_text(page, encoding="utf-8")
 print("Archivo creado: /mnt/data/signup.html")
 print("URL prevista: https://bfab.io/signup/")
 print("Colócalo en la raíz del repo como signup.html")
