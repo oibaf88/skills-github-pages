@@ -1,5 +1,3 @@
-<div>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -738,4 +736,3 @@
   </footer>
 </body>
 </html>
-<\div>
