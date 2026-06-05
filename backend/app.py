@@ -9,7 +9,31 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# ---------------------------------------------------------------------
+# bfab.io newsletter API
+# ---------------------------------------------------------------------
+# This version deliberately DOES NOT use DATABASE_URL.
+#
+# Reason:
+# DATABASE_URL was being parsed incorrectly and caused:
+# OperationalError: [Errno -8] Servname not supported for ai_socktype
+#
+# Instead, configure these variables separately in Render:
+#
+# DB_HOST
+# DB_PORT
+# DB_NAME
+# DB_USER
+# DB_PASSWORD
+# DB_SSLMODE
+# ---------------------------------------------------------------------
+
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "postgres")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_SSLMODE = os.getenv("DB_SSLMODE", "require")
 
 CORS_ORIGINS = [
     origin.strip()
@@ -21,7 +45,7 @@ CORS_ORIGINS = [
 ]
 
 
-app = FastAPI(title="bfab.io newsletter API", version="1.0.2")
+app = FastAPI(title="bfab.io newsletter API", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -46,14 +70,15 @@ def validate_name(name: str) -> bool:
 def validate_email(email: str) -> bool:
     if not isinstance(email, str):
         return False
+
     return re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email.strip()) is not None
 
 
 def validate_newsletter_user(name: str, email: str, consent: bool) -> bool:
-    if not validate_name(name):
+    if validate_name(name) is False:
         raise ValueError("Please make sure your name is greater than 2 characters.")
 
-    if not validate_email(email):
+    if validate_email(email) is False:
         raise ValueError("Your email address is in the incorrect format, please enter a valid email.")
 
     if consent is not True:
@@ -63,12 +88,36 @@ def validate_newsletter_user(name: str, email: str, consent: bool) -> bool:
 
 
 def get_connection():
-    if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL environment variable is not configured.")
-    return psycopg.connect(DATABASE_URL, row_factory=dict_row)
+    missing = []
+
+    if not DB_HOST:
+        missing.append("DB_HOST")
+    if not DB_USER:
+        missing.append("DB_USER")
+    if not DB_PASSWORD:
+        missing.append("DB_PASSWORD")
+
+    if missing:
+        raise RuntimeError(f"Missing database environment variables: {', '.join(missing)}")
+
+    try:
+        port = int(DB_PORT)
+    except ValueError as exc:
+        raise RuntimeError(f"DB_PORT must be numeric. Current value: {DB_PORT!r}") from exc
+
+    return psycopg.connect(
+        host=DB_HOST,
+        port=port,
+        dbname=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        sslmode=DB_SSLMODE,
+        row_factory=dict_row,
+    )
 
 
 def init_db():
+    """Create the newsletter table if it does not already exist."""
     with get_connection() as conn:
         with conn.cursor() as cur:
             cur.execute(
@@ -84,10 +133,16 @@ def init_db():
                     subscribed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                     unsubscribed_at TIMESTAMPTZ
                 );
-
+                """
+            )
+            cur.execute(
+                """
                 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email
                 ON newsletter_subscribers (lower(email));
-
+                """
+            )
+            cur.execute(
+                """
                 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_subscribed_at
                 ON newsletter_subscribers (subscribed_at DESC);
                 """
@@ -101,14 +156,30 @@ def startup_event():
         init_db()
         print("Database initialized successfully.")
     except Exception as exc:
+        # Keep the API online so /health and /health/db can diagnose the issue.
         print(f"Database initialization failed: {type(exc).__name__}: {exc}")
+
+
+@app.get("/")
+def root():
+    return {
+        "service": "bfab.io newsletter API",
+        "status": "ok",
+        "docs": "/docs",
+        "health": "/health",
+    }
 
 
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "database_url_configured": bool(DATABASE_URL),
+        "database_configured": bool(DB_HOST and DB_USER and DB_PASSWORD),
+        "db_host": DB_HOST,
+        "db_port": DB_PORT,
+        "db_name": DB_NAME,
+        "db_user": DB_USER,
+        "db_sslmode": DB_SSLMODE,
         "cors_origins": CORS_ORIGINS,
     }
 
