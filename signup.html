@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Static signup validation demo for B. Fabio Mejías Fernández eHealth developer portfolio." />
-  <title>Signup | B. Fabio Mejías Fernández</title>
+  <meta name="description" content="Newsletter signup for B. Fabio Mejías Fernández eHealth developer portfolio." />
+  <title>Newsletter Signup | B. Fabio Mejías Fernández</title>
 
   <style>
     :root {
       --bg: #000000;
-      --bg-soft: #05070a;
       --card: rgba(2, 8, 14, 0.82);
       --card-border: rgba(0, 255, 156, 0.28);
       --text: #f8fbff;
@@ -18,22 +17,13 @@
       --accent-2: #00ff9c;
       --warning: #b8ff3d;
       --danger: #ff173d;
-      --success: #00ff9c;
-      --code-bg: rgba(0, 0, 0, 0.64);
-      --shadow: 0 0 50px rgba(0, 245, 255, 0.18);
+      --danger-soft: #ff5b6d;
       --radius: 24px;
       --max-width: 1100px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
@@ -67,10 +57,7 @@
       z-index: 0;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .container {
       width: min(100% - 32px, var(--max-width));
@@ -97,13 +84,23 @@
       gap: 24px;
     }
 
+    .brand,
+    .nav-links,
+    .eyebrow,
+    label,
+    .button,
+    .notice,
+    .result-card h3,
+    .rules-card h2 {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
       font-weight: 800;
       letter-spacing: -0.03em;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     }
 
     .brand-mark {
@@ -124,7 +121,6 @@
       gap: 18px;
       color: var(--muted);
       font-size: 0.95rem;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     }
 
     .nav-links a {
@@ -137,9 +133,7 @@
       text-shadow: 0 0 16px rgba(0, 245, 255, 0.75);
     }
 
-    main {
-      padding: clamp(58px, 8vw, 92px) 0 80px;
-    }
+    main { padding: clamp(58px, 8vw, 92px) 0 80px; }
 
     .signup-layout {
       display: grid;
@@ -148,10 +142,7 @@
       align-items: center;
     }
 
-    .copy {
-      min-width: 0;
-      max-width: 620px;
-    }
+    .copy { min-width: 0; max-width: 620px; }
 
     .eyebrow {
       display: inline-flex;
@@ -162,7 +153,6 @@
       border-radius: 999px;
       color: #c8f6ff;
       background: rgba(0, 245, 255, 0.1);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 0.9rem;
       margin-bottom: 24px;
     }
@@ -207,13 +197,10 @@
       border: 1px solid rgba(184, 255, 61, 0.28);
       background: rgba(184, 255, 61, 0.055);
       color: var(--muted);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 0.9rem;
     }
 
-    .notice strong {
-      color: var(--warning);
-    }
+    .notice strong { color: var(--warning); }
 
     .signup-card,
     .result-card,
@@ -242,14 +229,9 @@
       pointer-events: none;
     }
 
-    .signup-card > * {
-      position: relative;
-      z-index: 1;
-    }
+    .signup-card > * { position: relative; z-index: 1; }
 
-    .form-header {
-      margin-bottom: 24px;
-    }
+    .form-header { margin-bottom: 24px; }
 
     .form-header h2 {
       font-size: clamp(1.7rem, 4vw, 2.6rem);
@@ -259,26 +241,20 @@
       margin-bottom: 10px;
     }
 
-    .form-header p {
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
+    .form-header p { color: var(--muted); font-size: 0.98rem; }
 
-    form {
-      display: grid;
-      gap: 18px;
-    }
+    form { display: grid; gap: 18px; }
 
     label {
       display: grid;
       gap: 8px;
       color: var(--text);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 0.88rem;
       letter-spacing: 0.03em;
     }
 
-    input {
+    input[type="text"],
+    input[type="email"] {
       width: 100%;
       min-height: 48px;
       padding: 0 14px;
@@ -292,7 +268,8 @@
       transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
-    input:focus {
+    input[type="text"]:focus,
+    input[type="email"]:focus {
       border-color: rgba(0, 255, 156, 0.72);
       box-shadow: 0 0 0 3px rgba(0, 255, 156, 0.10), inset 0 0 22px rgba(0, 245, 255, 0.06);
       background: rgba(0, 0, 0, 0.64);
@@ -303,9 +280,20 @@
       box-shadow: 0 0 0 3px rgba(255, 23, 61, 0.10);
     }
 
-    input.valid {
-      border-color: rgba(0, 255, 156, 0.72);
+    input.valid { border-color: rgba(0, 255, 156, 0.72); }
+
+    .checkbox-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0;
     }
+
+    .checkbox-row input { margin-top: 4px; accent-color: var(--accent-2); }
 
     .helper {
       color: var(--muted);
@@ -339,13 +327,10 @@
       padding: 0 20px;
       border-radius: 999px;
       font-weight: 800;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
 
-    .button:hover {
-      transform: translateY(-2px);
-    }
+    .button:hover { transform: translateY(-2px); }
 
     .button-primary {
       color: #06101d;
@@ -366,21 +351,12 @@
       color: var(--muted);
     }
 
-    .result-card.visible {
-      display: block;
-    }
-
-    .result-card.success {
-      border-color: rgba(0, 255, 156, 0.34);
-    }
-
-    .result-card.failure {
-      border-color: rgba(255, 23, 61, 0.34);
-    }
+    .result-card.visible { display: block; }
+    .result-card.success { border-color: rgba(0, 255, 156, 0.34); }
+    .result-card.failure { border-color: rgba(255, 23, 61, 0.34); }
 
     .result-card h3 {
       color: var(--text);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 1rem;
       margin-bottom: 10px;
       text-transform: uppercase;
@@ -397,16 +373,13 @@
       font-size: 0.86rem;
       line-height: 1.55;
       border: 1px solid rgba(0, 245, 255, 0.14);
+      white-space: pre-wrap;
     }
 
-    .rules-card {
-      margin-top: 24px;
-      padding: 20px;
-    }
+    .rules-card { margin-top: 24px; padding: 20px; }
 
     .rules-card h2 {
       color: var(--accent-2);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       text-transform: uppercase;
       font-size: 0.85rem;
       letter-spacing: 0.14em;
@@ -421,11 +394,7 @@
       list-style: none;
     }
 
-    .rules-list li {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
+    .rules-list li { display: flex; gap: 10px; align-items: flex-start; }
 
     .rules-list li::before {
       content: ">";
@@ -440,35 +409,15 @@
     }
 
     @media (max-width: 980px) {
-      .signup-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .copy {
-        max-width: 760px;
-      }
-
-      .signup-card {
-        max-width: 620px;
-      }
+      .signup-layout { grid-template-columns: 1fr; }
+      .copy { max-width: 760px; }
+      .signup-card { max-width: 620px; }
     }
 
     @media (max-width: 720px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 18px 0;
-      }
-
-      .nav-links {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 4px;
-      }
-
-      main {
-        padding-top: 54px;
-      }
+      .nav { align-items: flex-start; flex-direction: column; padding: 18px 0; }
+      .nav-links { width: 100%; overflow-x: auto; padding-bottom: 4px; }
+      main { padding-top: 54px; }
     }
   </style>
 </head>
@@ -476,18 +425,18 @@
 <body>
   <header class="site-header">
     <div class="container nav">
-      <a href="{{ '/' | relative_url }}" class="brand" aria-label="Homepage">
+      <a href="/" class="brand" aria-label="Homepage">
         <span class="brand-mark">eH</span>
         <span>B. Fabio Mejías Fernández</span>
       </a>
 
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/' | relative_url }}#about">About</a>
-        <a href="{{ '/' | relative_url }}#focus">Focus</a>
-        <a href="{{ '/' | relative_url }}#progress">Progress</a>
-        <a href="{{ '/' | relative_url }}#blog">Blog</a>
-        <a href="{{ '/' | relative_url }}#contact">Contact</a>
+        <a href="/">Home</a>
+        <a href="/#about">About</a>
+        <a href="/#focus">Focus</a>
+        <a href="/#progress">Progress</a>
+        <a href="/#blog">Blog</a>
+        <a href="/#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -497,23 +446,21 @@
       <section class="copy">
         <div class="eyebrow">
           <span class="eyebrow-dot"></span>
-          <span>Static signup // Validation demo</span>
+          <span>Newsletter // Validation + database</span>
         </div>
 
         <h1>
-          <span class="gradient-text">Create</span> user
+          <span class="gradient-text">Join</span> newsletter
         </h1>
 
         <p class="lead">
-          A front-end signup page based on the <strong>uservalidation</strong> Python exercise.
-          It reproduces the same validation logic for name, email and password, adapted to a static
-          GitHub Pages environment.
+          Subscribe to receive notes about eHealth development, Python, digital health tools and clinical software experiments.
+          The form validates name and email before sending the subscription to a Python API.
         </p>
 
         <div class="notice">
-          <strong>Important:</strong> this is a static validation demo. GitHub Pages cannot create real users,
-          store passwords or run Python server-side code by itself. For production signup, connect this form
-          to a backend/API and hash passwords before storage.
+          <strong>Privacy note:</strong> this form only collects name and email for the newsletter. Do not submit health data.
+          The backend stores the subscription in a database and can later be extended with double opt-in.
         </div>
 
         <div class="rules-card" aria-label="Validation rules">
@@ -521,20 +468,19 @@
           <ul class="rules-list">
             <li>Name must be greater than 2 characters.</li>
             <li>Email must have a valid email format.</li>
-            <li>Password must be greater than 8 characters.</li>
-            <li>Password must include at least one capital letter.</li>
-            <li>Password must include at least one number.</li>
+            <li>Consent checkbox must be accepted before submitting.</li>
+            <li>No password is requested or stored for newsletter subscription.</li>
           </ul>
         </div>
       </section>
 
-      <section class="signup-card" aria-label="Signup form">
+      <section class="signup-card" aria-label="Newsletter signup form">
         <div class="form-header">
-          <h2>User registration</h2>
-          <p>Validate input before creating a local demo user object.</p>
+          <h2>Newsletter signup</h2>
+          <p>Validate input and send the subscription to the Python backend.</p>
         </div>
 
-        <form id="signup-form" novalidate>
+        <form id="newsletter-form" novalidate>
           <label for="name">
             Name
             <input id="name" name="name" type="text" autocomplete="name" placeholder="B. Fabio" required />
@@ -547,16 +493,15 @@
             <span class="helper">Use a standard email format.</span>
           </label>
 
-          <label for="password">
-            Password
-            <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Example123" required />
-            <span class="helper">More than 8 characters, one capital letter and one number.</span>
+          <label class="checkbox-row" for="consent">
+            <input id="consent" name="consent" type="checkbox" required />
+            <span>I consent to receive the newsletter and to have my name and email stored for this purpose.</span>
           </label>
 
           <p id="error-message" class="error-message" aria-live="polite"></p>
 
           <div class="button-row">
-            <button class="button button-primary" type="submit">Create user</button>
+            <button class="button button-primary" type="submit">Subscribe</button>
             <button class="button button-secondary" type="reset">Reset</button>
           </div>
         </form>
@@ -576,67 +521,42 @@
   </footer>
 
   <script>
+    /*
+      IMPORTANT:
+      Replace this URL with your deployed Python API endpoint.
+      Example: "https://bfab-newsletter-api.onrender.com/subscribe"
+    */
+    const NEWSLETTER_API_ENDPOINT = "https://YOUR-BACKEND-DOMAIN/subscribe";
+
     function validateName(name) {
       return typeof name === "string" && name.trim().length > 2;
     }
 
     function validateEmail(email) {
       if (typeof email !== "string") return false;
-      return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim());
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     }
 
-    function validatePassword(password) {
-      if (typeof password !== "string") return false;
-
-      const hasMinimumLength = password.length > 8;
-      const hasCapitalLetter = /[A-Z]/.test(password);
-      const hasNumber = /\\d/.test(password);
-
-      return hasMinimumLength && hasCapitalLetter && hasNumber;
-    }
-
-    function validateUser(name, email, password) {
+    function validateNewsletterUser(name, email, consent) {
       if (validateName(name) === false) {
-        throw new ValueError("Please make sure your name is greater than 2 characters!");
+        throw new Error("Please make sure your name is greater than 2 characters.");
       }
 
       if (validateEmail(email) === false) {
-        throw new ValueError("Your email address is in the incorrect format, please enter a valid email.");
+        throw new Error("Your email address is in the incorrect format, please enter a valid email.");
       }
 
-      if (validatePassword(password) === false) {
-        throw new ValueError(
-          "Your password is too weak, ensure that your password is greater than 8 characters, contains a capital letter and a number."
-        );
+      if (consent !== true) {
+        throw new Error("Please accept the newsletter consent checkbox before subscribing.");
       }
 
       return true;
     }
 
-    function ValueError(message) {
-      this.name = "ValueError";
-      this.message = message;
-    }
-    ValueError.prototype = Object.create(Error.prototype);
-
-    function registerUser(name, email, password) {
-      try {
-        validateUser(name, email, password);
-      } catch (error) {
-        return false;
-      }
-
-      return {
-        name: name.trim(),
-        email: email.trim(),
-        password: "[validated but not displayed or stored in this static demo]"
-      };
-    }
-
-    const form = document.getElementById("signup-form");
+    const form = document.getElementById("newsletter-form");
     const nameInput = document.getElementById("name");
     const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
+    const consentInput = document.getElementById("consent");
     const errorMessage = document.getElementById("error-message");
     const resultCard = document.getElementById("result-card");
     const resultTitle = document.getElementById("result-title");
@@ -644,60 +564,76 @@
 
     function setInputState(input, isValid) {
       input.classList.remove("valid", "invalid");
-
-      if (input.value.length === 0) {
-        return;
-      }
-
+      if (input.value.length === 0) return;
       input.classList.add(isValid ? "valid" : "invalid");
     }
 
     function refreshInputStates() {
       setInputState(nameInput, validateName(nameInput.value));
       setInputState(emailInput, validateEmail(emailInput.value));
-      setInputState(passwordInput, validatePassword(passwordInput.value));
     }
 
-    [nameInput, emailInput, passwordInput].forEach((input) => {
+    [nameInput, emailInput].forEach((input) => {
       input.addEventListener("input", refreshInputStates);
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const name = nameInput.value;
       const email = emailInput.value;
-      const password = passwordInput.value;
+      const consent = consentInput.checked;
 
       refreshInputStates();
       errorMessage.textContent = "";
 
       try {
-        validateUser(name, email, password);
+        validateNewsletterUser(name, email, consent);
 
-        const user = registerUser(name, email, password);
+        if (NEWSLETTER_API_ENDPOINT.includes("YOUR-BACKEND-DOMAIN")) {
+          throw new Error("The Python API endpoint is not configured yet. Replace NEWSLETTER_API_ENDPOINT in signup/index.html.");
+        }
+
+        const response = await fetch(NEWSLETTER_API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: name.trim(),
+            email: email.trim(),
+            consent: consent,
+            source: "bfab.io/signup"
+          })
+        });
+
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(payload.detail || payload.message || "Newsletter subscription failed.");
+        }
 
         resultCard.className = "result-card visible success";
-        resultTitle.textContent = "User validated";
-        resultOutput.textContent = JSON.stringify(user, null, 2);
+        resultTitle.textContent = "Subscription saved";
+        resultOutput.textContent = JSON.stringify(payload, null, 2);
       } catch (error) {
         resultCard.className = "result-card visible failure";
-        resultTitle.textContent = "Validation failed";
+        resultTitle.textContent = "Subscription failed";
         resultOutput.textContent = JSON.stringify(
           {
             error: error.name || "ValidationError",
-            message: error.message || "User validation failed."
+            message: error.message || "Newsletter subscription failed."
           },
           null,
           2
         );
-        errorMessage.textContent = error.message || "User validation failed.";
+        errorMessage.textContent = error.message || "Newsletter subscription failed.";
       }
     });
 
     form.addEventListener("reset", () => {
       setTimeout(() => {
-        [nameInput, emailInput, passwordInput].forEach((input) => {
+        [nameInput, emailInput].forEach((input) => {
           input.classList.remove("valid", "invalid");
         });
 
@@ -710,9 +646,3 @@
   </script>
 </body>
 </html>
-'''
-
-Path("/mnt/data/signup.html").write_text(page, encoding="utf-8")
-print("Archivo creado: /mnt/data/signup.html")
-print("URL prevista: https://bfab.io/signup/")
-print("Colócalo en la raíz del repo como signup.html")
