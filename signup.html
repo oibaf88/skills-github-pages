@@ -608,11 +608,46 @@
           })
         });
 
-        const payload = await response.json().catch(() => ({}));
+       const responseText = await response.text();
 
-        if (!response.ok) {
-          throw new Error(payload.detail || payload.message || "Newsletter subscription failed.");
-        }
+let payload = {};
+try {
+  payload = responseText ? JSON.parse(responseText) : {};
+} catch {
+  payload = { message: responseText || "Newsletter subscription failed." };
+}
+
+function getApiErrorMessage(payload) {
+  if (!payload) {
+    return "Newsletter subscription failed.";
+  }
+
+  if (typeof payload.detail === "string") {
+    return payload.detail;
+  }
+
+  if (payload.detail && typeof payload.detail === "object") {
+    if (payload.detail.error_type || payload.detail.error_message) {
+      return `${payload.detail.error_type || "Error"}: ${payload.detail.error_message || "Unknown backend error."}`;
+    }
+
+    return JSON.stringify(payload.detail, null, 2);
+  }
+
+  if (typeof payload.message === "string") {
+    return payload.message;
+  }
+
+  if (typeof payload.error === "string") {
+    return payload.error;
+  }
+
+  return JSON.stringify(payload, null, 2);
+}
+
+if (!response.ok) {
+  throw new Error(getApiErrorMessage(payload));
+}
 
         resultCard.className = "result-card visible success";
         resultTitle.textContent = "Subscription saved";
