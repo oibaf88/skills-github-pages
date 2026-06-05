@@ -23,7 +23,6 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
@@ -135,7 +134,7 @@
 
     main { padding: clamp(58px, 8vw, 92px) 0 80px; }
 
-    .signup-layout {
+    .newsletter-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
       gap: clamp(42px, 7vw, 92px);
@@ -202,7 +201,7 @@
 
     .notice strong { color: var(--warning); }
 
-    .signup-card,
+    .newsletter-card,
     .result-card,
     .rules-card {
       background: linear-gradient(180deg, rgba(0, 12, 20, 0.92), rgba(0, 0, 0, 0.86));
@@ -211,13 +210,13 @@
       box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 42px rgba(0, 245, 255, 0.12);
     }
 
-    .signup-card {
+    .newsletter-card {
       position: relative;
       overflow: hidden;
       padding: clamp(24px, 4vw, 32px);
     }
 
-    .signup-card::before {
+    .newsletter-card::before {
       content: "";
       position: absolute;
       inset: -70px -90px auto auto;
@@ -229,7 +228,7 @@
       pointer-events: none;
     }
 
-    .signup-card > * { position: relative; z-index: 1; }
+    .newsletter-card > * { position: relative; z-index: 1; }
 
     .form-header { margin-bottom: 24px; }
 
@@ -409,9 +408,9 @@
     }
 
     @media (max-width: 980px) {
-      .signup-layout { grid-template-columns: 1fr; }
+      .newsletter-layout { grid-template-columns: 1fr; }
       .copy { max-width: 760px; }
-      .signup-card { max-width: 620px; }
+      .newsletter-card { max-width: 620px; }
     }
 
     @media (max-width: 720px) {
@@ -442,7 +441,7 @@
   </header>
 
   <main>
-    <div class="container signup-layout">
+    <div class="container newsletter-layout">
       <section class="copy">
         <div class="eyebrow">
           <span class="eyebrow-dot"></span>
@@ -474,7 +473,7 @@
         </div>
       </section>
 
-      <section class="signup-card" aria-label="Newsletter signup form">
+      <section class="newsletter-card" aria-label="Newsletter signup form">
         <div class="form-header">
           <h2>Newsletter signup</h2>
           <p>Validate input and send the subscription to the Python backend.</p>
