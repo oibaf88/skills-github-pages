@@ -10,24 +10,25 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+
 CORS_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
         "CORS_ORIGINS",
-        "https://bfab.io,http://localhost:8000,http://127.0.0.1:8000",
+        "https://bfab.io,https://www.bfab.io,http://localhost:8000,http://127.0.0.1:8000",
     ).split(",")
     if origin.strip()
 ]
 
 
-app = FastAPI(title="bfab.io newsletter API", version="1.0.0")
+app = FastAPI(title="bfab.io newsletter API", version="1.0.2")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
     allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Accept"],
 )
 
 
@@ -45,28 +46,14 @@ def validate_name(name: str) -> bool:
 def validate_email(email: str) -> bool:
     if not isinstance(email, str):
         return False
-
     return re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email.strip()) is not None
 
 
 def validate_newsletter_user(name: str, email: str, consent: bool) -> bool:
-    """Validate a newsletter subscriber.
-
-    Args:
-        name: Name that we're attempting to validate.
-        email: Email address that we're attempting to validate.
-        consent: Explicit newsletter consent.
-
-    Returns:
-        bool: True if all validation checks pass.
-
-    Raises:
-        ValueError: If any validation check fails.
-    """
-    if validate_name(name) is False:
+    if not validate_name(name):
         raise ValueError("Please make sure your name is greater than 2 characters.")
 
-    if validate_email(email) is False:
+    if not validate_email(email):
         raise ValueError("Your email address is in the incorrect format, please enter a valid email.")
 
     if consent is not True:
@@ -78,13 +65,105 @@ def validate_newsletter_user(name: str, email: str, consent: bool) -> bool:
 def get_connection():
     if not DATABASE_URL:
         raise RuntimeError("DATABASE_URL environment variable is not configured.")
-
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
+
+
+def init_db():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+                    id BIGSERIAL PRIMARY KEY,
+                    name TEXT NOT NULL CHECK (char_length(trim(name)) > 2),
+                    email TEXT NOT NULL UNIQUE CHECK (
+                        email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$'
+                    ),
+                    source TEXT,
+                    user_agent TEXT,
+                    subscribed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    unsubscribed_at TIMESTAMPTZ
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email
+                ON newsletter_subscribers (lower(email));
+
+                CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_subscribed_at
+                ON newsletter_subscribers (subscribed_at DESC);
+                """
+            )
+            conn.commit()
+
+
+@app.on_event("startup")
+def startup_event():
+    try:
+        init_db()
+        print("Database initialized successfully.")
+    except Exception as exc:
+        print(f"Database initialization failed: {type(exc).__name__}: {exc}")
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "database_url_configured": bool(DATABASE_URL),
+        "cors_origins": CORS_ORIGINS,
+    }
+
+
+@app.get("/health/db")
+def health_db():
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT 1 AS ok;")
+                row = cur.fetchone()
+
+        return {"status": "ok", "database": row["ok"]}
+
+    except Exception as exc:
+        print(f"Database health check failed: {type(exc).__name__}: {exc}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+            },
+        )
+
+
+@app.get("/health/table")
+def health_table():
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'newsletter_subscribers'
+                    ORDER BY ordinal_position;
+                    """
+                )
+                columns = cur.fetchall()
+
+        return {
+            "status": "ok",
+            "table_exists": len(columns) > 0,
+            "columns": columns,
+        }
+
+    except Exception as exc:
+        print(f"Table health check failed: {type(exc).__name__}: {exc}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+            },
+        )
 
 
 @app.post("/subscribe")
@@ -119,14 +198,22 @@ def subscribe(payload: NewsletterSubscription, request: Request):
                 )
                 row = cur.fetchone()
                 conn.commit()
+
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="Database write failed.") from exc
+        print(f"Database write failed: {type(exc).__name__}: {exc}")
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+            },
+        )
 
     return {
         "ok": True,
         "message": "Newsletter subscription saved.",
         "subscriber": {
-            "id": str(row["id"]),
+            "id": row["id"],
             "name": row["name"],
             "email": row["email"],
             "subscribed_at": row["subscribed_at"].isoformat(),
