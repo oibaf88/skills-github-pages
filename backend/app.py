@@ -15,7 +15,7 @@ from pydantic import BaseModel, EmailStr, Field
 # CORS_ORIGINS=https://bfab.io,https://www.bfab.io
 # PYTHON_VERSION=3.12.8
 
-DATABASE_URL = os.getenv("https://api.render.com/deploy/srv-d8heevuk1jcs739t2sh0?key=gH61YByxHys")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 CORS_ORIGINS = [
     origin.strip()
