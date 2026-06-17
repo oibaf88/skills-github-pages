@@ -1,6 +1,7 @@
 import os
 import re
 from typing import Optional
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import psycopg
 from psycopg.rows import dict_row
@@ -9,24 +10,63 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 
 
-# Final version for Render PostgreSQL.
-# Required Render environment variables:
-# DATABASE_URL=<Internal Database URL from Render PostgreSQL>
-# CORS_ORIGINS=https://bfab.io,https://www.bfab.io
-# PYTHON_VERSION=3.12.8
+# Backend for bfab.io newsletter subscriptions.
+# Required Render environment variable:
+#   DATABASE_URL=<Supabase connection pooler URL>
+# Optional aliases supported:
+#   SUPABASE_DATABASE_URL=<Supabase connection pooler URL>
+#   POSTGRES_URL=<Supabase connection pooler URL>
+# Recommended Render environment variable:
+#   CORS_ORIGINS=https://bfab.io,https://www.bfab.io,https://oibaf88.github.io
+# Never commit real credentials to GitHub.
 
-DATABASE_URL = os.getenv("postgresql://fabio:6B48BzNOz3gFessLDlnUhRedGCSVIRm7@dpg-d8hsqcnlk1mc73fgomi0-a/dbnamex")
+TABLE_NAME = "newsletter_subscribers"
+
+
+def get_database_url() -> str | None:
+    raw_url = (
+        os.getenv("DATABASE_URL")
+        or os.getenv("SUPABASE_DATABASE_URL")
+        or os.getenv("POSTGRES_URL")
+    )
+
+    if not raw_url:
+        return None
+
+    return normalize_database_url(raw_url.strip())
+
+
+def normalize_database_url(database_url: str) -> str:
+    """Ensure Supabase/Postgres URLs use SSL unless already configured."""
+    parsed = urlsplit(database_url)
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+
+    query.setdefault("sslmode", "require")
+    query.setdefault("connect_timeout", "10")
+
+    return urlunsplit(
+        (
+            parsed.scheme,
+            parsed.netloc,
+            parsed.path,
+            urlencode(query),
+            parsed.fragment,
+        )
+    )
+
+
+DATABASE_URL = get_database_url()
 
 CORS_ORIGINS = [
-    origin.strip()
+    origin.strip().rstrip("/")
     for origin in os.getenv(
         "CORS_ORIGINS",
-        "https://bfab.io,https://www.bfab.io,http://localhost:8000,http://127.0.0.1:8000",
+        "https://bfab.io,https://www.bfab.io,https://oibaf88.github.io,http://localhost:8000,http://127.0.0.1:8000,http://localhost:5500,http://127.0.0.1:5500",
     ).split(",")
     if origin.strip()
 ]
 
-app = FastAPI(title="bfab.io newsletter API", version="2.0.0")
+app = FastAPI(title="bfab.io newsletter API", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -66,7 +106,9 @@ def validate_newsletter_user(name: str, email: str, consent: bool) -> bool:
 
 def get_connection():
     if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL environment variable is not configured.")
+        raise RuntimeError(
+            "Database URL is not configured. Set DATABASE_URL in Render to your Supabase connection pooler URL."
+        )
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
 
 
@@ -74,12 +116,12 @@ def init_db():
     with get_connection() as conn:
         with conn.cursor() as cur:
             cur.execute(
-                """
-                CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+                f"""
+                CREATE TABLE IF NOT EXISTS public.{TABLE_NAME} (
                     id BIGSERIAL PRIMARY KEY,
                     name TEXT NOT NULL CHECK (char_length(trim(name)) > 2),
                     email TEXT NOT NULL UNIQUE CHECK (
-                        email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$'
+                        email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{{2,}}$'
                     ),
                     source TEXT,
                     user_agent TEXT,
@@ -89,15 +131,15 @@ def init_db():
                 """
             )
             cur.execute(
-                """
-                CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email
-                ON newsletter_subscribers (lower(email));
+                f"""
+                CREATE INDEX IF NOT EXISTS idx_{TABLE_NAME}_email
+                ON public.{TABLE_NAME} (lower(email));
                 """
             )
             cur.execute(
-                """
-                CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_subscribed_at
-                ON newsletter_subscribers (subscribed_at DESC);
+                f"""
+                CREATE INDEX IF NOT EXISTS idx_{TABLE_NAME}_subscribed_at
+                ON public.{TABLE_NAME} (subscribed_at DESC);
                 """
             )
             conn.commit()
@@ -119,6 +161,8 @@ def root():
         "status": "ok",
         "docs": "/docs",
         "health": "/health",
+        "health_db": "/health/db",
+        "health_table": "/health/table",
     }
 
 
@@ -128,6 +172,7 @@ def health():
         "status": "ok",
         "database_url_configured": bool(DATABASE_URL),
         "cors_origins": CORS_ORIGINS,
+        "table": TABLE_NAME,
     }
 
 
@@ -157,11 +202,13 @@ def health_table():
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT column_name, data_type
+                    SELECT column_name, data_type, is_nullable
                     FROM information_schema.columns
-                    WHERE table_name = 'newsletter_subscribers'
+                    WHERE table_schema = 'public'
+                      AND table_name = %s
                     ORDER BY ordinal_position;
-                    """
+                    """,
+                    (TABLE_NAME,),
                 )
                 columns = cur.fetchall()
         return {"status": "ok", "table_exists": len(columns) > 0, "columns": columns}
@@ -192,8 +239,8 @@ def subscribe(payload: NewsletterSubscription, request: Request):
         with get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
-                    """
-                    INSERT INTO newsletter_subscribers (name, email, source, user_agent)
+                    f"""
+                    INSERT INTO public.{TABLE_NAME} (name, email, source, user_agent)
                     VALUES (%s, %s, %s, %s)
                     ON CONFLICT (email)
                     DO UPDATE SET
@@ -202,7 +249,7 @@ def subscribe(payload: NewsletterSubscription, request: Request):
                         user_agent = EXCLUDED.user_agent,
                         subscribed_at = NOW(),
                         unsubscribed_at = NULL
-                    RETURNING id, name, email, subscribed_at;
+                    RETURNING id, name, email, source, subscribed_at;
                     """,
                     (name, email, source, user_agent),
                 )
@@ -225,6 +272,7 @@ def subscribe(payload: NewsletterSubscription, request: Request):
             "id": row["id"],
             "name": row["name"],
             "email": row["email"],
+            "source": row["source"],
             "subscribed_at": row["subscribed_at"].isoformat(),
         },
     }
