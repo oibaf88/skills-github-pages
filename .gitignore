@@ -6,6 +6,18 @@
 *.exe
 *.o
 *.so
+*.pyc
+__pycache__/
+
+# Python environments #
+######################
+.venv/
+venv/
+
+# Local environment files containing secrets #
+############################################
+.env
+backend/.env
 
 # Packages #
 ############
@@ -35,4 +47,3 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-
