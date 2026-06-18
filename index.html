@@ -7,24 +7,29 @@
   <title>B. Fabio Mejías Fernández | eHealth Developer Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Profile image fix: show the full vertical portrait instead of cropping it as a square. */
+    /* Profile image fix: preserve the full portrait inside the neon frame. */
     .profile-frame {
-      width: min(220px, 100%);
+      width: min(240px, 100%);
       aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
       background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--warning));
     }
 
     .profile-frame img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center center;
       display: block;
+      background: rgba(0, 0, 0, 0.88);
+      border-radius: 27px;
     }
 
     @media (max-width: 520px) {
       .profile-frame {
-        width: min(190px, 100%);
+        width: min(210px, 100%);
       }
     }
   </style>
@@ -66,7 +71,7 @@
         </div>
         <aside class="status-card" aria-label="Portfolio status">
           <div class="profile-frame">
-            <img src="source/fabio-profile.jpgg?v=20260618-full" alt="Portrait of B. Fabio Mejías Fernández" loading="lazy" decoding="async" />
+            <img src="source/fabio-profile.jpg?v=20260618-full" alt="Portrait of B. Fabio Mejías Fernández" loading="lazy" decoding="async" />
           </div>
           <p class="status-label">Work in progress</p>
           <h2>Coming soon...</h2>
