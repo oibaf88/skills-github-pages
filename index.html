@@ -7,7 +7,6 @@
   <title>B. Fabio Mejías Fernández | eHealth Developer Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Profile image fix: preserve the full portrait inside the neon frame. */
     .profile-frame {
       width: min(240px, 100%);
       aspect-ratio: 4 / 5;
@@ -16,7 +15,6 @@
       overflow: hidden;
       background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--warning));
     }
-
     .profile-frame img {
       width: 100%;
       height: 100%;
@@ -26,11 +24,8 @@
       background: rgba(0, 0, 0, 0.88);
       border-radius: 27px;
     }
-
     @media (max-width: 520px) {
-      .profile-frame {
-        width: min(210px, 100%);
-      }
+      .profile-frame { width: min(210px, 100%); }
     }
   </style>
 </head>
@@ -54,16 +49,9 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            <span>Digital health application development</span>
-          </div>
-          <h1>
-            <span class="gradient-text">B. Fabio</span> Mejías Fernández
-          </h1>
-          <p class="hero-text">
-            Physician, clinical pharmacology resident and eHealth developer in progress, building digital health applications from Madrid, European Union.
-          </p>
+          <div class="eyebrow"><span class="eyebrow-dot"></span><span>Digital health application development</span></div>
+          <h1><span class="gradient-text">B. Fabio</span> Mejías Fernández</h1>
+          <p class="hero-text">Physician, clinical pharmacology resident and eHealth developer in progress, building digital health applications from Madrid, European Union.</p>
           <div class="actions">
             <a class="button button-primary" href="#progress">View progress</a>
             <a class="button button-secondary" href="#focus">Explore focus areas</a>
@@ -75,129 +63,44 @@
           </div>
           <p class="status-label">Work in progress</p>
           <h2>Coming soon...</h2>
-          <p>
-            This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.
-          </p>
+          <p>This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.</p>
           <div class="meta-list">
-            <div class="meta-item">
-              <span>Published</span>
-              <strong>2026-05-18</strong>
-            </div>
-            <div class="meta-item">
-              <span>Status</span>
-              <strong>Building</strong>
-            </div>
-            <div class="meta-item">
-              <span>Domain</span>
-              <strong>eHealth</strong>
-            </div>
-            <div class="meta-item">
-              <span>Location</span>
-              <strong>Madrid, European Union</strong>
-            </div>
+            <div class="meta-item"><span>Published</span><strong>2026-05-18</strong></div>
+            <div class="meta-item"><span>Status</span><strong>Building</strong></div>
+            <div class="meta-item"><span>Domain</span><strong>eHealth</strong></div>
+            <div class="meta-item"><span>Location</span><strong>Madrid, European Union</strong></div>
           </div>
         </aside>
       </div>
     </section>
-    <section id="about">
-      <div class="container">
-        <h2 class="section-title">About this portfolio</h2>
-        <p class="section-intro">
-          This website is a living record of my learning path, experiments and projects in digital health. It is designed as a simple but professional starting point that can grow into a complete developer portfolio.
-        </p>
-      </div>
-    </section>
+    <section id="about"><div class="container"><h2 class="section-title">About this portfolio</h2><p class="section-intro">This website is a living record of my learning path, experiments and projects in digital health. It is designed as a simple but professional starting point that can grow into a complete developer portfolio.</p></div></section>
     <section id="focus">
       <div class="container">
         <h2 class="section-title">Focus areas</h2>
-        <p class="section-intro">
-          The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.
-        </p>
+        <p class="section-intro">The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.</p>
         <div class="cards">
-          <article class="card">
-            <div class="card-icon">01</div>
-            <h3><a href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Clinical software</a></h3>
-            <p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">02</div>
-            <h3>Health data</h3>
-            <p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">03</div>
-            <h3>AI for eHealth</h3>
-            <p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p>
-          </article>
+          <article class="card"><div class="card-icon">01</div><h3><a href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Clinical software</a></h3><p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p></article>
+          <article class="card"><div class="card-icon">02</div><h3>Health data</h3><p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p></article>
+          <article class="card"><div class="card-icon">03</div><h3>AI for eHealth</h3><p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p></article>
         </div>
       </div>
     </section>
-    <section id="progress">
-      <div class="container">
-        <h2 class="section-title">Development progress</h2>
-        <p class="section-intro">
-          A minimal roadmap for what will appear here as the portfolio evolves.
-        </p>
-        <div class="timeline">
-          <article class="timeline-item">
-            <time datetime="2026-05-18">2026-05-18</time>
-            <h3>Portfolio initialized</h3>
-            <p>First public version of the personal eHealth developer portfolio.</p>
-          </article>
-          <article class="timeline-item">
-            <time>Next</time>
-            <h3>Project gallery</h3>
-            <p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p>
-          </article>
-          <article class="timeline-item">
-            <time>Soon</time>
-            <h3>Technical notes</h3>
-            <p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section id="blog">
-      <div class="container">
-        <h2 class="section-title">Blog</h2>
-        <p class="section-intro">
-          Notes, experiments and small development logs from my eHealth and software learning path.
-        </p>
-        <div class="timeline">
-          <article class="timeline-item">
-            <time datetime="2026-05-28">2026-05-28</time>
-            <h3>
-              <a href="/blog/uservalidation">
-                Small user validation function
-              </a>
-            </h3>
-            <p>
-              A short development note about implementing a small user validation function.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
+    <section id="progress"><div class="container"><h2 class="section-title">Development progress</h2><p class="section-intro">A minimal roadmap for what will appear here as the portfolio evolves.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-05-18">2026-05-18</time><h3>Portfolio initialized</h3><p>First public version of the personal eHealth developer portfolio.</p></article><article class="timeline-item"><time>Next</time><h3>Project gallery</h3><p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p></article><article class="timeline-item"><time>Soon</time><h3>Technical notes</h3><p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p></article></div></div></section>
+    <section id="blog"><div class="container"><h2 class="section-title">Blog</h2><p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-05-28">2026-05-28</time><h3><a href="/blog/uservalidation">Small user validation function</a></h3><p>A short development note about implementing a small user validation function.</p></article></div></div></section>
     <section id="contact">
       <div class="container">
         <div class="contact-box">
           <div>
             <h2 class="section-title">Coming soon...</h2>
-            <p>
-              Contact me at mejias@bfab.io. GitHub repositories and selected projects will be added as the portfolio grows.
-            </p>
+            <p>Contact me at mejias@bfab.io. GitHub repositories and selected projects will be added as the portfolio grows.</p>
             <p>You can also subscribe to my newsletter to keep in touch:</p>
-            <a href="signup.html">Subscribe to my newsletter</a>
+            <a href="/signup">Subscribe to my newsletter</a>
           </div>
           <a class="button button-primary" href="mailto:mejias@bfab.io">mejias@bfab.io</a>
         </div>
       </div>
     </section>
   </main>
-  <footer>
-    <div class="container">
-      <p>© 2026 B. Fabio Mejías Fernández. Built as a work in progress.</p>
-    </div>
-  </footer>
+  <footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Built as a work in progress.</p></div></footer>
 </body>
 </html>
