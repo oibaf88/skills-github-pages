@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Newsletter signup for B. Fabio Mejías Fernández eHealth developer portfolio." />
   <title>Newsletter Signup | B. Fabio Mejías Fernández</title>
-
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-
 <body>
   <header class="site-header">
     <div class="container nav">
@@ -16,7 +14,6 @@
         <span class="brand-mark">eH</span>
         <span>B. Fabio Mejías Fernández</span>
       </a>
-
       <nav class="nav-links" aria-label="Main navigation">
         <a href="/">Home</a>
         <a href="/#about">About</a>
@@ -35,21 +32,15 @@
           <span class="eyebrow-dot"></span>
           <span>Newsletter // Validation + database</span>
         </div>
-
-        <h1>
-          <span class="gradient-text">Join</span> newsletter
-        </h1>
-
+        <h1><span class="gradient-text">Join</span> newsletter</h1>
         <p class="lead">
           Subscribe to receive notes about eHealth development, Python, digital health tools and clinical software experiments.
           The form validates name and email before sending the subscription to a Python API.
         </p>
-
         <div class="notice">
           <strong>Privacy note:</strong> this form only collects name and email for the newsletter. Do not submit health data.
           The backend stores the subscription in a database and can later be extended with double opt-in.
         </div>
-
         <div class="rules-card" aria-label="Validation rules">
           <h2>Validation rules</h2>
           <ul class="rules-list">
@@ -108,11 +99,6 @@
   </footer>
 
   <script>
-    /*
-      IMPORTANT:
-      Replace this URL with your deployed Python API endpoint.
-      Example: "https://bfab-newsletter-api.onrender.com/subscribe"
-    */
     const NEWSLETTER_API_ENDPOINT = "https://skills-github-pages-2.onrender.com/subscribe";
 
     function validateName(name) {
@@ -125,18 +111,15 @@
     }
 
     function validateNewsletterUser(name, email, consent) {
-      if (validateName(name) === false) {
+      if (!validateName(name)) {
         throw new Error("Please make sure your name is greater than 2 characters.");
       }
-
-      if (validateEmail(email) === false) {
+      if (!validateEmail(email)) {
         throw new Error("Your email address is in the incorrect format, please enter a valid email.");
       }
-
       if (consent !== true) {
         throw new Error("Please accept the newsletter consent checkbox before subscribing.");
       }
-
       return true;
     }
 
@@ -160,6 +143,20 @@
       setInputState(emailInput, validateEmail(emailInput.value));
     }
 
+    function getApiErrorMessage(payload) {
+      if (!payload) return "Newsletter subscription failed.";
+      if (typeof payload.detail === "string") return payload.detail;
+      if (payload.detail && typeof payload.detail === "object") {
+        if (payload.detail.error_type || payload.detail.error_message) {
+          return `${payload.detail.error_type || "Error"}: ${payload.detail.error_message || "Unknown backend error."}`;
+        }
+        return JSON.stringify(payload.detail, null, 2);
+      }
+      if (typeof payload.message === "string") return payload.message;
+      if (typeof payload.error === "string") return payload.error;
+      return JSON.stringify(payload, null, 2);
+    }
+
     [nameInput, emailInput].forEach((input) => {
       input.addEventListener("input", refreshInputStates);
     });
@@ -177,10 +174,6 @@
       try {
         validateNewsletterUser(name, email, consent);
 
-        if (NEWSLETTER_API_ENDPOINT.includes("YOUR-BACKEND-DOMAIN")) {
-          throw new Error("The Python API endpoint is not configured yet. Replace NEWSLETTER_API_ENDPOINT in signup/index.html.");
-        }
-
         const response = await fetch(NEWSLETTER_API_ENDPOINT, {
           method: "POST",
           mode: "cors",
@@ -196,61 +189,26 @@
           })
         });
 
-       const responseText = await response.text();
+        const responseText = await response.text();
+        let payload = {};
 
-let payload = {};
-try {
-  payload = responseText ? JSON.parse(responseText) : {};
-} catch {
-  payload = { message: responseText || "Newsletter subscription failed." };
-}
+        try {
+          payload = responseText ? JSON.parse(responseText) : {};
+        } catch {
+          payload = { message: responseText || "Newsletter subscription failed." };
+        }
 
-function getApiErrorMessage(payload) {
-  if (!payload) {
-    return "Newsletter subscription failed.";
-  }
-
-  if (typeof payload.detail === "string") {
-    return payload.detail;
-  }
-
-  if (payload.detail && typeof payload.detail === "object") {
-    if (payload.detail.error_type || payload.detail.error_message) {
-      return `${payload.detail.error_type || "Error"}: ${payload.detail.error_message || "Unknown backend error."}`;
-    }
-
-    return JSON.stringify(payload.detail, null, 2);
-  }
-
-  if (typeof payload.message === "string") {
-    return payload.message;
-  }
-
-  if (typeof payload.error === "string") {
-    return payload.error;
-  }
-
-  return JSON.stringify(payload, null, 2);
-}
-
-if (!response.ok) {
-  throw new Error(getApiErrorMessage(payload));
-}
+        if (!response.ok) {
+          throw new Error(getApiErrorMessage(payload));
+        }
 
         resultCard.className = "result-card visible success";
-        resultTitle.textContent = "Subscription saved";
-        resultOutput.textContent = JSON.stringify(payload, null, 2);
+        resultTitle.textContent = "subscribed correctly!";
+        resultOutput.textContent = "";
       } catch (error) {
         resultCard.className = "result-card visible failure";
         resultTitle.textContent = "Subscription failed";
-        resultOutput.textContent = JSON.stringify(
-          {
-            error: error.name || "ValidationError",
-            message: error.message || "Newsletter subscription failed."
-          },
-          null,
-          2
-        );
+        resultOutput.textContent = error.message || "Newsletter subscription failed.";
         errorMessage.textContent = error.message || "Newsletter subscription failed.";
       }
     });
@@ -260,7 +218,6 @@ if (!response.ok) {
         [nameInput, emailInput].forEach((input) => {
           input.classList.remove("valid", "invalid");
         });
-
         errorMessage.textContent = "";
         resultCard.className = "result-card";
         resultTitle.textContent = "Result";
