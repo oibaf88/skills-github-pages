@@ -13,7 +13,7 @@ categories: login
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Blog post about a small Python user validation function." />
   <title>uservalidation | B. Fabio Mejías Fernández</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
 </head>
 
 <body>
