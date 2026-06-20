@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: email-client
+    name: skills-github-pages-2
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
