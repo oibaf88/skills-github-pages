@@ -48,6 +48,16 @@ footer {
   margin: 18px 0 24px;
 }
 
+.post-meta-panel {
+  padding: 14px;
+  border: 1px solid rgba(0, 255, 156, 0.26);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top left, rgba(0, 245, 255, 0.17), transparent 35%),
+    linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 255, 156, 0.06));
+  box-shadow: inset 0 0 28px rgba(0, 245, 255, 0.06), 0 0 34px rgba(0, 245, 255, 0.1);
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
@@ -63,6 +73,12 @@ footer {
   font-weight: 700;
   letter-spacing: 0.02em;
   white-space: nowrap;
+}
+
+.post-meta-panel .pill {
+  border-color: rgba(184, 255, 61, 0.3);
+  color: #f4ffe0;
+  background: linear-gradient(135deg, rgba(184, 255, 61, 0.13), rgba(0, 245, 255, 0.08));
 }
 
 .content-card,
@@ -109,6 +125,23 @@ footer {
 
 .code-card {
   overflow: hidden;
+}
+
+.code-card::before {
+  content: "CODE CANVAS";
+  position: absolute;
+  right: 18px;
+  top: 56px;
+  z-index: 2;
+  padding: 4px 8px;
+  border: 1px solid rgba(184, 255, 61, 0.24);
+  border-radius: 999px;
+  color: rgba(184, 255, 61, 0.75);
+  background: rgba(0, 0, 0, 0.62);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
 .code-header {
@@ -232,12 +265,31 @@ footer {
     rgba(2, 8, 14, 0.96);
 }
 
+.side-card-featured {
+  border-color: rgba(184, 255, 61, 0.32);
+  background:
+    radial-gradient(circle at 85% 0%, rgba(184, 255, 61, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(0, 18, 28, 0.98), rgba(0, 0, 0, 0.93));
+  box-shadow: 0 0 0 1px rgba(184, 255, 61, 0.08), 0 0 48px rgba(0, 245, 255, 0.14);
+}
+
 .side-card h2 {
   margin-bottom: 18px;
   color: var(--text);
   font-size: 1.15rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.side-card-featured h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--warning), var(--accent));
+  box-shadow: 0 0 18px rgba(184, 255, 61, 0.35);
 }
 
 .side-list {
@@ -251,6 +303,11 @@ footer {
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(0, 255, 156, 0.045));
   box-shadow: inset 0 0 22px rgba(0, 245, 255, 0.045);
+}
+
+.side-card-featured .side-list > div {
+  border-color: rgba(184, 255, 61, 0.22);
+  background: linear-gradient(135deg, rgba(184, 255, 61, 0.09), rgba(0, 245, 255, 0.055));
 }
 
 .side-list span {
@@ -302,5 +359,9 @@ footer {
   .code-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .code-card::before {
+    display: none;
   }
 }
