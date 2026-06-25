@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: null
 title: "uservalidation"
 date: 2026-06-02 18:00:00 -0000
 permalink: /blog/uservalidation/
@@ -14,6 +14,9 @@ categories: login
   <meta name="description" content="Blog post about a small Python user validation function." />
   <title>uservalidation | B. Fabio Mejías Fernández</title>
   <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/blog-posts.css' | relative_url }}" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </head>
 
 <body>
@@ -47,7 +50,7 @@ categories: login
           <span class="gradient-text">user</span>validation
         </h1>
 
-        <div class="post-meta">
+        <div class="post-meta" aria-label="Post metadata summary">
           <span class="pill">Published // <time datetime="2026-05-28">2026-05-28</time></span>
           <span class="pill">Category // Python basics</span>
           <span class="pill">Status // learning log</span>
@@ -76,7 +79,7 @@ categories: login
 
         <section class="code-card" aria-label="Python source code">
           <div class="code-header">
-            <span class="dots">
+            <span class="dots" aria-hidden="true">
               <span class="dot"></span>
               <span class="dot"></span>
               <span class="dot"></span>
@@ -84,7 +87,7 @@ categories: login
             <span>small_user_validation_function.py</span>
           </div>
 
-          <pre><code>from python_functions import validate_name, validate_email, validate_password
+          <pre class="code-canvas"><code class="language-python">from python_functions import validate_name, validate_email, validate_password
 
 def validate_user(name, email, password):
     &quot;&quot;&quot;Validate the user name, email and password.
