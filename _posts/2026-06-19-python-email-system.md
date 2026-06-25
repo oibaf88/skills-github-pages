@@ -59,6 +59,7 @@ categories: python oop
           list and read messages while keeping the message state inside the objects.
         </p>
 
+        <!-- Live demo URL verified: https://email-client-1gs6.onrender.com -->
         <div class="actions">
           <a class="button button-primary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open live demo</a>
           <a class="button button-secondary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">View repository</a>
