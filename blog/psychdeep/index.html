@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PsychDeep / Psychapp project note: an early prototype for structured psychological self-analysis, with technical, privacy and medical safety precautions." />
+  <title>PsychDeep / Psychapp | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/blog-posts.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="/" class="brand" aria-label="Homepage">
+        <span class="brand-mark">eH</span>
+        <span>B. Fabio Mejías Fernández</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/#about">About</a>
+        <a href="/#focus">Focus</a>
+        <a href="/#progress">Progress</a>
+        <a href="/#blog">Blog</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>PsychDeep // Psychapp // Clinical software prototype</span>
+        </div>
+
+        <h1>
+          <span class="gradient-text">PsychDeep</span> / Psychapp
+        </h1>
+
+        <div class="post-meta post-meta-panel" aria-label="Post metadata summary">
+          <span class="pill">Published // <time datetime="2026-06-25">2026-06-25</time></span>
+          <span class="pill">Category // Clinical software</span>
+          <span class="pill">Status // early prototype</span>
+          <span class="pill">Stack // React + Node + OAuth + OpenAI</span>
+        </div>
+
+        <p class="lead">
+          PsychDeep, currently deployed as Psychapp, is a first technical sketch of a larger real project:
+          a structured workspace for longitudinal psychological self-analysis. It is not a diagnostic device,
+          not a medical product and not a substitute for clinical care. Its current value is exploratory:
+          it tests whether personal data, language traces and reflective prompts can be organized into a safer,
+          more inspectable interface for self-understanding.
+        </p>
+
+        <div class="actions">
+          <a class="button button-primary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open Psychapp</a>
+          <a class="button button-secondary" href="https://github.com/oibaf88/psychapp" target="_blank" rel="noopener noreferrer">View repository</a>
+        </div>
+
+        <section class="content-card">
+          <h2>What the prototype tries to do</h2>
+          <p>
+            The central idea is to turn scattered personal information into a structured analytical workspace.
+            In its current form, PsychDeep can combine different sources of autobiographical data, normalize them
+            into time-stamped items and use AI-assisted prompts to generate hypotheses about psychological patterns.
+          </p>
+
+          <ul>
+            <li><strong>Connected sources:</strong> Gmail, Google Drive, Google Calendar, Outlook, Microsoft 365, Teams and OneDrive can be connected through OAuth flows when enabled by the backend.</li>
+            <li><strong>Uploaded exports:</strong> exported files such as messaging histories or text archives can be parsed locally by the frontend before analysis.</li>
+            <li><strong>Temporal modelling:</strong> the app is designed around time series, periods, trend changes and trigger patterns rather than one-off interpretations.</li>
+            <li><strong>Psychological frameworks:</strong> the prototype experiments with dimensions such as affective valence, arousal, stress, cognitive complexity, attachment signals, cognitive biases and regulatory patterns.</li>
+            <li><strong>Reflective forecasting:</strong> once a profile exists, the interface can ask the model to reason about likely reactions to hypothetical situations, always as a probabilistic aid rather than a clinical conclusion.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>How it works at a high level</h2>
+          <p>
+            The frontend is a React/Vite application. It lets the user select sources, upload files, connect accounts
+            and launch analysis steps. The backend is a Node service that keeps sensitive API credentials away from the
+            browser and exposes controlled API routes for OpenAI calls and OAuth callbacks.
+          </p>
+
+          <p>
+            The application roughly follows this pipeline: collect or connect data, parse it into normalized records,
+            divide the records into periods, extract period-level features, synthesize a profile, identify triggers and
+            allow a structured question-answering mode on top of the generated model. In the current version, this is
+            an experimental architecture rather than a clinically validated workflow.
+          </p>
+        </section>
+
+        <section class="code-card" aria-label="Conceptual architecture sketch">
+          <div class="code-header">
+            <span class="dots" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </span>
+            <span>psychdeep_pipeline_sketch.txt</span>
+          </div>
+
+          <pre class="code-canvas"><code>Personal data sources
+  ├─ OAuth connectors: Gmail, Drive, Calendar, Outlook, Microsoft services
+  ├─ Uploaded exports: chats, emails, CSV files, text archives
+  └─ Optional public profile URLs
+
+Normalization layer
+  ├─ Parse messages / documents / events
+  ├─ Convert to timestamped records
+  └─ Remove unusable or duplicated fragments where possible
+
+Analysis layer
+  ├─ Period-level feature extraction
+  ├─ Trigger and pattern detection
+  ├─ Longitudinal profile synthesis
+  └─ Scenario-based reflective forecasting
+
+Safety layer
+  ├─ Clear non-diagnostic framing
+  ├─ Privacy-first data handling
+  ├─ Human review of outputs
+  └─ Escalation to professional care when risk appears</code></pre>
+        </section>
+
+        <section class="content-card">
+          <h2>Why this is only a first sketch</h2>
+          <p>
+            A real version of this project would require more than a working interface. It would need stronger data
+            governance, explicit consent flows, auditable prompt and model versions, clinical review, validation against
+            known outcomes, bias testing and a clear definition of what the system is allowed to infer. The prototype is
+            therefore best understood as a learning artifact and a design study: it explores the shape of a future tool,
+            but it does not yet prove clinical usefulness or safety.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Technical and cybersecurity precautions</h2>
+          <p>
+            PsychDeep touches potentially sensitive personal data. That makes technical caution central to the design.
+            Any future production version should treat emails, files, calendars, private messages and psychological notes
+            as high-sensitivity data.
+          </p>
+
+          <ul>
+            <li><strong>No secrets in the frontend:</strong> API keys, OAuth client secrets and service credentials must never be exposed as public JavaScript or stored in localStorage.</li>
+            <li><strong>OAuth discipline:</strong> redirect URIs must be exact, scopes should be minimal and tokens should be stored only in secure, HttpOnly, encrypted server-side or cookie mechanisms.</li>
+            <li><strong>Data minimization:</strong> the app should request only the data required for a specific analysis and avoid unnecessary retention.</li>
+            <li><strong>Transport security:</strong> all production traffic should use HTTPS; mixed content and insecure callback URLs should be rejected.</li>
+            <li><strong>Prompt-injection awareness:</strong> documents and emails can contain hostile instructions. The backend must treat retrieved content as untrusted data, not as developer instructions.</li>
+            <li><strong>Auditability:</strong> important analysis outputs should be traceable to model version, prompt version, data source and date of generation.</li>
+            <li><strong>Deletion and revocation:</strong> users should be able to disconnect providers, revoke access and delete previously processed data.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Medical and psychological precautions</h2>
+          <p>
+            The medical risk is not only technical. A psychological model can sound authoritative even when it is wrong.
+            It can overfit, confirm fears, exaggerate patterns, miss acute risk or produce explanations that feel precise
+            without being clinically valid. For that reason, PsychDeep must remain framed as a reflective tool unless it
+            undergoes formal clinical validation.
+          </p>
+
+          <ul>
+            <li><strong>No diagnosis:</strong> outputs should never be presented as psychiatric diagnosis, prognosis or treatment indication.</li>
+            <li><strong>No emergency use:</strong> the app is not suitable for crisis triage, suicidality, psychosis, intoxication, withdrawal, acute insomnia or rapidly worsening mental state.</li>
+            <li><strong>Professional coordination:</strong> clinically meaningful findings should be discussed with a qualified clinician, especially when medication, relapse risk or safety planning are involved.</li>
+            <li><strong>Uncertainty must be visible:</strong> hypotheses should include confidence, limitations and possible alternative explanations.</li>
+            <li><strong>Avoid self-surveillance harm:</strong> excessive tracking can worsen anxiety, rumination or compulsive checking in vulnerable users.</li>
+            <li><strong>Bias control:</strong> language-based inference can be distorted by mood, context, culture, language, substance use, sleep deprivation and incomplete data.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Next steps for a real project</h2>
+          <p>
+            The next meaningful stage would be to convert the prototype into a safer research-grade tool: narrower scope,
+            explicit use cases, better consent screens, local-first processing where possible, structured export/delete
+            controls, evaluation datasets, clinician-facing review modes and careful user experience design around uncertainty.
+          </p>
+
+          <p>
+            The long-term idea is not to build an oracle about the self. The useful target is more modest and more rigorous:
+            a system that helps organize personal evidence, makes patterns easier to inspect and supports better conversations
+            between the person, their own reflective process and, when appropriate, healthcare professionals.
+          </p>
+        </section>
+
+        <div class="actions">
+          <a class="button button-primary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open Psychapp</a>
+          <a class="button button-secondary" href="/#blog">Back to blog</a>
+          <a class="button button-secondary" href="/">Home</a>
+        </div>
+      </article>
+
+      <aside class="side-card side-card-featured" aria-label="Post metadata">
+        <h2>Post metadata</h2>
+        <div class="side-list">
+          <div>
+            <span>Title</span>
+            <strong>PsychDeep / Psychapp</strong>
+          </div>
+          <div>
+            <span>Date</span>
+            <strong>2026-06-25</strong>
+          </div>
+          <div>
+            <span>Project stage</span>
+            <strong>First sketch</strong>
+          </div>
+          <div>
+            <span>Domain</span>
+            <strong>Digital mental health</strong>
+          </div>
+          <div>
+            <span>Live app</span>
+            <strong>psychapp.bfab.io</strong>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 B. Fabio Mejías Fernández. eHealth Developer Portfolio.</p>
+    </div>
+  </footer>
+</body>
+</html>
