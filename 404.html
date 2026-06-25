@@ -54,7 +54,7 @@
     .cat-frame {
       position: relative;
       overflow: hidden;
-      min-height: 260px;
+      min-height: 320px;
       border: 1px solid rgba(0, 245, 255, 0.28);
       border-radius: 24px;
       background:
@@ -65,14 +65,12 @@
       box-shadow: inset 0 0 34px rgba(0, 245, 255, 0.08);
     }
 
-    .cat-frame img {
+    .repo-cat-frame {
       width: 100%;
-      height: 100%;
-      min-height: 260px;
+      height: 320px;
       display: block;
-      object-fit: cover;
-      object-position: center;
-      filter: contrast(1.04) saturate(1.08);
+      border: 0;
+      background: transparent;
     }
 
     .cat-frame::after {
@@ -89,6 +87,7 @@
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.11em;
+      z-index: 2;
     }
 
     .error-code-badge {
@@ -108,6 +107,7 @@
       font-size: 1.45rem;
       font-weight: 900;
       text-shadow: 0 0 18px rgba(0, 245, 255, 0.45);
+      z-index: 2;
     }
 
     .error-card p {
@@ -193,7 +193,7 @@
 
         <aside class="error-card" aria-label="Página no encontrada">
           <div class="cat-frame">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="Fotografía de un gatito en la página 404" loading="eager" decoding="async" />
+            <iframe class="repo-cat-frame" src="/source/404-cat-source.html" title="Gatito diseñado para la página 404"></iframe>
             <div class="error-code-badge">404</div>
           </div>
           <p>
