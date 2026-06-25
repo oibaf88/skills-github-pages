@@ -56,7 +56,7 @@ All pages use a **consistent techno/cyberpunk aesthetic** with these CSS variabl
 ## 🔗 Cross-References
 
 ### From Homepage (`index.html`):
-- Link to newsletter signup: `<a href="/signup.html">` or `<a href="signup.html">`
+- Link to newsletter signup: `<a href="/signup">`
 - Link to blog posts: See `#blog` section and internal links
 - Navigation menu anchors: `#about`, `#focus`, `#progress`, `#blog`, `#contact`
 
@@ -73,10 +73,10 @@ All pages use a **consistent techno/cyberpunk aesthetic** with these CSS variabl
 ## ⚙️ Configuration
 
 ### `_config.yml`
-The site uses Jekyll for GitHub Pages. Key settings:
-- **Theme**: Minimal with custom styling
-- **Markdown processor**: kramdown
-- **Output directory**: `_site/`
+The site can be served as static files from GitHub Pages. Key settings:
+- **Theme**: No external theme; custom HTML/CSS
+- **Markdown processor**: kramdown, where Jekyll is enabled
+- **Static mode**: `.nojekyll` is present so GitHub Pages can serve the checked-in HTML directly
 
 ### `CNAME`
 Custom domain configuration for GitHub Pages.
@@ -113,14 +113,17 @@ The newsletter form validates:
 
 ```
 /
-├── index.html           # Main portfolio (HTML)
-├── signup.html          # Newsletter form (HTML)
-├── 404.md              # Error page (Markdown + HTML)
-├── README.md           # This file
-├── _config.yml         # Jekyll configuration
-├── CNAME               # Custom domain
-├── LICENSE             # MIT License
-└── _posts/             # Blog posts (future)
+├── index.html                         # Main portfolio
+├── signup.html                        # Newsletter form
+├── signup/index.html                  # Clean /signup route
+├── blog/python-email-system/index.html # Static blog post
+├── blog/uservalidation/index.html     # Static blog post
+├── 404.md                             # Error page
+├── README.md                          # This file
+├── _config.yml                        # Optional GitHub Pages metadata
+├── .nojekyll                          # Serve static files directly
+├── CNAME                              # Custom domain
+└── LICENSE                            # MIT License
 ```
 
 ## 🚀 Development Progress
@@ -134,7 +137,7 @@ The newsletter form validates:
 
 ## 📧 Contact & Support
 
-- **Email**: [mejias@bfab.io](mailto:mejias@bfab.io)
+- **Email**: [requests@bfab.io](mailto:requests@bfab.io)
 - **Newsletter**: [Subscribe via signup page](signup.html)
 - **GitHub**: [oibaf88](https://github.com/oibaf88)
 
