@@ -3,14 +3,14 @@
 # Repository/project: skills-github-pages
 
 title: "B. Fabio Mejías Fernández"
-email: "mejias@bfab.io"
+email: "requests@bfab.io"
 description: >-
   Personal eHealth developer portfolio by B. Fabio Mejías Fernández.
   A work-in-progress digital health development portfolio from Madrid, European Union.
 
 author:
   name: "B. Fabio Mejías Fernández"
-  email: "mejias@bfab.io"
+  email: "requests@bfab.io"
   location: "Madrid, European Union"
 
 # Custom domain configuration
@@ -85,5 +85,5 @@ portfolio:
   domain: "eHealth"
   status: "Work in progress"
   location: "Madrid, European Union"
-  contact_email: "mejias@bfab.io"
+  contact_email: "requests@bfab.io"
   blog_path: "/blog/"
