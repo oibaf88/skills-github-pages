@@ -24,6 +24,17 @@
       background: rgba(0, 0, 0, 0.88);
       border-radius: 27px;
     }
+    .software-links .meta-item {
+      flex-wrap: nowrap;
+    }
+    .software-links .meta-item span {
+      min-width: 0;
+      overflow-wrap: normal;
+    }
+    .software-links .button {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
     @media (max-width: 520px) {
       .profile-frame { width: min(210px, 100%); }
     }
@@ -83,14 +94,14 @@
             <div class="card-icon">01</div>
             <h3>Clinical software</h3>
             <p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p>
-            <div class="meta-list" aria-label="Clinical software projects">
+            <div class="meta-list software-links" aria-label="Clinical software projects">
               <div class="meta-item">
                 <span>Psychapp</span>
                 <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
               </div>
               <div class="meta-item">
                 <span>Email System Demo</span>
-                <a class="button button-secondary" href="https://email-client.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a>
+                <a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a>
               </div>
             </div>
           </article>
