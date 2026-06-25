@@ -35,6 +35,14 @@
       flex-shrink: 0;
       white-space: nowrap;
     }
+    .blog-post-actions {
+      margin-top: 18px;
+    }
+    .blog-post-actions .button {
+      min-height: 42px;
+      padding: 0 18px;
+      white-space: nowrap;
+    }
     @media (max-width: 520px) {
       .profile-frame { width: min(210px, 100%); }
     }
@@ -111,7 +119,30 @@
       </div>
     </section>
     <section id="progress"><div class="container"><h2 class="section-title">Development progress</h2><p class="section-intro">A minimal roadmap for what will appear here as the portfolio evolves.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-05-18">2026-05-18</time><h3>Portfolio initialized</h3><p>First public version of the personal eHealth developer portfolio.</p></article><article class="timeline-item"><time>Next</time><h3>Project gallery</h3><p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p></article><article class="timeline-item"><time>Soon</time><h3>Technical notes</h3><p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p></article></div></div></section>
-    <section id="blog"><div class="container"><h2 class="section-title">Blog</h2><p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-06-19">2026-06-19</time><h3><a href="/blog/python-email-system/">Python Email System</a></h3><p>An object-oriented Python console simulation with users, inboxes, emails, timestamps and read/unread state.</p></article><article class="timeline-item"><time datetime="2026-05-28">2026-05-28</time><h3><a href="/blog/uservalidation/">Small user validation function</a></h3><p>A short development note about implementing a small user validation function.</p></article></div></div></section>
+    <section id="blog">
+      <div class="container">
+        <h2 class="section-title">Blog</h2>
+        <p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p>
+        <div class="timeline">
+          <article class="timeline-item">
+            <time datetime="2026-06-19">2026-06-19</time>
+            <h3><a href="/blog/python-email-system/">Python Email System</a></h3>
+            <p>An object-oriented Python console simulation with users, inboxes, emails, timestamps and read/unread state.</p>
+            <div class="actions blog-post-actions">
+              <a class="button button-primary" href="/blog/python-email-system/">Read post</a>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <time datetime="2026-05-28">2026-05-28</time>
+            <h3><a href="/blog/uservalidation/">Small user validation function</a></h3>
+            <p>A short development note about implementing a small user validation function.</p>
+            <div class="actions blog-post-actions">
+              <a class="button button-secondary" href="/blog/uservalidation/">Read post</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
     <section id="contact">
       <div class="container">
         <div class="contact-box">
