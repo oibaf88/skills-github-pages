@@ -35,6 +35,17 @@
       flex-shrink: 0;
       white-space: nowrap;
     }
+    .software-links .meta-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .software-links .meta-actions .button {
+      min-height: 38px;
+      padding: 0 14px;
+      font-size: 0.88rem;
+    }
     .blog-post-actions {
       margin-top: 18px;
     }
@@ -45,6 +56,13 @@
     }
     @media (max-width: 520px) {
       .profile-frame { width: min(210px, 100%); }
+      .software-links .meta-item {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .software-links .meta-actions {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
@@ -105,11 +123,17 @@
             <div class="meta-list software-links" aria-label="Clinical software projects">
               <div class="meta-item">
                 <span>Psychapp</span>
-                <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
+                <div class="meta-actions">
+                  <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
+                  <a class="button button-secondary" href="/blog/psychdeep/">Read post</a>
+                </div>
               </div>
               <div class="meta-item">
                 <span>Email System Demo</span>
-                <a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a>
+                <div class="meta-actions">
+                  <a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a>
+                  <a class="button button-secondary" href="/blog/python-email-system/">Read post</a>
+                </div>
               </div>
             </div>
           </article>
@@ -124,6 +148,15 @@
         <h2 class="section-title">Blog</h2>
         <p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p>
         <div class="timeline">
+          <article class="timeline-item">
+            <time datetime="2026-06-25">2026-06-25</time>
+            <h3><a href="/blog/psychdeep/">PsychDeep / Psychapp</a></h3>
+            <p>A first sketch of a real digital mental health project: architecture, workflow, privacy, cybersecurity and medical precautions.</p>
+            <div class="actions blog-post-actions">
+              <a class="button button-primary" href="/blog/psychdeep/">Read post</a>
+              <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
+            </div>
+          </article>
           <article class="timeline-item">
             <time datetime="2026-06-19">2026-06-19</time>
             <h3><a href="/blog/python-email-system/">Python Email System</a></h3>
