@@ -67,7 +67,7 @@
 
           <label for="email">
             Email
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="mejias@bfab.io" required />
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="requests@bfab.io" required />
             <span class="helper">Use a standard email format.</span>
           </label>
 
@@ -218,6 +218,7 @@
         [nameInput, emailInput].forEach((input) => {
           input.classList.remove("valid", "invalid");
         });
+        consentInput.checked = false;
         errorMessage.textContent = "";
         resultCard.className = "result-card";
         resultTitle.textContent = "Result";
