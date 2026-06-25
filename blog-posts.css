@@ -1,0 +1,306 @@
+/* Blog post components built on top of styles.css variables */
+body > main,
+.site-header,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.post-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: clamp(24px, 5vw, 48px);
+  align-items: start;
+  padding: clamp(48px, 7vw, 84px) 0;
+}
+
+.post {
+  min-width: 0;
+  padding: clamp(22px, 4vw, 40px);
+  border: 1px solid rgba(0, 255, 156, 0.24);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(0, 12, 20, 0.94), rgba(0, 0, 0, 0.9)),
+    rgba(2, 8, 14, 0.92);
+  box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 54px rgba(0, 245, 255, 0.14);
+  backdrop-filter: blur(14px);
+}
+
+.post h1 {
+  max-width: 920px;
+  margin-bottom: 20px;
+  font-size: clamp(2.4rem, 7vw, 4.9rem);
+  line-height: 0.98;
+  overflow-wrap: anywhere;
+}
+
+.post .lead {
+  max-width: 850px;
+  margin: 24px 0 30px;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 24px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid rgba(0, 245, 255, 0.28);
+  border-radius: 999px;
+  color: #d9fffb;
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.12), rgba(0, 255, 156, 0.06));
+  box-shadow: inset 0 0 18px rgba(0, 245, 255, 0.06), 0 0 18px rgba(0, 245, 255, 0.08);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.content-card,
+.side-card,
+.code-card {
+  position: relative;
+  z-index: 1;
+  margin: 28px 0;
+  border: 1px solid rgba(0, 255, 156, 0.22);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(0, 12, 20, 0.96), rgba(0, 0, 0, 0.88));
+  box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 38px rgba(0, 245, 255, 0.1);
+}
+
+.content-card {
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.content-card h2 {
+  margin-bottom: 14px;
+  color: var(--text);
+  letter-spacing: -0.03em;
+}
+
+.content-card p,
+.content-card li {
+  color: var(--muted);
+}
+
+.content-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0 1.2rem;
+}
+
+.content-card code:not(pre code) {
+  padding: 0.12rem 0.35rem;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  border-radius: 8px;
+  color: #b8ff3d;
+  background: rgba(0, 245, 255, 0.08);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.code-card {
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(0, 255, 156, 0.2);
+  color: #c8f6ff;
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.14), rgba(0, 255, 156, 0.06));
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.7);
+}
+
+.dot:nth-child(2) {
+  background: var(--accent-2);
+  box-shadow: 0 0 12px rgba(0, 255, 156, 0.7);
+}
+
+.dot:nth-child(3) {
+  background: var(--warning);
+  box-shadow: 0 0 12px rgba(184, 255, 61, 0.6);
+}
+
+.code-canvas,
+.code-card pre {
+  margin: 0;
+  padding: clamp(18px, 3vw, 28px);
+  overflow-x: auto;
+  border-radius: 0 0 var(--radius) var(--radius);
+  color: #e6edf3;
+  background:
+    linear-gradient(rgba(0, 245, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 156, 0.035) 1px, transparent 1px),
+    #020617;
+  background-size: 28px 28px, 28px 28px, auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(0.82rem, 1.6vw, 0.96rem);
+  line-height: 1.65;
+  tab-size: 4;
+}
+
+.code-canvas code,
+.code-card pre code {
+  display: block;
+  min-width: max-content;
+  white-space: pre;
+  color: inherit;
+}
+
+/* Lightweight Python syntax colors. Works with manual spans and Prism token classes. */
+.tok-keyword,
+.token.keyword {
+  color: #ff7bff;
+}
+
+.tok-function,
+.token.function {
+  color: #00f5ff;
+}
+
+.tok-class,
+.token.class-name {
+  color: #b8ff3d;
+}
+
+.tok-string,
+.token.string {
+  color: #7dd3fc;
+}
+
+.tok-comment,
+.token.comment {
+  color: #6ee7b7;
+  opacity: 0.78;
+  font-style: italic;
+}
+
+.tok-number,
+.token.number,
+.token.boolean {
+  color: #fbbf24;
+}
+
+.tok-builtin,
+.token.builtin {
+  color: #22d3ee;
+}
+
+.tok-operator,
+.token.operator,
+.token.punctuation {
+  color: #d8b4fe;
+}
+
+.side-card {
+  position: sticky;
+  top: 104px;
+  align-self: start;
+  padding: 22px;
+  margin-top: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 16, 26, 0.98), rgba(0, 0, 0, 0.92)),
+    rgba(2, 8, 14, 0.96);
+}
+
+.side-card h2 {
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.side-list {
+  display: grid;
+  gap: 12px;
+}
+
+.side-list > div {
+  padding: 14px 15px;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(0, 255, 156, 0.045));
+  box-shadow: inset 0 0 22px rgba(0, 245, 255, 0.045);
+}
+
+.side-list span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.side-list strong {
+  display: block;
+  color: #f8fbff;
+  font-size: 1rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  .post-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side-card {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .post-layout {
+    padding-top: 34px;
+  }
+
+  .post {
+    padding: 18px;
+  }
+
+  .pill {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .code-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
