@@ -59,6 +59,11 @@ categories: python oop
           list and read messages while keeping the message state inside the objects.
         </p>
 
+        <div class="actions">
+          <a class="button button-primary" href="https://email-client.onrender.com" target="_blank" rel="noopener noreferrer">Open live demo</a>
+          <a class="button button-secondary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">View repository</a>
+        </div>
+
         <section class="content-card">
           <h2>What this program does</h2>
           <p>
@@ -246,6 +251,10 @@ if __name__ == &#x27;__main__&#x27;:
             <code>User</code> acts as the interface used by the rest of the program.
           </p>
           <p>
+            The console exercise now also has a deployed browser demo, built as a small Flask application and connected
+            to Supabase so the prototype can preserve the state of the two-user email simulation during a browser session.
+          </p>
+          <p>
             A natural future improvement would be exposing <code>delete_email()</code> directly in the main menu,
             because the deletion method already exists in the classes but is not yet reachable from the interactive flow.
             Other possible extensions would include persistence with JSON, search by sender or subject, and unit tests for
@@ -254,7 +263,8 @@ if __name__ == &#x27;__main__&#x27;:
         </section>
 
         <div class="actions">
-          <a class="button button-primary" href="{{ '/' | relative_url }}#blog">Back to blog</a>
+          <a class="button button-primary" href="https://email-client.onrender.com" target="_blank" rel="noopener noreferrer">Open live demo</a>
+          <a class="button button-secondary" href="{{ '/' | relative_url }}#blog">Back to blog</a>
           <a class="button button-secondary" href="{{ '/' | relative_url }}">Home</a>
         </div>
       </article>
