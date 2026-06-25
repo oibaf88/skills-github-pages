@@ -51,23 +51,63 @@
       box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.08), 0 0 42px rgba(0, 245, 255, 0.12);
     }
 
-    .error-code {
-      display: grid;
-      place-items: center;
-      min-height: 220px;
-      border: 1px dashed rgba(0, 245, 255, 0.28);
-      border-radius: 22px;
+    .cat-frame {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      border: 1px solid rgba(0, 245, 255, 0.28);
+      border-radius: 24px;
       background:
         linear-gradient(rgba(0, 245, 255, 0.045) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 156, 0.045) 1px, transparent 1px),
         rgba(0, 0, 0, 0.28);
       background-size: 28px 28px, 28px 28px, auto;
-      color: var(--accent);
+      box-shadow: inset 0 0 34px rgba(0, 245, 255, 0.08);
+    }
+
+    .cat-frame img {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      filter: contrast(1.04) saturate(1.08);
+    }
+
+    .cat-frame::after {
+      content: "404 // GATITO GUARDIÁN";
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      padding: 7px 10px;
+      border: 1px solid rgba(0, 255, 156, 0.32);
+      border-radius: 999px;
+      color: var(--accent-2);
+      background: rgba(0, 0, 0, 0.72);
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size: clamp(4rem, 14vw, 7rem);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+    }
+
+    .error-code-badge {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      display: grid;
+      place-items: center;
+      min-width: 72px;
+      min-height: 48px;
+      padding: 8px 12px;
+      border: 1px solid rgba(0, 245, 255, 0.34);
+      border-radius: 16px;
+      color: var(--accent);
+      background: rgba(0, 0, 0, 0.72);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 1.45rem;
       font-weight: 900;
-      letter-spacing: -0.08em;
-      text-shadow: 0 0 28px rgba(0, 245, 255, 0.35);
+      text-shadow: 0 0 18px rgba(0, 245, 255, 0.45);
     }
 
     .error-card p {
@@ -152,7 +192,10 @@
         </div>
 
         <aside class="error-card" aria-label="Página no encontrada">
-          <div class="error-code">404</div>
+          <div class="cat-frame">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg" alt="Fotografía de un gatito en la página 404" loading="eager" decoding="async" />
+            <div class="error-code-badge">404</div>
+          </div>
           <p>
             Ruta inexistente. Esta página está servida como <code>/404.html</code>, por lo que también funciona en rutas profundas como <code>/blog/url-inexistente/</code>.
           </p>
