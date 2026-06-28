@@ -24,78 +24,28 @@
       background: rgba(0, 0, 0, 0.88);
       border-radius: 27px;
     }
-    .software-links .meta-item {
-      flex-wrap: nowrap;
-    }
-    .software-links .meta-item span {
-      min-width: 0;
-      overflow-wrap: normal;
-    }
-    .software-links .button {
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    .software-links .meta-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .software-links .meta-actions .button {
-      min-height: 38px;
-      padding: 0 14px;
-      font-size: 0.88rem;
-    }
-    .project-note-callout {
-      margin-top: 18px;
-      padding: 18px;
-      border: 1px solid rgba(0, 245, 255, 0.26);
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(0, 245, 255, 0.10), rgba(0, 255, 156, 0.06));
-    }
-    .project-note-callout p {
-      margin: 0 0 14px;
-      color: var(--muted);
-    }
-    .project-note-callout .button {
-      min-height: 42px;
-      padding: 0 16px;
-      white-space: nowrap;
-    }
-    .blog-post-actions {
-      margin-top: 18px;
-    }
-    .blog-post-actions .button {
-      min-height: 42px;
-      padding: 0 18px;
-      white-space: nowrap;
-    }
+    .software-links .meta-item { flex-wrap: nowrap; }
+    .software-links .meta-item span { min-width: 0; overflow-wrap: normal; }
+    .software-links .button { flex-shrink: 0; white-space: nowrap; }
+    .software-links .meta-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+    .software-links .meta-actions .button { min-height: 38px; padding: 0 14px; font-size: 0.88rem; }
+    .project-note-callout { margin-top: 18px; padding: 18px; border: 1px solid rgba(0, 245, 255, 0.26); border-radius: 18px; background: linear-gradient(135deg, rgba(0, 245, 255, 0.10), rgba(0, 255, 156, 0.06)); }
+    .project-note-callout p { margin: 0 0 14px; color: var(--muted); }
+    .project-note-callout .button { min-height: 42px; padding: 0 16px; white-space: nowrap; }
+    .blog-post-actions { margin-top: 18px; }
+    .blog-post-actions .button { min-height: 42px; padding: 0 18px; white-space: nowrap; }
     @media (max-width: 520px) {
       .profile-frame { width: min(210px, 100%); }
-      .software-links .meta-item {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .software-links .meta-actions {
-        justify-content: flex-start;
-      }
+      .software-links .meta-item { align-items: flex-start; flex-direction: column; }
+      .software-links .meta-actions { justify-content: flex-start; }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
-      <a href="#top" class="brand" aria-label="Homepage">
-        <span class="brand-mark">eH</span>
-        <span>B. Fabio Mejías Fernández</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#focus">Focus</a>
-        <a href="#progress">Progress</a>
-        <a href="#blog">Blog</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <a href="#top" class="brand" aria-label="Homepage"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Main navigation"><a href="#about">About</a><a href="#focus">Focus</a><a href="#progress">Progress</a><a href="#blog">Blog</a><a href="/apps/eudravigilance-api/">EV API</a><a href="#contact">Contact</a></nav>
     </div>
   </header>
   <main id="top">
@@ -105,114 +55,20 @@
           <div class="eyebrow"><span class="eyebrow-dot"></span><span>Digital health application development</span></div>
           <h1><span class="gradient-text">B. Fabio</span> Mejías Fernández</h1>
           <p class="hero-text">Physician, clinical pharmacology resident and eHealth developer in progress, building digital health applications from Madrid, European Union.</p>
-          <div class="actions">
-            <a class="button button-primary" href="#progress">View progress</a>
-            <a class="button button-secondary" href="#focus">Explore focus areas</a>
-            <a class="button button-secondary" href="/blog/psychdeep/">Read PsychDeep post</a>
-          </div>
+          <div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open EudraVigilance API Workbench</a><a class="button button-secondary" href="#progress">View progress</a><a class="button button-secondary" href="#focus">Explore focus areas</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read EV API post</a></div>
         </div>
         <aside class="status-card" aria-label="Portfolio status">
-          <div class="profile-frame">
-            <img src="source/fabio-profile.jpg?v=20260618-full" alt="Portrait of B. Fabio Mejías Fernández" loading="lazy" decoding="async" />
-          </div>
-          <p class="status-label">Work in progress</p>
-          <h2>My portfolio</h2>
-          <p>This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.</p>
-          <div class="meta-list">
-            <div class="meta-item"><span>Published</span><strong>2026-05-18</strong></div>
-            <div class="meta-item"><span>Status</span><strong>Building</strong></div>
-            <div class="meta-item"><span>Domain</span><strong>eHealth</strong></div>
-            <div class="meta-item"><span>Location</span><strong>Madrid, European Union</strong></div>
-          </div>
+          <div class="profile-frame"><img src="source/fabio-profile.jpg?v=20260618-full" alt="Portrait of B. Fabio Mejías Fernández" loading="lazy" decoding="async" /></div>
+          <p class="status-label">Work in progress</p><h2>My portfolio</h2><p>This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.</p>
+          <div class="meta-list"><div class="meta-item"><span>Published</span><strong>2026-05-18</strong></div><div class="meta-item"><span>Status</span><strong>Building</strong></div><div class="meta-item"><span>Domain</span><strong>eHealth</strong></div><div class="meta-item"><span>Location</span><strong>Madrid, European Union</strong></div></div>
         </aside>
       </div>
     </section>
     <section id="about"><div class="container"><h2 class="section-title">About this portfolio</h2><p class="section-intro">This website is a living record of my learning path, experiments and projects in digital health. It is designed as a simple but professional starting point that can grow into a complete developer portfolio.</p></div></section>
-    <section id="focus">
-      <div class="container">
-        <h2 class="section-title">Focus areas</h2>
-        <p class="section-intro">The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.</p>
-        <div class="cards">
-          <article class="card">
-            <div class="card-icon">01</div>
-            <h3>Clinical software</h3>
-            <p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p>
-            <div class="project-note-callout" aria-label="Featured PsychDeep project note">
-              <p><strong>PsychDeep / Psychapp project note:</strong> architecture, workflow, privacy, cybersecurity and medical precautions for the experimental digital mental health prototype.</p>
-              <div class="actions">
-                <a class="button button-primary" href="/blog/psychdeep/">Read PsychDeep post</a>
-                <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open Psychapp</a>
-              </div>
-            </div>
-            <div class="meta-list software-links" aria-label="Clinical software projects">
-              <div class="meta-item">
-                <span>Psychapp</span>
-                <div class="meta-actions">
-                  <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
-                  <a class="button button-secondary" href="/blog/psychdeep/">Read post</a>
-                </div>
-              </div>
-              <div class="meta-item">
-                <span>Email System Demo</span>
-                <div class="meta-actions">
-                  <a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a>
-                  <a class="button button-secondary" href="/blog/python-email-system/">Read post</a>
-                </div>
-              </div>
-            </div>
-          </article>
-          <article class="card"><div class="card-icon">02</div><h3>Health data</h3><p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p></article>
-          <article class="card"><div class="card-icon">03</div><h3>AI for eHealth</h3><p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p></article>
-        </div>
-      </div>
-    </section>
-    <section id="progress"><div class="container"><h2 class="section-title">Development progress</h2><p class="section-intro">A minimal roadmap for what will appear here as the portfolio evolves.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-05-18">2026-05-18</time><h3>Portfolio initialized</h3><p>First public version of the personal eHealth developer portfolio.</p></article><article class="timeline-item"><time>Next</time><h3>Project gallery</h3><p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p></article><article class="timeline-item"><time>Soon</time><h3>Technical notes</h3><p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p></article></div></div></section>
-    <section id="blog">
-      <div class="container">
-        <h2 class="section-title">Blog</h2>
-        <p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p>
-        <div class="timeline">
-          <article class="timeline-item">
-            <time datetime="2026-06-25">2026-06-25</time>
-            <h3><a href="/blog/psychdeep/">PsychDeep / Psychapp</a></h3>
-            <p>A first sketch of a real digital mental health project: architecture, workflow, privacy, cybersecurity and medical precautions.</p>
-            <div class="actions blog-post-actions">
-              <a class="button button-primary" href="/blog/psychdeep/">Read post</a>
-              <a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a>
-            </div>
-          </article>
-          <article class="timeline-item">
-            <time datetime="2026-06-19">2026-06-19</time>
-            <h3><a href="/blog/python-email-system/">Python Email System</a></h3>
-            <p>An object-oriented Python console simulation with users, inboxes, emails, timestamps and read/unread state.</p>
-            <div class="actions blog-post-actions">
-              <a class="button button-primary" href="/blog/python-email-system/">Read post</a>
-            </div>
-          </article>
-          <article class="timeline-item">
-            <time datetime="2026-05-28">2026-05-28</time>
-            <h3><a href="/blog/uservalidation/">Small user validation function</a></h3>
-            <p>A short development note about implementing a small user validation function.</p>
-            <div class="actions blog-post-actions">
-              <a class="button button-secondary" href="/blog/uservalidation/">Read post</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section id="contact">
-      <div class="container">
-        <div class="contact-box">
-          <div>
-            <h2 class="section-title">My portfolio</h2>
-            <p>Contact me at requests@bfab.io. GitHub repositories and selected projects will be added as the portfolio grows.</p>
-            <p>You can also subscribe to my newsletter to keep in touch:</p>
-            <a href="/signup">Subscribe to my newsletter</a>
-          </div>
-          <a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a>
-        </div>
-      </div>
-    </section>
+    <section id="focus"><div class="container"><h2 class="section-title">Focus areas</h2><p class="section-intro">The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.</p><div class="cards"><article class="card"><div class="card-icon">01</div><h3>Clinical software</h3><p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p><div class="project-note-callout" aria-label="Featured pharmacovigilance project note"><p><strong>EudraVigilance API Workbench:</strong> authorised API proxy, public ADR aggregate analysis and exploratory disproportionality metrics for pharmacovigilance workflows.</p><div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open EV API app</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read post</a></div></div><div class="meta-list software-links" aria-label="Clinical software projects"><div class="meta-item"><span>EudraVigilance API Workbench</span><div class="meta-actions"><a class="button button-secondary" href="/apps/eudravigilance-api/">Open app</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read post</a></div></div><div class="meta-item"><span>Psychapp</span><div class="meta-actions"><a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a><a class="button button-secondary" href="/blog/psychdeep/">Read post</a></div></div><div class="meta-item"><span>Email System Demo</span><div class="meta-actions"><a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a><a class="button button-secondary" href="/blog/python-email-system/">Read post</a></div></div></div></article><article class="card"><div class="card-icon">02</div><h3>Health data</h3><p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p></article><article class="card"><div class="card-icon">03</div><h3>AI for eHealth</h3><p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p></article></div></div></section>
+    <section id="progress"><div class="container"><h2 class="section-title">Development progress</h2><p class="section-intro">A minimal roadmap for what will appear here as the portfolio evolves.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3><a href="/apps/eudravigilance-api/">EudraVigilance API Workbench</a></h3><p>Added a pharmacovigilance prototype with authorised API proxy mode, direct API testing and local public ADR aggregate analysis.</p></article><article class="timeline-item"><time datetime="2026-05-18">2026-05-18</time><h3>Portfolio initialized</h3><p>First public version of the personal eHealth developer portfolio.</p></article><article class="timeline-item"><time>Next</time><h3>Project gallery</h3><p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p></article><article class="timeline-item"><time>Soon</time><h3>Technical notes</h3><p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p></article></div></div></section>
+    <section id="blog"><div class="container"><h2 class="section-title">Blog</h2><p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3><a href="/blog/eudravigilance-api/">EudraVigilance API Workbench</a></h3><p>Architecture note for an authorised API proxy, public ADR aggregate analysis and exploratory disproportionality metrics.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/eudravigilance-api/">Read post</a><a class="button button-secondary" href="/apps/eudravigilance-api/">Open app</a></div></article><article class="timeline-item"><time datetime="2026-06-25">2026-06-25</time><h3><a href="/blog/psychdeep/">PsychDeep / Psychapp</a></h3><p>A first sketch of a real digital mental health project: architecture, workflow, privacy, cybersecurity and medical precautions.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/psychdeep/">Read post</a><a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a></div></article><article class="timeline-item"><time datetime="2026-06-19">2026-06-19</time><h3><a href="/blog/python-email-system/">Python Email System</a></h3><p>An object-oriented Python console simulation with users, inboxes, emails, timestamps and read/unread state.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/python-email-system/">Read post</a></div></article><article class="timeline-item"><time datetime="2026-05-28">2026-05-28</time><h3><a href="/blog/uservalidation/">Small user validation function</a></h3><p>A short development note about implementing a small user validation function.</p><div class="actions blog-post-actions"><a class="button button-secondary" href="/blog/uservalidation/">Read post</a></div></article></div></div></section>
+    <section id="contact"><div class="container"><div class="contact-box"><div><h2 class="section-title">My portfolio</h2><p>Contact me at requests@bfab.io. GitHub repositories and selected projects will be added as the portfolio grows.</p><p>You can also subscribe to my newsletter to keep in touch:</p><a href="/signup">Subscribe to my newsletter</a></div><a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a></div></div></section>
   </main>
   <footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Built as a work in progress.</p></div></footer>
 </body>
