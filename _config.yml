@@ -76,6 +76,7 @@ exclude:
 # Jekyll-reserved folders
 include:
   - _posts
+  - .well-known
 
 # Optional project metadata
 github:

@@ -35,6 +35,10 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Preserve Microsoft identity association
+        run: |
+          mkdir -p ./_site/.well-known
+          cp ./.well-known/microsoft-identity-association.json ./_site/.well-known/microsoft-identity-association.json
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
