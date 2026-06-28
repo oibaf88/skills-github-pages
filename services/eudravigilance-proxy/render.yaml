@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: bfab-eudravigilance-proxy
+    runtime: node
+    rootDir: services/eudravigilance-proxy
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://bfab.io,https://www.bfab.io
+      - key: PV_PROXY_TOKEN
+        sync: false
+      - key: EV_API_BASE_URL
+        sync: false
+      - key: EV_API_BEARER_TOKEN
+        sync: false
+      - key: EV_API_STATIC_AUTH_HEADER
+        sync: false
