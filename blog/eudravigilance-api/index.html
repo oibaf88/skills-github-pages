@@ -1,48 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Build note for the EudraVigilance API Workbench: authorised API proxy, public ADR aggregate analysis, ROR/PRR and pharmacovigilance standards." />
-  <title>EudraVigilance API Workbench | B. Fabio Mejías Fernández</title>
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="container nav">
-      <a href="/" class="brand" aria-label="Homepage"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a>
-      <nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/apps/eudravigilance-api/">Open app</a><a href="/signup">Newsletter</a></nav>
-    </div>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Build note · pharmacovigilance software</span></div>
-        <h1><span class="gradient-text">EudraVigilance</span> API Workbench</h1>
-        <p class="hero-text">A prototype for authorised EudraVigilance/EVDAS-style API access, public ADR aggregate analysis and exploratory disproportionality metrics.</p>
-        <div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open the app</a><a class="button button-secondary" href="/services/eudravigilance-proxy/README.md">Proxy README</a></div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <h2 class="section-title">Why this app exists</h2>
-        <p class="section-intro">A public portfolio demo should not pretend to have unrestricted access to EudraVigilance. The correct architecture separates three situations: authorised API access, direct sandbox testing, and public aggregate-data exploration.</p>
-        <div class="cards">
-          <article class="card"><div class="card-icon">01</div><h3>Authorised API proxy</h3><p>A Supabase Edge Function and a Render-ready Node service can proxy lawful authorised API calls without exposing upstream credentials in the browser.</p></article>
-          <article class="card"><div class="card-icon">02</div><h3>Public aggregate analysis</h3><p>The browser can analyse CSV/TSV matrices copied from permitted public aggregate sources such as adrreports.eu.</p></article>
-          <article class="card"><div class="card-icon">03</div><h3>Disproportionality</h3><p>ROR and PRR are implemented as exploratory screening statistics on drug-event-count matrices, not as incidence, causality or medical advice.</p></article>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <h2 class="section-title">Regulatory boundary</h2>
-        <p>EMA describes EudraVigilance as the system for managing and analysing information on suspected adverse reactions in the EEA. It supports ICSR exchange, early signal detection and improved product information, and access to EudraVigilance data depends on the EMA access policy. Public data are available through the European database of suspected adverse drug reaction reports.</p>
-        <p>The workbench therefore avoids any claim of unrestricted API access. Its API mode is only useful once lawful endpoint details and credentials are configured in Supabase or Render. Its public mode works locally in the browser and does not upload report tables to a backend.</p>
-        <div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Use the workbench</a></div>
-      </div>
-    </section>
-  </main>
-  <footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Prototype only; not an official EudraVigilance tool.</p></div></footer>
-</body>
-</html>
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Build note for the EudraVigilance API Workbench and public pharmacovigilance API configuration." /><title>EudraVigilance API Workbench | B. Fabio Mejías Fernández</title><link rel="stylesheet" href="/styles.css" /></head>
+<body><header class="site-header"><div class="container nav"><a href="/" class="brand" aria-label="Homepage"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a><nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/apps/eudravigilance-api/">EV app</a><a href="/apps/public-pv-api/">Public API</a><a href="/signup">Newsletter</a></nav></div></header>
+<main><section class="hero"><div class="container"><div class="eyebrow"><span class="eyebrow-dot"></span><span>Build note · pharmacovigilance software</span></div><h1><span class="gradient-text">EudraVigilance</span> API Workbench</h1><p class="hero-text">A prototype for authorised EudraVigilance/EVDAS-style API access, public ADR aggregate analysis, live public FAERS API queries and exploratory disproportionality metrics.</p><div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open EV workbench</a><a class="button button-secondary" href="/apps/public-pv-api/">Open public API app</a><a class="button button-secondary" href="/services/eudravigilance-proxy/README.md">Proxy README</a></div></div></section>
+<section><div class="container"><h2 class="section-title">What changed</h2><p class="section-intro">The app now separates restricted European pharmacovigilance access from public API access. EudraVigilance remains behind an authorised proxy because there is no unrestricted public REST API. The working public API mode uses the openFDA FAERS drug adverse event endpoint through a Supabase Edge Function.</p><div class="cards"><article class="card"><div class="card-icon">01</div><h3>Authorised EV/EVDAS proxy</h3><p>Supabase and Render proxy layers are prepared for lawful institutional endpoints and credentials.</p></article><article class="card"><div class="card-icon">02</div><h3>Live public API</h3><p>The public API app queries the openFDA FAERS drug-event endpoint through Supabase <code>pv-public-api</code>.</p></article><article class="card"><div class="card-icon">03</div><h3>Disproportionality</h3><p>ROR and PRR are exploratory screening statistics, not incidence, causality or clinical advice.</p></article></div></div></section>
+<section><div class="container"><h2 class="section-title">Regulatory boundary</h2><p>EudraVigilance is the European system for managing and analysing information on suspected adverse reactions. EMA publishes public European suspected adverse reaction reports through adrreports.eu, while access to richer EudraVigilance data is governed by the access policy.</p><p>The correct public architecture is therefore: official European public reports as public source, open public pharmacovigilance APIs where they exist, and authorised proxy mode only where lawful credentials exist.</p><div class="actions"><a class="button button-primary" href="/apps/public-pv-api/">Try public API</a><a class="button button-secondary" href="https://www.adrreports.eu/en/index.html" target="_blank" rel="noopener noreferrer">Open EU ADR reports</a></div></div></section></main><footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Prototype only; not an official EudraVigilance tool.</p></div></footer></body></html>
