@@ -50,9 +50,8 @@ function containsControlCharacters(value: string): boolean {
   return /[\u0000-\u001f\u007f]/.test(value)
 }
 
-function containsDotSegments(value: string): boolean {
-  const pathOnly = value.split(/[?#]/, 1)[0]
-  let decoded = pathOnly
+function containsUnsafePathEncoding(value: string): boolean {
+  let decoded = value
 
   for (let index = 0; index < 3; index += 1) {
     let next: string
@@ -65,7 +64,14 @@ function containsDotSegments(value: string): boolean {
     decoded = next
   }
 
-  return decoded.split("/").some((segment) => segment === "." || segment === "..")
+  const decodedPath = decoded.split(/[?#]/, 1)[0]
+  return (
+    decoded.includes("\\") ||
+    decoded.includes("://") ||
+    decodedPath.startsWith("//") ||
+    containsControlCharacters(decoded) ||
+    decodedPath.split("/").some((segment) => segment === "." || segment === "..")
+  )
 }
 
 function parseAllowedPathPrefixes(value: string | undefined): string[] | null {
@@ -87,7 +93,7 @@ function parseAllowedPathPrefixes(value: string | undefined): string[] | null {
       prefix.includes("#") ||
       prefix.includes("://") ||
       containsControlCharacters(prefix) ||
-      containsDotSegments(prefix)
+      containsUnsafePathEncoding(prefix)
     ) {
       return null
     }
@@ -144,7 +150,7 @@ function safeTarget(
     rawPath.includes("://") ||
     rawPath.includes("#") ||
     containsControlCharacters(rawPath) ||
-    containsDotSegments(rawPath)
+    containsUnsafePathEncoding(rawPath)
   ) {
     return null
   }
