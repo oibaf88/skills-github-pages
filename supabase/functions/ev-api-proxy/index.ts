@@ -242,16 +242,37 @@ function authHeaders(): Headers {
   return headers
 }
 
-async function readJsonBody(request: Request): Promise<ProxyBody> {
+async function readLimitedRequestBody(request: Request): Promise<string> {
   const declaredLength = Number(request.headers.get("Content-Length") ?? 0)
   if (Number.isFinite(declaredLength) && declaredLength > MAX_REQUEST_BYTES) {
     throw new RequestLimitError("Request body exceeded the configured limit")
   }
 
-  const text = await request.text()
-  if (new TextEncoder().encode(text).byteLength > MAX_REQUEST_BYTES) {
-    throw new RequestLimitError("Request body exceeded the configured limit")
+  if (!request.body) return ""
+
+  const reader = request.body.getReader()
+  const decoder = new TextDecoder()
+  let totalBytes = 0
+  let body = ""
+
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+
+    totalBytes += value.byteLength
+    if (totalBytes > MAX_REQUEST_BYTES) {
+      await reader.cancel()
+      throw new RequestLimitError("Request body exceeded the configured limit")
+    }
+
+    body += decoder.decode(value, { stream: true })
   }
+
+  return body + decoder.decode()
+}
+
+async function readJsonBody(request: Request): Promise<ProxyBody> {
+  const text = await readLimitedRequestBody(request)
 
   let parsed: unknown
   try {
