@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Portfolio v2.0 release note covering the employer-facing rebuild, documentation cleanup and security hardening.">
+  <link rel="canonical" href="https://bfab.io/blog/portfolio-v2/">
+  <meta property="og:title" content="Portfolio v2.0: evidence, versions and explicit limits">
+  <meta property="og:description" content="Portfolio v2.0 release note covering the employer-facing rebuild, documentation cleanup and security hardening.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/portfolio-v2/">
+  <title>Portfolio v2.0: evidence, versions and explicit limits | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Portfolio v2.0: evidence, versions and explicit limits","description":"Portfolio v2.0 release note covering the employer-facing rebuild, documentation cleanup and security hardening.","datePublished":"2026-07-26","dateModified":"2026-07-26","mainEntityOfPage":"https://bfab.io/blog/portfolio-v2/","author":{"@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Release note // Portfolio</span></div>
+        <h1><span class="gradient-text">Portfolio v2.0</span>: show the reasoning</h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata">
+          <span class="pill">Prepared // <time datetime="2026-07-26">2026-07-26</time></span><span class="pill">Audience // employers and collaborators</span><span class="pill">Focus // clinical engineering</span><span class="pill">Status // release candidate</span>
+        </div>
+        <p class="lead">The second portfolio version replaces an “under construction” narrative with evidence-linked case studies. It presents the work as an evolution in clinical product reasoning, software delivery and security rather than a list of technologies.</p>
+        <div class="actions"><a class="button button-primary" href="/">Open portfolio home</a><a class="button button-secondary" href="/cv/">View public CV</a><a class="button button-secondary" href="https://github.com/oibaf88/skills-github-pages" target="_blank" rel="noopener noreferrer">Portfolio repository</a></div>
+        <section class="content-card"><h2>Information architecture</h2><ul><li>A concise public CV with only claims supported by the portfolio.</li><li>A blog index connecting release notes, retrospectives and original posts.</li><li>Version-specific notes for PsychApp and Domain Mail.</li><li>A sitemap, crawler policy, changelog and disclosure policy.</li></ul></section><section class="content-card"><h2>Security work included</h2><ul><li>Fixed-origin and path-allowlisted pharmacovigilance proxy targets.</li><li>Manual redirect handling so upstream credentials cannot follow a redirect.</li><li>Bounded request and response bodies with upstream timeouts.</li><li>DOM construction with textContent for API and CSV-derived values.</li><li>Exact newsletter consent validation, bounded fields and idempotent Supabase upsert.</li></ul></section><section class="content-card"><h2>Repository cleanup</h2><p>Obsolete GitHub Skills workflows, duplicate signup output, archived 404 source pages and deployment notes from unrelated older versions were removed. Current backends were deliberately retained until their production ownership can be verified.</p></section><section class="content-card"><h2>Definition of done</h2><p>A release is not proven by a branch alone. Acceptance includes review, merge, deployment of the expected commit, route crawling, responsive and accessibility checks, and comparison of live claims with repository state.</p></section>
+        <div class="actions"><a class="button button-primary" href="/blog/">All writing</a><a class="button button-secondary" href="/">Portfolio home</a></div>
+      </article>
+      <aside class="side-card side-card-featured" aria-label="Release summary">
+        <h2>Release summary</h2>
+        <div class="side-list">
+          <div><span>Prepared</span><strong>2026-07-26</strong></div><div><span>Version</span><strong>2.0 release candidate</strong></div><div><span>Primary audience</span><strong>Hiring teams</strong></div><div><span>Theme</span><strong>Clinical engineering</strong></div><div><span>Live proof</span><strong>Verify after deployment</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>
