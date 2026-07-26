@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PsychApp v0.2 rebuild note covering the research POC architecture, synthetic demonstration, safety boundaries and deployment truth.">
+  <link rel="canonical" href="https://bfab.io/blog/psychapp-v0-2/">
+  <meta property="og:title" content="PsychApp v0.2: rebuilding around clinical supervision">
+  <meta property="og:description" content="PsychApp v0.2 rebuild note covering the research POC architecture, synthetic demonstration, safety boundaries and deployment truth.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/psychapp-v0-2/">
+  <title>PsychApp v0.2: rebuilding around clinical supervision | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PsychApp v0.2: rebuilding around clinical supervision","description":"PsychApp v0.2 rebuild note covering the research POC architecture, synthetic demonstration, safety boundaries and deployment truth.","datePublished":"2026-07-23","dateModified":"2026-07-26","mainEntityOfPage":"https://bfab.io/blog/psychapp-v0-2/","author":{"@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Release note // Research POC</span></div>
+        <h1><span class="gradient-text">PsychApp v0.2</span>: clinician-supervised by design</h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata">
+          <span class="pill">Rebuild milestone // <time datetime="2026-07-23">2026-07-23</time></span><span class="pill">Status // research POC</span><span class="pill">Data // synthetic or authorized only</span><span class="pill">Clinical use // no</span>
+        </div>
+        <p class="lead">PsychApp v0.2 reframes the project as a preclinical research proof of concept. It separates population modelling, a participant-level digital twin and longitudinal state updates while keeping diagnosis, treatment decisions and emergency use outside the product boundary.</p>
+        <div class="actions"><a class="button button-primary" href="https://github.com/oibaf88/psychapp" target="_blank" rel="noopener noreferrer">Review the repository</a><a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open the public POC</a><a class="button button-secondary" href="/blog/psychapp-v0-1-retrospective/">Read the retrospective</a></div>
+        <section class="content-card"><h2>Architecture assembled in the repository</h2><ul><li><strong>PWA:</strong> participant and professional views built with React and Vite.</li><li><strong>Gateway contracts:</strong> a serverless reference layer for authentication and consent boundaries.</li><li><strong>Model service:</strong> a Python POC with coordinated agents, ephemeral storage and mock adapters.</li><li><strong>Data layer:</strong> a versioned Supabase schema with RLS, consent, traceability and human-review concepts.</li><li><strong>Research assets:</strong> reproducible population-baseline and QLoRA configuration material.</li></ul></section><section class="content-card"><h2>Safety is a separate execution path</h2><p>Safety analysis runs on the original Spanish text. Translation and voice are optional helpers and cannot replace the source or determine risk. Predictions remain probabilistic support for review, not orders.</p><p>The public build uses synthetic content. It is not a medical device, diagnostic service, treatment system or crisis tool, and it does not establish clinical efficacy.</p></section><section class="content-card"><h2>Repository capability is not deployment proof</h2><p>The Render host can serve the PWA and blog, but the gateway, Python model service and Supabase schema are separate modules. Their presence in Git does not mean they are connected to the public host or authorized for real patient data.</p><p>Deployment acceptance requires the public health response to identify release and commit, plus verification that the custom domain serves that exact build. Until that check is complete, repository state and live state must be described separately.</p></section><section class="content-card"><h2>Employer-facing evidence</h2><p>The value of this version is the engineering reasoning it exposes: explicit data boundaries, replaceable adapters, review queues, versioned models, reproducible research assets and a deployment contract that can be inspected instead of assumed.</p></section>
+        <div class="actions"><a class="button button-primary" href="/blog/">All writing</a><a class="button button-secondary" href="/">Portfolio home</a></div>
+      </article>
+      <aside class="side-card side-card-featured" aria-label="Release summary">
+        <h2>Release summary</h2>
+        <div class="side-list">
+          <div><span>Milestone</span><strong>2026-07-23</strong></div><div><span>Version</span><strong>0.2 research POC</strong></div><div><span>Public data</span><strong>Synthetic</strong></div><div><span>Human role</span><strong>Clinician in the loop</strong></div><div><span>Validation</span><strong>Not clinically validated</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>
