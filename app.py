@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from flask import Flask, jsonify, make_response, request
 from supabase import Client, create_client
+from werkzeug.exceptions import HTTPException
 
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -42,7 +43,7 @@ ALLOWED_ORIGINS = {
     "http://127.0.0.1:5500",
 }
 
-EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+EMAIL_RE = re.compile(r"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$", re.IGNORECASE)
 
 
 def cors_origin() -> str:
@@ -148,6 +149,9 @@ def handle_payload_too_large(_error):
 
 @app.errorhandler(Exception)
 def handle_exception(error):
+    if isinstance(error, HTTPException):
+        return error
+
     app.logger.exception("Unhandled newsletter API error")
     return jsonify({"error": "internal_server_error"}), 500
 
