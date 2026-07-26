@@ -1,75 +1,197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Personal portfolio website for an eHealth developer focused on digital health application development." />
-  <title>B. Fabio Mejías Fernández | eHealth Developer Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .profile-frame {
-      width: min(240px, 100%);
-      aspect-ratio: 4 / 5;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--warning));
-    }
-    .profile-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center center;
-      display: block;
-      background: rgba(0, 0, 0, 0.88);
-      border-radius: 27px;
-    }
-    .software-links .meta-item { flex-wrap: nowrap; }
-    .software-links .meta-item span { min-width: 0; overflow-wrap: normal; }
-    .software-links .button { flex-shrink: 0; white-space: nowrap; }
-    .software-links .meta-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
-    .software-links .meta-actions .button { min-height: 38px; padding: 0 14px; font-size: 0.88rem; }
-    .project-note-callout { margin-top: 18px; padding: 18px; border: 1px solid rgba(0, 245, 255, 0.26); border-radius: 18px; background: linear-gradient(135deg, rgba(0, 245, 255, 0.10), rgba(0, 255, 156, 0.06)); }
-    .project-note-callout p { margin: 0 0 14px; color: var(--muted); }
-    .project-note-callout .button { min-height: 42px; padding: 0 16px; white-space: nowrap; }
-    .blog-post-actions { margin-top: 18px; }
-    .blog-post-actions .button { min-height: 42px; padding: 0 18px; white-space: nowrap; }
-    @media (max-width: 520px) {
-      .profile-frame { width: min(210px, 100%); }
-      .software-links .meta-item { align-items: flex-start; flex-direction: column; }
-      .software-links .meta-actions { justify-content: flex-start; }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="B. Fabio Mejías Fernández — physician, clinical pharmacology resident and eHealth developer building safety-conscious digital health software.">
+  <meta name="theme-color" content="#05080f">
+  <link rel="canonical" href="https://bfab.io/">
+  <meta property="og:title" content="B. Fabio Mejías Fernández | Clinical insight, production-minded software">
+  <meta property="og:description" content="Digital health portfolio: PsychApp, Domain Mail and pharmacovigilance API work.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bfab.io/">
+  <title>B. Fabio Mejías Fernández | Physician & eHealth Developer</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/","email":"mailto:requests@bfab.io","jobTitle":"Physician, Clinical Pharmacology Resident and eHealth Developer","homeLocation":{"@type":"Place","name":"Madrid, European Union"},"sameAs":["https://github.com/oibaf88"]}</script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container nav">
-      <a href="#top" class="brand" aria-label="Homepage"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a>
-      <nav class="nav-links" aria-label="Main navigation"><a href="#about">About</a><a href="#focus">Focus</a><a href="#progress">Progress</a><a href="#blog">Blog</a><a href="/apps/eudravigilance-api/">EV API</a><a href="#contact">Contact</a></nav>
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#work">Work</a><a href="#approach">Approach</a><a href="#evolution">Evolution</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
-  <main id="top">
+
+  <main id="main">
     <section class="hero">
       <div class="container hero-grid">
-        <div>
-          <div class="eyebrow"><span class="eyebrow-dot"></span><span>Digital health application development</span></div>
-          <h1><span class="gradient-text">B. Fabio</span> Mejías Fernández</h1>
-          <p class="hero-text">Physician, clinical pharmacology resident and eHealth developer in progress, building digital health applications from Madrid, European Union.</p>
-          <div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open EudraVigilance API Workbench</a><a class="button button-secondary" href="#progress">View progress</a><a class="button button-secondary" href="#focus">Explore focus areas</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read EV API post</a></div>
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span><span>Medicine × software engineering × evidence</span></div>
+          <h1>Clinical insight.<br><span class="gradient-text">Production-minded software.</span></h1>
+          <p class="hero-text"><strong>Physician, Clinical Pharmacology Resident and eHealth Developer</strong> in Madrid. I turn healthcare questions into inspectable prototypes, document their limits and improve them through real deployment feedback.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#work">Explore case studies</a>
+            <a class="button button-secondary" href="/cv/">View public CV</a>
+            <a class="button button-secondary" href="https://github.com/oibaf88" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          </div>
         </div>
-        <aside class="status-card" aria-label="Portfolio status">
-          <div class="profile-frame"><img src="source/fabio-profile.jpg?v=20260618-full" alt="Portrait of B. Fabio Mejías Fernández" loading="lazy" decoding="async" /></div>
-          <p class="status-label">Work in progress</p><h2>My portfolio</h2><p>This portfolio is currently being built. Soon it will include projects, technical notes, prototypes and development milestones related to eHealth software.</p>
-          <div class="meta-list"><div class="meta-item"><span>Published</span><strong>2026-05-18</strong></div><div class="meta-item"><span>Status</span><strong>Building</strong></div><div class="meta-item"><span>Domain</span><strong>eHealth</strong></div><div class="meta-item"><span>Location</span><strong>Madrid, European Union</strong></div></div>
+        <aside class="status-card" aria-label="Portfolio profile">
+          <div class="profile-frame"><img src="/source/fabio-profile.jpg?v=20260726" alt="Portrait of B. Fabio Mejías Fernández" loading="eager" decoding="async"></div>
+          <p class="status-label">Portfolio release // v2.0</p>
+          <h2>Building at the clinical–technical boundary</h2>
+          <p>Selected work emphasizes medical caution, explicit system boundaries, maintainable delivery and honest product status.</p>
+          <div class="meta-list">
+            <div class="meta-item"><span>Location</span><strong>Madrid, EU</strong></div>
+            <div class="meta-item"><span>Domain</span><strong>Digital health</strong></div>
+            <div class="meta-item"><span>Core lens</span><strong>Clinical pharmacology</strong></div>
+            <div class="meta-item"><span>Updated</span><strong>2026-07-26</strong></div>
+          </div>
         </aside>
       </div>
     </section>
-    <section id="about"><div class="container"><h2 class="section-title">About this portfolio</h2><p class="section-intro">This website is a living record of my learning path, experiments and projects in digital health. It is designed as a simple but professional starting point that can grow into a complete developer portfolio.</p></div></section>
-    <section id="focus"><div class="container"><h2 class="section-title">Focus areas</h2><p class="section-intro">The portfolio will progressively document technical work at the intersection of healthcare, software engineering and applied digital tools.</p><div class="cards"><article class="card"><div class="card-icon">01</div><h3>Clinical software</h3><p>Applications designed around healthcare workflows, usability, safety and practical clinical value.</p><div class="project-note-callout" aria-label="Featured pharmacovigilance project note"><p><strong>EudraVigilance API Workbench:</strong> authorised API proxy, public ADR aggregate analysis and exploratory disproportionality metrics for pharmacovigilance workflows.</p><div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open EV API app</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read post</a></div></div><div class="meta-list software-links" aria-label="Clinical software projects"><div class="meta-item"><span>EudraVigilance API Workbench</span><div class="meta-actions"><a class="button button-secondary" href="/apps/eudravigilance-api/">Open app</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read post</a></div></div><div class="meta-item"><span>Psychapp</span><div class="meta-actions"><a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a><a class="button button-secondary" href="/blog/psychdeep/">Read post</a></div></div><div class="meta-item"><span>Email System Demo</span><div class="meta-actions"><a class="button button-secondary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open demo</a><a class="button button-secondary" href="/blog/python-email-system/">Read post</a></div></div></div></article><article class="card"><div class="card-icon">02</div><h3>Health data</h3><p>Data structures, dashboards, APIs and tools for turning health information into useful insights.</p></article><article class="card"><div class="card-icon">03</div><h3>AI for eHealth</h3><p>Explorations of responsible AI-assisted development, clinical reasoning support and human-centered digital health tools.</p></article></div></div></section>
-    <section id="progress"><div class="container"><h2 class="section-title">Development progress</h2><p class="section-intro">A minimal roadmap for what will appear here as the portfolio evolves.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3><a href="/apps/eudravigilance-api/">EudraVigilance API Workbench</a></h3><p>Added a pharmacovigilance prototype with authorised API proxy mode, direct API testing and local public ADR aggregate analysis.</p></article><article class="timeline-item"><time datetime="2026-05-18">2026-05-18</time><h3>Portfolio initialized</h3><p>First public version of the personal eHealth developer portfolio.</p></article><article class="timeline-item"><time>Next</time><h3>Project gallery</h3><p>Upcoming section for prototypes, repositories, screenshots and short technical explanations.</p></article><article class="timeline-item"><time>Soon</time><h3>Technical notes</h3><p>Short articles about digital health development, clinical logic, interoperability and software design decisions.</p></article></div></div></section>
-    <section id="blog"><div class="container"><h2 class="section-title">Blog</h2><p class="section-intro">Notes, experiments and small development logs from my eHealth and software learning path.</p><div class="timeline"><article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3><a href="/blog/eudravigilance-api/">EudraVigilance API Workbench</a></h3><p>Architecture note for an authorised API proxy, public ADR aggregate analysis and exploratory disproportionality metrics.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/eudravigilance-api/">Read post</a><a class="button button-secondary" href="/apps/eudravigilance-api/">Open app</a></div></article><article class="timeline-item"><time datetime="2026-06-25">2026-06-25</time><h3><a href="/blog/psychdeep/">PsychDeep / Psychapp</a></h3><p>A first sketch of a real digital mental health project: architecture, workflow, privacy, cybersecurity and medical precautions.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/psychdeep/">Read post</a><a class="button button-secondary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open app</a></div></article><article class="timeline-item"><time datetime="2026-06-19">2026-06-19</time><h3><a href="/blog/python-email-system/">Python Email System</a></h3><p>An object-oriented Python console simulation with users, inboxes, emails, timestamps and read/unread state.</p><div class="actions blog-post-actions"><a class="button button-primary" href="/blog/python-email-system/">Read post</a></div></article><article class="timeline-item"><time datetime="2026-05-28">2026-05-28</time><h3><a href="/blog/uservalidation/">Small user validation function</a></h3><p>A short development note about implementing a small user validation function.</p><div class="actions blog-post-actions"><a class="button button-secondary" href="/blog/uservalidation/">Read post</a></div></article></div></div></section>
-    <section id="contact"><div class="container"><div class="contact-box"><div><h2 class="section-title">My portfolio</h2><p>Contact me at requests@bfab.io. GitHub repositories and selected projects will be added as the portfolio grows.</p><p>You can also subscribe to my newsletter to keep in touch:</p><a href="/signup">Subscribe to my newsletter</a></div><a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a></div></div></section>
+
+    <div class="proof-strip" aria-label="Portfolio evidence">
+      <div class="container proof-grid">
+        <div class="proof-item"><strong>3 public codebases</strong><span>Portfolio, clinical research POC and mail platform.</span></div>
+        <div class="proof-item"><strong>Safety first</strong><span>Limits and non-clinical boundaries are part of the product.</span></div>
+        <div class="proof-item"><strong>Full-stack delivery</strong><span>React, Node, Python, Supabase, Render and GitHub Actions.</span></div>
+        <div class="proof-item"><strong>Versioned learning</strong><span>Release notes preserve how each system evolved.</span></div>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div><h2 class="section-title">A clinician who ships</h2><p class="section-intro">My work starts with a clinical or operational problem, narrows it to a testable software boundary, and keeps uncertainty visible. The result is not a claim of medical validation: it is evidence of product thinking, engineering iteration and responsible scope.</p></div>
+          <p class="section-note">PUBLIC PORTFOLIO // CODE + DECISIONS + LIMITS</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">01</div><h3>Clinical reasoning</h3><p>Translate pharmacovigilance, longitudinal observation and safety requirements into concrete data and interface decisions.</p></article>
+          <article class="card"><div class="card-icon">02</div><h3>Software delivery</h3><p>Build across frontend, backend, database and deployment layers, then use production discrepancies to drive the next version.</p></article>
+          <article class="card"><div class="card-icon">03</div><h3>Responsible communication</h3><p>Separate prototypes from validated products, distinguish signals from causality and document what a system cannot safely do.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="section-head">
+          <div><h2 class="section-title">Selected work</h2><p class="section-intro">Three projects show an evolution from learning exercises to systems with explicit deployment, security and domain constraints.</p></div>
+          <p class="section-note">STATUS LABELS DESCRIBE THE CURRENT PUBLIC VERSION</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-mark">Ψ</div>
+              <div><h3>PsychApp <span class="gradient-text">v0.2.0</span></h3><p class="project-summary">A research POC for clinician-supervised longitudinal modelling using synthetic data, coordinated agent contracts, inspectable uncertainty and a safety layer. It is not a medical device, diagnostic service or crisis tool.</p></div>
+              <span class="status-pill status-research">Research POC</span>
+            </div>
+            <div class="stack"><span class="tag">React + Vite</span><span class="tag">Node.js</span><span class="tag">Supabase schema</span><span class="tag">Python model service</span><span class="tag">Synthetic data</span></div>
+            <div class="project-meta">
+              <div><span>Product decision</span><strong>Clinician remains in the loop</strong></div>
+              <div><span>Safety decision</span><strong>No autonomous diagnosis</strong></div>
+              <div><span>Current milestone</span><strong>Rebuilt 2026-07-23</strong></div>
+            </div>
+            <div class="actions"><a class="button button-primary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Open POC ↗</a><a class="button button-secondary" href="/blog/psychapp-v0-2/">Read v0.2 release</a><a class="button button-secondary" href="https://github.com/oibaf88/psychapp" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-mark">@</div>
+              <div><h3>Domain Mail <span class="gradient-text">v1.2.0</span></h3><p class="project-summary">A Flask webmail interface that progressed from a Python object model to real IMAP/SMTP integration and a self-hosting architecture. The public Render deployment now uses a synthetic showcase mode, so visitors can evaluate the interaction without exposing mail credentials.</p></div>
+              <span class="status-pill status-showcase">Safe showcase</span>
+            </div>
+            <div class="stack"><span class="tag">Python + Flask</span><span class="tag">IMAP / SMTP</span><span class="tag">Gunicorn</span><span class="tag">Render</span><span class="tag">Docker mailserver design</span></div>
+            <div class="project-meta">
+              <div><span>Product decision</span><strong>Demo and live modes separated</strong></div>
+              <div><span>Security decision</span><strong>No real credentials in showcase</strong></div>
+              <div><span>Current milestone</span><strong>Hardened 2026-07-26</strong></div>
+            </div>
+            <div class="actions"><a class="button button-primary" href="https://email-client-1gs6.onrender.com" target="_blank" rel="noopener noreferrer">Open showcase ↗</a><a class="button button-secondary" href="/blog/domain-mail-v1-2/">Read v1.2 release</a><a class="button button-secondary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div class="project-mark">PV</div>
+              <div><h3>Pharmacovigilance API Workbench</h3><p class="project-summary">A browser workbench separating restricted European pharmacovigilance access from lawful public aggregate analysis. It supports local CSV exploration, public openFDA queries and exploratory ROR/PRR calculations without presenting signals as incidence or causality.</p></div>
+              <span class="status-pill status-live">Public prototype</span>
+            </div>
+            <div class="stack"><span class="tag">Vanilla JavaScript</span><span class="tag">Supabase Edge Functions</span><span class="tag">openFDA</span><span class="tag">ROR / PRR</span><span class="tag">Authorised proxy boundary</span></div>
+            <div class="project-meta">
+              <div><span>Domain decision</span><strong>Restricted and public data separated</strong></div>
+              <div><span>Security decision</span><strong>Fixed-origin proxy allowlist</strong></div>
+              <div><span>Clinical boundary</span><strong>Signal screening, not causality</strong></div>
+            </div>
+            <div class="actions"><a class="button button-primary" href="/apps/eudravigilance-api/">Open workbench</a><a class="button button-secondary" href="/apps/public-pv-api/">Try public API</a><a class="button button-secondary" href="/blog/eudravigilance-api/">Read architecture note</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="container">
+        <div class="section-head"><div><h2 class="section-title">How I work</h2><p class="section-intro">The portfolio is intentionally explicit about trade-offs. For healthcare software, a polished interface is useful only when the data path, operational state and clinical boundary can also be inspected.</p></div></div>
+        <div class="split">
+          <div class="principles">
+            <div class="principle"><strong>1. Define the clinical boundary</strong>State intended users, excluded uses and escalation points before adding automation.</div>
+            <div class="principle"><strong>2. Build a narrow vertical slice</strong>Connect interface, API, data and deployment early enough to expose integration failures.</div>
+            <div class="principle"><strong>3. Treat production as evidence</strong>Compare repository intent with the live service, then fix configuration drift instead of hiding it.</div>
+            <div class="principle"><strong>4. Version the reasoning</strong>Keep release notes and retrospective posts so an employer can inspect growth, not only the final screenshot.</div>
+          </div>
+          <div class="metric-grid">
+            <div class="metric"><strong>Clinical</strong><span>Safety framing, pharmacovigilance and human review.</span></div>
+            <div class="metric"><strong>Product</strong><span>Scope, modes, workflows and honest status communication.</span></div>
+            <div class="metric"><strong>Engineering</strong><span>APIs, frontend, data models, tests and deployment.</span></div>
+            <div class="metric"><strong>Security</strong><span>Secrets, origin boundaries, RLS awareness and safe demos.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evolution">
+      <div class="container">
+        <div class="section-head"><div><h2 class="section-title">Versioned evolution</h2><p class="section-intro">Milestones are tied to repository history. Retrospectives preserve the date of the original milestone while clearly stating when the retrospective itself was published.</p></div><a class="button button-secondary" href="/blog/">Browse all writing</a></div>
+        <div class="timeline">
+          <article class="timeline-item"><time datetime="2026-07-26">2026-07-26</time><h3>Portfolio v2.0 + cross-project audit</h3><p>Reframed the site as an employer-facing clinical engineering portfolio, consolidated documentation and hardened public endpoints.</p><div class="actions"><a class="button button-secondary" href="/blog/portfolio-v2/">Release note</a></div></article>
+          <article class="timeline-item"><time datetime="2026-07-23">2026-07-23</time><h3>PsychApp v0.2 research POC</h3><p>Rebuilt the project around clinician supervision, population modelling, synthetic demonstration data, safety controls and reproducible research assets.</p><div class="actions"><a class="button button-secondary" href="/blog/psychapp-v0-2/">Release note</a></div></article>
+          <article class="timeline-item"><time datetime="2026-07-22">2026-07-22</time><h3>Domain Mail v1.1 performance pass</h3><p>Replaced N+1 IMAP fetches with batching and documented the transition from classroom model to operational mail architecture.</p><div class="actions"><a class="button button-secondary" href="/blog/domain-mail-v1-1/">Release note</a></div></article>
+          <article class="timeline-item"><time datetime="2026-07-04">2026-07-04</time><h3>Domain Mail v1.0 architecture</h3><p>Added the self-hosted mail appliance design, TLS/DNS operations and a real IMAP/SMTP web interface.</p><div class="actions"><a class="button button-secondary" href="/blog/domain-mail-v1/">Release note</a></div></article>
+          <article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3>Pharmacovigilance workbench</h3><p>Published the public aggregate workflow and separated it from restricted EudraVigilance access.</p><div class="actions"><a class="button button-secondary" href="/blog/eudravigilance-api/">Architecture note</a></div></article>
+          <article class="timeline-item"><time datetime="2026-06-25">2026-06-25</time><h3>PsychApp v0.1 first prototype</h3><p>The original PsychDeep note remains unchanged; a new retrospective maps that first concept to the later research architecture.</p><div class="actions"><a class="button button-secondary" href="/blog/psychdeep/">Original post</a><a class="button button-secondary" href="/blog/psychapp-v0-1-retrospective/">v0.1 retrospective</a></div></article>
+          <article class="timeline-item"><time datetime="2026-06-19">2026-06-19</time><h3>Python Email System v0</h3><p>A small object-oriented exercise established the message, inbox and user model that later evolved into Domain Mail.</p><div class="actions"><a class="button button-secondary" href="/blog/python-email-system/">Original post</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cv">
+      <div class="container contact-box">
+        <div><p class="status-label">Public CV // evidence-linked</p><h2 class="section-title">A concise profile for hiring conversations</h2><p>Review the clinical–technical profile, demonstrated stack, selected projects and current product boundaries in a print-friendly page.</p></div>
+        <div class="actions"><a class="button button-primary" href="/cv/">Open CV</a><a class="button button-secondary" href="mailto:requests@bfab.io?subject=Portfolio%20conversation">Start a conversation</a></div>
+      </div>
+    </section>
+
+    <section id="writing">
+      <div class="container">
+        <div class="section-head"><div><h2 class="section-title">Writing & release notes</h2><p class="section-intro">Technical notes connect visible features to architecture decisions, limitations and what changed between versions.</p></div><a class="button button-secondary" href="/blog/">All posts</a></div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">Ψ</div><h3><a href="/blog/psychapp-v0-2/">PsychApp v0.2</a></h3><p>The research POC rebuild, clinician-supervised architecture and the gap between repository and live deployment.</p></article>
+          <article class="card"><div class="card-icon">@</div><h3><a href="/blog/domain-mail-v1-2/">Domain Mail v1.2</a></h3><p>Why the public deployment became a synthetic showcase and how live IMAP/SMTP remains isolated.</p></article>
+          <article class="card"><div class="card-icon">BF</div><h3><a href="/blog/portfolio-v2/">Portfolio v2.0</a></h3><p>Documentation consolidation, security fixes and a clearer employer-facing narrative.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-box">
+        <div><p class="status-label">Contact // Madrid, European Union</p><h2 class="section-title">Let’s discuss clinical software</h2><p>For roles, collaborations or technical conversations about digital health, clinical pharmacology and responsible product development.</p></div>
+        <div class="actions"><a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a><a class="button button-secondary" href="https://github.com/oibaf88" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a class="button button-secondary" href="/signup/">Newsletter</a></div>
+      </div>
+    </section>
   </main>
-  <footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Built as a work in progress.</p></div></footer>
+
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Built with explicit scope and version history.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/security.txt">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
 </body>
 </html>
