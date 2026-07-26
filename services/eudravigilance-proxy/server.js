@@ -418,4 +418,4 @@ app.post('/disproportionality', async (request) => {
 })
 
 const port = Number(process.env.PORT || 10000)
-app.listen({ port, host: '0.0.0.0' })
+await app.listen({ port, host: '0.0.0.0' })
