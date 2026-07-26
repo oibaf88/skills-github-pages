@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Domain Mail v1.0 architecture milestone: Flask webmail, secure IMAP and SMTP paths, server-side sessions and self-hosting components.">
+  <link rel="canonical" href="https://bfab.io/blog/domain-mail-v1/">
+  <meta property="og:title" content="Domain Mail v1.0: from Python model to mail architecture">
+  <meta property="og:description" content="Domain Mail v1.0 architecture milestone: Flask webmail, secure IMAP and SMTP paths, server-side sessions and self-hosting components.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/domain-mail-v1/">
+  <title>Domain Mail v1.0: from Python model to mail architecture | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Domain Mail v1.0: from Python model to mail architecture","description":"Domain Mail v1.0 architecture milestone: Flask webmail, secure IMAP and SMTP paths, server-side sessions and self-hosting components.","datePublished":"2026-07-04","dateModified":"2026-07-26","mainEntityOfPage":"https://bfab.io/blog/domain-mail-v1/","author":{"@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Architecture milestone // Domain Mail</span></div>
+        <h1><span class="gradient-text">Domain Mail v1.0</span>: operational boundaries</h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata">
+          <span class="pill">Milestone // <time datetime="2026-07-04">2026-07-04</time></span><span class="pill">Status // repository architecture</span><span class="pill">Protocol // IMAP + SMTP</span><span class="pill">Release tag // none claimed</span>
+        </div>
+        <p class="lead">The first Domain Mail architecture moved beyond the earlier object-oriented email exercise. The repository added a Flask webmail path around real mail protocols and documented the infrastructure needed for a self-hosted domain-mail system.</p>
+        <div class="actions"><a class="button button-primary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">Review the repository</a><a class="button button-secondary" href="/blog/python-email-system/">Read the earlier exercise</a><a class="button button-secondary" href="/blog/domain-mail-v1-1/">Continue to v1.1</a></div>
+        <section class="content-card"><h2>What entered the codebase</h2><ul><li>Flask webmail flows for IMAP over TLS and SMTP with STARTTLS or TLS.</li><li>Server-side sessions and CSRF protection for browser actions.</li><li>Docker packaging for a repeatable application boundary.</li><li>Optional architecture for Docker Mailserver, Redis, Caddy, MTA-STS, certificates and DNS operations.</li></ul></section><section class="content-card"><h2>Why the architecture mattered</h2><p>Mail is not only a user interface problem. Authentication, transport encryption, DNS reputation, certificate renewal, queueing and mailbox semantics all affect whether a message system is dependable.</p><p>This milestone made those operational dependencies visible and separated application code from the broader mail appliance.</p></section><section class="content-card"><h2>What is not claimed</h2><p>Repository evidence shows the implementation and deployment design, but there is no formal v1.0 release tag and no verified proof here that the complete self-hosted stack was live on 2026-07-04. A historical public Render URL is not evidence that every optional component was deployed.</p></section><section class="content-card"><h2>Next pressure point</h2><p>Once real IMAP replaced in-memory objects, message-list performance became a network problem. That led directly to the v1.1 batching change.</p></section>
+        <div class="actions"><a class="button button-primary" href="/blog/">All writing</a><a class="button button-secondary" href="/">Portfolio home</a></div>
+      </article>
+      <aside class="side-card side-card-featured" aria-label="Release summary">
+        <h2>Release summary</h2>
+        <div class="side-list">
+          <div><span>Milestone</span><strong>2026-07-04</strong></div><div><span>App layer</span><strong>Python + Flask</strong></div><div><span>Mail protocols</span><strong>IMAP / SMTP</strong></div><div><span>Security</span><strong>TLS, sessions, CSRF</strong></div><div><span>Deployment proof</span><strong>Not fully verified</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>
