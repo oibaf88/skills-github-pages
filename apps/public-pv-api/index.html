@@ -1,1 +1,57 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Public PV API</title><link rel="stylesheet" href="/styles.css"><style>.panel{padding:22px;border:1px solid rgba(0,255,156,.22);border-radius:22px;background:rgba(0,12,20,.88)}input,select{width:100%;padding:12px;border-radius:14px;background:#02080e;color:white;border:1px solid rgba(0,245,255,.24)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.box{padding:14px;border:1px solid rgba(0,245,255,.16);border-radius:14px;overflow:auto}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><header class="site-header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a><nav class="nav-links"><a href="/apps/eudravigilance-api/">EV Workbench</a><a href="/blog/eudravigilance-api/">Blog</a></nav></div></header><main><section class="hero"><div class="container"><h1><span class="gradient-text">Public PV</span> API</h1><p class="hero-text">Live public pharmacovigilance API demo. European EudraVigilance public data remains available through official public web reports; this page uses a real public API for live queries.</p></div></section><section><div class="container grid"><article class="panel"><h2>Query</h2><p>Provider: public FAERS drug adverse-event API via Supabase function <code>pv-public-api</code>.</p><p><label>Product<br><input id="product" value="aspirin"></label></p><p><label>Count by<br><select id="count"><option value="patient.reaction.reactionmeddrapt.exact">reaction term</option><option value="serious">seriousness</option><option value="primarysource.qualification">reporter qualification</option><option value="occurcountry">country</option></select></label></p><button class="button button-primary" id="run">Run query</button></article><aside class="panel"><h2>Results</h2><div class="box"><table><thead><tr><th>Term</th><th>Count</th></tr></thead><tbody id="rows"><tr><td colspan="2">No query yet.</td></tr></tbody></table></div></aside></div></section></main><script>const url='https://zzgavefdyzbukbrowzot.supabase.co/functions/v1/pv-public-api';const $=id=>document.getElementById(id);async function run(){const body={provider:'openfda_drug_event',search:'patient.drug.medicinalproduct:"'+$('product').value.replaceAll('"','')+'"',count:$('count').value,limit:20};const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await res.json();const tb=$('rows');tb.innerHTML='';(j.data?.results||[]).forEach(x=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+x.term+'</td><td>'+x.count+'</td>';tb.appendChild(tr)});if(!tb.children.length)tb.innerHTML='<tr><td colspan="2">No results or API error.</td></tr>'}document.getElementById('run').onclick=run;run();</script></body></html>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Public PV API</title><link rel="stylesheet" href="/styles.css"><style>.panel{padding:22px;border:1px solid rgba(0,255,156,.22);border-radius:22px;background:rgba(0,12,20,.88)}input,select{width:100%;padding:12px;border-radius:14px;background:#02080e;color:white;border:1px solid rgba(0,245,255,.24)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.box{padding:14px;border:1px solid rgba(0,245,255,.16);border-radius:14px;overflow:auto}@media(max-width:900px){.grid{grid-template-columns:1fr}}</style></head><body><header class="site-header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">eH</span><span>B. Fabio Mejías Fernández</span></a><nav class="nav-links"><a href="/apps/eudravigilance-api/">EV Workbench</a><a href="/blog/eudravigilance-api/">Blog</a></nav></div></header><main><section class="hero"><div class="container"><h1><span class="gradient-text">Public PV</span> API</h1><p class="hero-text">Live public pharmacovigilance API demo. European EudraVigilance public data remains available through official public web reports; this page uses a real public API for live queries.</p></div></section><section><div class="container grid"><article class="panel"><h2>Query</h2><p>Provider: public FAERS drug adverse-event API via Supabase function <code>pv-public-api</code>.</p><p><label>Product<br><input id="product" value="aspirin"></label></p><p><label>Count by<br><select id="count"><option value="patient.reaction.reactionmeddrapt.exact">reaction term</option><option value="serious">seriousness</option><option value="primarysource.qualification">reporter qualification</option><option value="occurcountry">country</option></select></label></p><button class="button button-primary" id="run">Run query</button></article><aside class="panel"><h2>Results</h2><div class="box"><table><thead><tr><th>Term</th><th>Count</th></tr></thead><tbody id="rows"><tr><td colspan="2">No query yet.</td></tr></tbody></table></div></aside></div></section></main><script>
+const url = 'https://zzgavefdyzbukbrowzot.supabase.co/functions/v1/pv-public-api'
+const element = (id) => document.getElementById(id)
+
+function appendResultRow(tableBody, term, count) {
+  const row = document.createElement('tr')
+  const termCell = document.createElement('td')
+  const countCell = document.createElement('td')
+  termCell.textContent = String(term ?? '')
+  countCell.textContent = String(count ?? '')
+  row.append(termCell, countCell)
+  tableBody.appendChild(row)
+}
+
+function showEmptyState(tableBody, message) {
+  const row = document.createElement('tr')
+  const cell = document.createElement('td')
+  cell.colSpan = 2
+  cell.textContent = message
+  row.appendChild(cell)
+  tableBody.replaceChildren(row)
+}
+
+async function run() {
+  const body = {
+    provider: 'openfda_drug_event',
+    search: 'patient.drug.medicinalproduct:"' + element('product').value.replaceAll('"', '') + '"',
+    count: element('count').value,
+    limit: 20
+  }
+
+  const tableBody = element('rows')
+  tableBody.replaceChildren()
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+    const result = await response.json()
+
+    for (const item of result.data?.results ?? []) {
+      appendResultRow(tableBody, item.term, item.count)
+    }
+
+    if (!tableBody.children.length) {
+      showEmptyState(tableBody, 'No results or API error.')
+    }
+  } catch {
+    showEmptyState(tableBody, 'No results or API error.')
+  }
+}
+
+element('run').addEventListener('click', run)
+run()
+</script></body></html>
