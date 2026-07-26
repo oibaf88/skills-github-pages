@@ -9,13 +9,12 @@ from werkzeug.exceptions import HTTPException
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-FLASK_SECRET_KEY = os.environ.get("FLASK_SECRET_KEY") or os.environ.get("SECRET_KEY")
 NEWSLETTER_TABLE = os.environ.get("NEWSLETTER_TABLE", "newsletter_subscribers").strip()
+APP_RELEASE = os.environ.get("APP_RELEASE", "2.0.0").strip() or "2.0.0"
 
 MAX_NAME_LENGTH = 120
 MAX_EMAIL_LENGTH = 254
 MAX_SOURCE_LENGTH = 200
-MAX_USER_AGENT_LENGTH = 512
 MAX_REQUEST_BYTES = 16 * 1024
 
 if not SUPABASE_URL:
@@ -31,8 +30,6 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = MAX_REQUEST_BYTES
-if FLASK_SECRET_KEY:
-    app.secret_key = FLASK_SECRET_KEY
 
 ALLOWED_ORIGINS = {
     "https://bfab.io",
@@ -46,24 +43,32 @@ ALLOWED_ORIGINS = {
 EMAIL_RE = re.compile(r"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$", re.IGNORECASE)
 
 
-def cors_origin() -> str:
+def cors_origin() -> str | None:
     origin = request.headers.get("Origin", "")
-    if origin in ALLOWED_ORIGINS:
-        return origin
-    return "https://bfab.io"
+    return origin if origin in ALLOWED_ORIGINS else None
 
 
-def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = cors_origin()
-    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS, GET"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Accept"
-    response.headers["Vary"] = "Origin"
-    return response
+def origin_allowed() -> bool:
+    origin = request.headers.get("Origin", "")
+    return not origin or origin in ALLOWED_ORIGINS
 
 
 @app.after_request
-def after_request(response):
-    return add_cors_headers(response)
+def add_response_headers(response):
+    allowed_origin = cors_origin()
+    if allowed_origin:
+        response.headers["Access-Control-Allow-Origin"] = allowed_origin
+    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS, GET"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Accept"
+    response.headers["Access-Control-Max-Age"] = "600"
+    response.headers["Vary"] = "Origin"
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
 
 
 def validate_payload(payload: object) -> tuple[str, str, str]:
@@ -73,11 +78,15 @@ def validate_payload(payload: object) -> tuple[str, str, str]:
     name_value = payload.get("name")
     email_value = payload.get("email")
     source_value = payload.get("source", "bfab.io/signup")
+    website_value = payload.get("website", "")
 
     name = name_value.strip() if isinstance(name_value, str) else ""
     email = email_value.strip().lower() if isinstance(email_value, str) else ""
     source = source_value.strip() if isinstance(source_value, str) else ""
     source = source or "bfab.io/signup"
+
+    if not isinstance(website_value, str) or website_value.strip():
+        raise ValueError("Invalid submission.")
 
     if len(name) <= 2:
         raise ValueError("Please make sure your name is greater than 2 characters.")
@@ -101,8 +110,9 @@ def validate_payload(payload: object) -> tuple[str, str, str]:
 def home():
     return jsonify(
         {
-            "service": "skills-github-pages newsletter API",
+            "service": "bfab.io newsletter API",
             "status": "ok",
+            "release": APP_RELEASE,
             "endpoints": ["/healthz", "/subscribe"],
         }
     )
@@ -110,11 +120,14 @@ def home():
 
 @app.get("/healthz")
 def healthz():
-    return jsonify({"status": "ok"}), 200
+    return jsonify({"status": "ok", "release": APP_RELEASE}), 200
 
 
 @app.route("/subscribe", methods=["POST", "OPTIONS"])
 def subscribe():
+    if not origin_allowed():
+        return jsonify({"error": "origin_not_allowed"}), 403
+
     if request.method == "OPTIONS":
         return make_response(("", 204))
 
@@ -125,21 +138,29 @@ def subscribe():
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 400
 
-    now = datetime.now(timezone.utc).isoformat()
-    user_agent = request.headers.get("User-Agent", "").strip()[:MAX_USER_AGENT_LENGTH]
-
     record = {
         "name": name,
         "email": email,
         "source": source,
-        "user_agent": user_agent,
-        "subscribed_at": now,
-        "unsubscribed_at": None,
+        "subscribed_at": datetime.now(timezone.utc).isoformat(),
     }
 
-    supabase.table(NEWSLETTER_TABLE).upsert(record, on_conflict="email").execute()
+    (
+        supabase.table(NEWSLETTER_TABLE)
+        .upsert(record, on_conflict="email", ignore_duplicates=True)
+        .execute()
+    )
 
-    return jsonify({"message": "subscribed correctly!"}), 200
+    return (
+        jsonify(
+            {
+                "message": (
+                    "If this address is eligible, the subscription has been recorded."
+                )
+            }
+        ),
+        200,
+    )
 
 
 @app.errorhandler(413)
@@ -150,7 +171,7 @@ def handle_payload_too_large(_error):
 @app.errorhandler(Exception)
 def handle_exception(error):
     if isinstance(error, HTTPException):
-        return error
+        return jsonify({"error": error.name, "message": error.description}), error.code
 
     app.logger.exception("Unhandled newsletter API error")
     return jsonify({"error": "internal_server_error"}), 500
