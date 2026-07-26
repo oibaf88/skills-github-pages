@@ -8,11 +8,14 @@ from supabase import Client, create_client
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-FLASK_SECRET_KEY = (
-    os.environ.get("FLASK_SECRET_KEY")
-    or os.environ.get("SECRET_KEY")
-    or "dev-secret-key-change-me"
-)
+FLASK_SECRET_KEY = os.environ.get("FLASK_SECRET_KEY") or os.environ.get("SECRET_KEY")
+NEWSLETTER_TABLE = os.environ.get("NEWSLETTER_TABLE", "newsletter_subscribers").strip()
+
+MAX_NAME_LENGTH = 120
+MAX_EMAIL_LENGTH = 254
+MAX_SOURCE_LENGTH = 200
+MAX_USER_AGENT_LENGTH = 512
+MAX_REQUEST_BYTES = 16 * 1024
 
 if not SUPABASE_URL:
     raise RuntimeError("Missing SUPABASE_URL environment variable.")
@@ -20,10 +23,15 @@ if not SUPABASE_URL:
 if not SUPABASE_SERVICE_ROLE_KEY:
     raise RuntimeError("Missing SUPABASE_SERVICE_ROLE_KEY environment variable.")
 
+if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", NEWSLETTER_TABLE):
+    raise RuntimeError("NEWSLETTER_TABLE must be a valid table identifier.")
+
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 app = Flask(__name__)
-app.secret_key = FLASK_SECRET_KEY
+app.config["MAX_CONTENT_LENGTH"] = MAX_REQUEST_BYTES
+if FLASK_SECRET_KEY:
+    app.secret_key = FLASK_SECRET_KEY
 
 ALLOWED_ORIGINS = {
     "https://bfab.io",
@@ -57,22 +65,35 @@ def after_request(response):
     return add_cors_headers(response)
 
 
-def validate_payload(payload: dict) -> tuple[str, str, bool, str]:
-    name = str(payload.get("name", "")).strip()
-    email = str(payload.get("email", "")).strip().lower()
-    consent = bool(payload.get("consent"))
-    source = str(payload.get("source", "bfab.io/signup")).strip() or "bfab.io/signup"
+def validate_payload(payload: object) -> tuple[str, str, str]:
+    if not isinstance(payload, dict):
+        raise ValueError("Request body must be a JSON object.")
+
+    name_value = payload.get("name")
+    email_value = payload.get("email")
+    source_value = payload.get("source", "bfab.io/signup")
+
+    name = name_value.strip() if isinstance(name_value, str) else ""
+    email = email_value.strip().lower() if isinstance(email_value, str) else ""
+    source = source_value.strip() if isinstance(source_value, str) else ""
+    source = source or "bfab.io/signup"
 
     if len(name) <= 2:
         raise ValueError("Please make sure your name is greater than 2 characters.")
 
-    if not EMAIL_RE.match(email):
+    if len(name) > MAX_NAME_LENGTH:
+        raise ValueError("Your name is too long.")
+
+    if len(email) > MAX_EMAIL_LENGTH or not EMAIL_RE.fullmatch(email):
         raise ValueError("Your email address is in the incorrect format, please enter a valid email.")
 
-    if consent is not True:
+    if payload.get("consent") is not True:
         raise ValueError("Please accept the newsletter consent checkbox before subscribing.")
 
-    return name, email, consent, source
+    if len(source) > MAX_SOURCE_LENGTH:
+        raise ValueError("The subscription source is too long.")
+
+    return name, email, source
 
 
 @app.get("/")
@@ -96,70 +117,39 @@ def subscribe():
     if request.method == "OPTIONS":
         return make_response(("", 204))
 
-    payload = request.get_json(silent=True) or {}
+    payload = request.get_json(silent=True)
 
     try:
-        name, email, consent, source = validate_payload(payload)
+        name, email, source = validate_payload(payload)
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 400
 
-    existing = (
-        supabase.table("newsletter_subscriptions")
-        .select("id,email")
-        .eq("email", email)
-        .limit(1)
-        .execute()
-    )
-
     now = datetime.now(timezone.utc).isoformat()
+    user_agent = request.headers.get("User-Agent", "").strip()[:MAX_USER_AGENT_LENGTH]
 
-    if existing.data:
-        updated = (
-            supabase.table("newsletter_subscriptions")
-            .update(
-                {
-                    "name": name,
-                    "consent": consent,
-                    "source": source,
-                    "status": "active",
-                    "updated_at": now,
-                }
-            )
-            .eq("email", email)
-            .execute()
-        )
+    record = {
+        "name": name,
+        "email": email,
+        "source": source,
+        "user_agent": user_agent,
+        "subscribed_at": now,
+        "unsubscribed_at": None,
+    }
 
-        if not updated.data:
-            raise RuntimeError("Could not update newsletter subscription.")
+    supabase.table(NEWSLETTER_TABLE).upsert(record, on_conflict="email").execute()
 
-        return jsonify({"message": "subscribed correctly!"}), 200
+    return jsonify({"message": "subscribed correctly!"}), 200
 
-    inserted = (
-        supabase.table("newsletter_subscriptions")
-        .insert(
-            {
-                "name": name,
-                "email": email,
-                "consent": consent,
-                "source": source,
-                "status": "active",
-                "created_at": now,
-                "updated_at": now,
-            }
-        )
-        .execute()
-    )
 
-    if not inserted.data:
-        raise RuntimeError("Could not create newsletter subscription.")
-
-    return jsonify({"message": "subscribed correctly!"}), 201
+@app.errorhandler(413)
+def handle_payload_too_large(_error):
+    return jsonify({"error": "payload_too_large"}), 413
 
 
 @app.errorhandler(Exception)
 def handle_exception(error):
-    app.logger.exception(error)
-    return jsonify({"error": str(error)}), 500
+    app.logger.exception("Unhandled newsletter API error")
+    return jsonify({"error": "internal_server_error"}), 500
 
 
 if __name__ == "__main__":
