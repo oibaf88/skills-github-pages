@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "jekyll",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "node scripts/build-static-site.mjs",
+  "outputDirectory": "dist",
   "trailingSlash": true,
   "headers": [
     {
