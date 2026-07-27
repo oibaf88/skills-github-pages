@@ -4,14 +4,17 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 60
     healthCheckPath: /healthz
+    autoDeployTrigger: checksPass
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12.7
+        value: 3.14.6
+      - key: APP_RELEASE
+        value: "2.0.0"
+      - key: NEWSLETTER_TABLE
+        value: newsletter_subscribers
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-      - key: FLASK_SECRET_KEY
-        generateValue: true
