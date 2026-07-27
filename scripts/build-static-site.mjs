@@ -95,6 +95,7 @@ await rm(output, { recursive: true, force: true });
 await copyPublicFiles(root, output);
 
 const requiredFiles = [
+  ".well-known/microsoft-identity-association",
   ".well-known/security.txt",
   "404.html",
   "blog/index.html",
