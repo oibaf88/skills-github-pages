@@ -31,6 +31,7 @@ exclude:
   - app.py
   - Dockerfile
   - render.yaml
+  - vercel.json
   - requirements.txt
   - requirements-dev.txt
   - pyproject.toml
@@ -40,6 +41,8 @@ exclude:
   - supabase
   - scripts
   - docs
+  - dist
+  - _site
   - node_modules
   - vendor
   - .bundle

@@ -54,6 +54,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
+      - name: Build Vercel static output
+        run: node scripts/build-static-site.mjs
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

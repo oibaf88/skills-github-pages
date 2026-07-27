@@ -41,7 +41,8 @@ The historical PsychDeep and Python Email System posts remain available. New rel
 
 ~~~text
 bfab.io
-  GitHub Pages + Jekyll
+  Vercel deterministic static output at bfab.io
+  GitHub Pages + Jekyll deployment path
   standalone HTML + CSS + browser JavaScript
        |
        +-- newsletter form
@@ -58,7 +59,7 @@ bfab.io
 
 ### Static site
 
-GitHub Actions builds and deploys the Jekyll site from **main**. The site uses standalone pages rather than a theme. Repository-only backend, test and deployment files are excluded in **_config.yml**.
+Vercel serves **bfab.io** from a deterministic **dist/** output built by **scripts/build-static-site.mjs**. Only public portfolio assets are copied, so the colocated Flask API, tests, proxy source and migrations cannot be mistaken for website routes. GitHub Actions independently builds and deploys the same public content through Jekyll from **main**. The site uses standalone pages rather than a theme.
 
 ### Newsletter API
 
@@ -190,8 +191,10 @@ services/eudravigilance-proxy/     Optional Node proxy
 supabase/functions/ev-api-proxy/   Versioned Edge Function source
 tests/                             Backend and route regression tests
 .github/workflows/quality.yml      Pull-request quality gate
-.github/workflows/jekyll-gh-pages.yml  Production Pages deployment
-render.yaml                        Newsletter API deployment
+.github/workflows/jekyll-gh-pages.yml  GitHub Pages build/deployment path
+vercel.json                       bfab.io static production configuration
+scripts/build-static-site.mjs      Public-file deployment boundary
+render.yaml                       Newsletter API deployment
 ~~~
 
 ## Security and privacy

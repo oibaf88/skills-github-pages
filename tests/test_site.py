@@ -3,7 +3,7 @@ from pathlib import Path
 from urllib.parse import unquote, urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-IGNORED_PARTS = {".git", ".jekyll-cache", "node_modules", "vendor"}
+IGNORED_PARTS = {".git", ".jekyll-cache", "_site", "dist", "node_modules", "vendor"}
 
 
 class DocumentParser(HTMLParser):
