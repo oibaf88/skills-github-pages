@@ -4,7 +4,6 @@
   "installCommand": "",
   "buildCommand": "node scripts/build-static-site.mjs",
   "outputDirectory": "dist",
-  "trailingSlash": true,
   "headers": [
     {
       "source": "/(.*)",
