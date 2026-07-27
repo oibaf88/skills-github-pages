@@ -47,3 +47,8 @@ backend/.env
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Generated static output #
+###########################
+dist/
+_site/
