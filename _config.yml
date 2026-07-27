@@ -41,6 +41,8 @@ exclude:
   - supabase
   - scripts
   - docs
+  - dist
+  - _site
   - node_modules
   - vendor
   - .bundle
