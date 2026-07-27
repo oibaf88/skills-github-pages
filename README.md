@@ -1,150 +1,206 @@
-# eHealth Developer Portfolio
+# BFAB Digital Health Portfolio
 
-A personal portfolio website for **B. Fabio Mejías Fernández**, showcasing digital health development work, clinical software, and eHealth projects.
+Employer-facing portfolio for **B. Fabio Mejías Fernández**, a physician, clinical pharmacology resident and eHealth developer in Madrid.
 
-## 📋 Quick Navigation
+Production site: [https://bfab.io](https://bfab.io)
 
-- **🏠 [Homepage](index.html)** – Main portfolio landing page with hero section and overview
-- **📧 [Newsletter Signup](signup.html)** – Subscribe to updates about eHealth development and digital health tools
-- **❌ [404 Error Page](404.md)** – Custom error page for missing content
+## Portfolio release
 
-## ✨ Key Features
+**v2.0.0 — 2026-07-26**
 
-### Main Portfolio (`index.html`)
-- **Professional hero section** with gradient text effects
-- **About section** – Overview of the portfolio and learning path
-- **Focus areas** – Three pillars of work:
-  - Clinical software development
-  - Health data management and APIs
-  - AI-assisted tools for eHealth
-- **Development progress timeline** – Roadmap for portfolio evolution
-- **Blog section** – Technical notes and development logs
-- **Contact section** – Direct contact information and call-to-action
+This release replaces the original work-in-progress landing page with a versioned clinical-engineering portfolio:
 
-### Newsletter Signup (`signup.html`)
-- **Validation** – Client-side form validation for name and email
-- **Backend integration** – Sends subscriptions to Python API endpoint
-- **Privacy notice** – Clear data collection and usage policies
-- **Responsive design** – Works on all device sizes
+- evidence-linked project case studies;
+- a print-friendly public CV;
+- a canonical writing index and release notes;
+- explicit research, clinical and deployment boundaries;
+- an isolated newsletter API with minimal data collection;
+- hardened pharmacovigilance proxy implementations;
+- route, backend and Jekyll validation in CI.
 
-### Error Page (`404.md`)
-- **Custom 404 design** – Styled error page with decorative cat illustration
-- **Navigation helpers** – Links back to homepage and blog sections
-- **Multilingual support** – Spanish and English content
+See [CHANGELOG.md](CHANGELOG.md) for the complete history.
 
-## 🎯 Color Scheme & Design System
+## Public routes
 
-All pages use a **consistent techno/cyberpunk aesthetic** with these CSS variables:
+| Route | Purpose |
+|---|---|
+| / | Employer-focused portfolio and project evidence |
+| /cv/ | Public, print-friendly CV |
+| /blog/ | Canonical technical writing index |
+| /signup/ | Newsletter signup |
+| /privacy/ | Newsletter privacy notice |
+| /apps/eudravigilance-api/ | Restricted-access workbench boundary |
+| /apps/public-pv-api/ | Public pharmacovigilance aggregate explorer |
+| /.well-known/security.txt | Security contact |
+| /sitemap.xml | Search-engine route inventory |
+| /robots.txt | Crawler policy |
 
-| Variable | Value | Purpose |
-|----------|-------|---------|
-| `--accent` | `#00f5ff` | Primary cyan color, glows and highlights |
-| `--accent-2` | `#00ff9c` | Secondary green, accents and borders |
-| `--warning` | `#b8ff3d` | Yellow-green for alerts and labels |
-| `--danger` | `#ff173d` | Red for errors and warning states |
-| `--text` | `#f8fbff` | Main text color |
-| `--muted` | `#8ca0b8` | Secondary text color |
-| `--bg` | `#000000` | Pure black background |
-| `--card` | `rgba(2, 8, 14, 0.82)` | Card and section backgrounds |
+The historical PsychDeep and Python Email System posts remain available. New release posts explain how those prototypes evolved without rewriting their original dates or capabilities.
 
-## 📱 Responsive Breakpoints
+## Architecture
 
-- **Tablet** – `@media (max-width: 980px)` – Single column layout
-- **Mobile** – `@media (max-width: 720px)` – Adjusted navigation
-- **Small Mobile** – `@media (max-width: 520px)` – Minimal padding and sizing
+~~~text
+bfab.io
+  GitHub Pages + Jekyll
+  standalone HTML + CSS + browser JavaScript
+       |
+       +-- newsletter form
+       |     -> Render Flask API
+       |     -> Supabase newsletter_subscribers
+       |
+       +-- public pharmacovigilance workbench
+       |     -> public aggregate APIs and local files
+       |
+       +-- authorised EV proxy mode
+             -> Node proxy or Supabase Edge Function
+             -> fixed HTTPS origin + explicit path prefixes
+~~~
 
-## 🔗 Cross-References
+### Static site
 
-### From Homepage (`index.html`):
-- Link to newsletter signup: `<a href="/signup">`
-- Link to blog posts: See `#blog` section and internal links
-- Navigation menu anchors: `#about`, `#focus`, `#progress`, `#blog`, `#contact`
+GitHub Actions builds and deploys the Jekyll site from **main**. The site uses standalone pages rather than a theme. Repository-only backend, test and deployment files are excluded in **_config.yml**.
 
-### From Newsletter (`signup.html`):
-- Back to homepage: `<a href="/">Home</a>`
-- Homepage sections: `href="/#about"`, `href="/#focus"`, etc.
-- Blog section: `href="/#blog"`
+### Newsletter API
 
-### From 404 Page (`404.md`):
-- Back to homepage: `{{ '/' | relative_url }}`
-- Blog section: `{{ '/' | relative_url }}#blog`
-- **Note:** Uses Jekyll template syntax for GitHub Pages compatibility
+**app.py** provides:
 
-## ⚙️ Configuration
+- GET /healthz with release metadata;
+- POST /subscribe with exact consent validation;
+- a 16 KiB request limit;
+- an origin allowlist and browser security headers;
+- an off-screen honeypot;
+- email-conflict handling that does not overwrite or silently reactivate existing records;
+- generic internal errors and no user-agent storage.
 
-### `_config.yml`
-The site can be served as static files from GitHub Pages. Key settings:
-- **Theme**: No external theme; custom HTML/CSS
-- **Markdown processor**: kramdown, where Jekyll is enabled
-- **Static mode**: `.nojekyll` is present so GitHub Pages can serve the checked-in HTML directly
+The API uses the Supabase service-role key only on the server. The public site never receives that key.
 
-### `CNAME`
-Custom domain configuration for GitHub Pages.
+Required Render variables:
 
-## 📝 API Integration
+~~~dotenv
+APP_RELEASE=2.0.0
+NEWSLETTER_TABLE=newsletter_subscribers
+SUPABASE_URL=https://PROJECT.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=server-side-secret
+~~~
 
-The newsletter signup form connects to:
-```javascript
-const NEWSLETTER_API_ENDPOINT = "https://skills-github-pages-2.onrender.com/subscribe";
-```
+### Pharmacovigilance proxy
 
-**To configure:**
-1. Replace the endpoint URL with your deployed Python API
-2. Ensure CORS is properly configured on your backend
-3. Verify the API accepts POST requests with:
-   ```json
-   {
-     "name": "string",
-     "email": "string",
-     "consent": boolean,
-     "source": "bfab.io/signup"
-   }
-   ```
+The Node service and Supabase Edge Function enforce the same boundary:
 
-## 🧪 Form Validation Rules
+- HTTPS-only configured upstream;
+- exact origin preservation;
+- explicit allowed path prefixes;
+- encoded traversal and control-character rejection;
+- blocked redirects;
+- request and response size limits;
+- upstream timeout;
+- custom x-pv-proxy-token authentication;
+- no client-supplied destination or authorization header.
 
-The newsletter form validates:
-- ✅ **Name**: Must be greater than 2 characters
-- ✅ **Email**: Must match valid email format (`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
-- ✅ **Consent**: Must be explicitly accepted
-- ❌ **No passwords**: Never requested or stored
+Required Edge Function configuration is documented by variable name only:
 
-## 📄 Page Structure
+~~~dotenv
+EV_API_BASE_URL=https://authorised-upstream.example
+EV_API_ALLOWED_PATH_PREFIXES=/allowed/path,/another/allowed/path
+PV_PROXY_TOKEN=server-generated-secret
+EV_API_BEARER_TOKEN=optional-upstream-secret
+EV_API_STATIC_AUTH_HEADER=optional-name:value
+ALLOWED_ORIGINS=https://bfab.io,https://www.bfab.io
+~~~
 
-```
-/
-├── index.html                         # Main portfolio
-├── signup.html                        # Newsletter form
-├── signup/index.html                  # Clean /signup route
-├── blog/python-email-system/index.html # Static blog post
-├── blog/uservalidation/index.html     # Static blog post
-├── 404.md                             # Error page
-├── README.md                          # This file
-├── _config.yml                        # Optional GitHub Pages metadata
-├── .nojekyll                          # Serve static files directly
-├── CNAME                              # Custom domain
-└── LICENSE                            # MIT License
-```
+The proxy is for lawful, authorised access. Public pages must not claim that restricted EudraVigilance data is openly available.
 
-## 🚀 Development Progress
+## Project history
 
-| Date | Milestone | Status |
-|------|-----------|--------|
-| 2026-05-18 | Portfolio initialized | ✅ Complete |
-| TBD | Project gallery | 🚧 In progress |
-| TBD | Technical notes | 📋 Planned |
-| TBD | Blog posts | 📋 Planned |
+### PsychApp
 
-## 📧 Contact & Support
+- **v0.1 milestone — 2026-06-25:** first PsychDeep concept.
+- **v0.2.0 — 2026-07-23/26:** clinician-supervised research POC, synthetic data, explicit uncertainty and safety controls.
+- The current project is not a medical device, diagnostic service or crisis tool.
 
-- **Email**: [requests@bfab.io](mailto:requests@bfab.io)
-- **Newsletter**: [Subscribe via signup page](signup.html)
-- **GitHub**: [oibaf88](https://github.com/oibaf88)
+### Domain Mail
 
-## 📜 License
+- **v0.x — 2026-06-19/20:** object-oriented learning exercise and early Flask demo.
+- **v1.0 — 2026-07-03/04:** self-hosted IMAP/SMTP architecture.
+- **v1.1 — 2026-07-22:** bounded batch IMAP fetching.
+- **v1.2.0 — 2026-07-26:** isolated public showcase and hardened private live mode.
 
-This project is licensed under the **MIT License** – see [LICENSE](LICENSE) file for details.
+### Portfolio
 
----
+- **v1 — 2026-05-18:** initial work-in-progress site.
+- **v2.0.0 — 2026-07-26:** employer-facing narrative, CV, canonical blog, privacy/security documentation and cross-project release history.
 
-**© 2026 B. Fabio Mejías Fernández** | Built with ❤️ as a work in progress
+## Local development
+
+### Static site
+
+Any local static server is sufficient for most pages:
+
+~~~powershell
+py -3.14 -m http.server 4000
+~~~
+
+Open http://127.0.0.1:4000.
+
+A full Jekyll build is performed by GitHub Actions before deployment.
+
+### Newsletter API
+
+~~~powershell
+py -3.14 -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements-dev.txt
+$env:SUPABASE_URL = "https://PROJECT.supabase.co"
+$env:SUPABASE_SERVICE_ROLE_KEY = "server-side-secret"
+flask --app app run --debug
+~~~
+
+Never commit the real service-role key.
+
+## Validation
+
+~~~powershell
+ruff check app.py tests
+python -m compileall -q app.py tests
+python -m pytest -q
+node --check services/eudravigilance-proxy/server.js
+~~~
+
+CI validates:
+
+- newsletter behavior, privacy fields, idempotency, origin policy and error handling;
+- every checked-in internal page/resource link and anchor;
+- absence of duplicate legacy Jekyll posts;
+- Node proxy syntax;
+- the complete Jekyll build.
+
+## Repository map
+
+~~~text
+index.html                         Portfolio homepage
+cv/index.html                      Public CV
+blog/                              Canonical index and versioned posts
+apps/                              Browser pharmacovigilance tools
+signup/index.html                  Newsletter form
+privacy/index.html                 Newsletter privacy notice
+styles.css                         Shared design system
+blog-posts.css                     Article styles
+app.py                             Render newsletter API
+services/eudravigilance-proxy/     Optional Node proxy
+supabase/functions/ev-api-proxy/   Versioned Edge Function source
+tests/                             Backend and route regression tests
+.github/workflows/quality.yml      Pull-request quality gate
+.github/workflows/jekyll-gh-pages.yml  Production Pages deployment
+render.yaml                        Newsletter API deployment
+~~~
+
+## Security and privacy
+
+- Review [SECURITY.md](SECURITY.md) before changing proxy, newsletter or browser data flows.
+- Report vulnerabilities through GitHub private vulnerability reporting or the address in [security.txt](.well-known/security.txt).
+- Review the public [newsletter privacy notice](https://bfab.io/privacy/).
+- Do not submit patient data, health data, mailbox credentials, API tokens or restricted pharmacovigilance case data to public portfolio forms.
+
+## License
+
+The repository includes an MIT license. Portfolio text, identity and personal imagery should not be reused in a way that implies endorsement or authorship.
