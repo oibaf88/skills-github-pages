@@ -3,9 +3,9 @@ import re
 from datetime import datetime, timezone
 
 from flask import Flask, jsonify, make_response, request
-from supabase import Client, create_client
 from werkzeug.exceptions import HTTPException
 
+from supabase import Client, create_client
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
