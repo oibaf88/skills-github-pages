@@ -2,7 +2,6 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlparse
 
-
 ROOT = Path(__file__).resolve().parents[1]
 IGNORED_PARTS = {".git", ".jekyll-cache", "node_modules", "vendor"}
 
