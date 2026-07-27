@@ -52,7 +52,7 @@ jobs:
           check_page "/blog/portfolio-v2/" "Portfolio v2.0: evidence, versions and explicit limits"
           check_page "/blog/psychdeep/" "Historical context"
           check_page "/blog/python-email-system/" "synthetic public showcase"
-          check_page "/blog/uservalidation/" "Small user validation function"
+          check_page "/blog/uservalidation/" "Python // User validation"
           check_page "/apps/eudravigilance-api/" "EudraVigilance API Workbench"
           check_page "/apps/public-pv-api/" "Public PV API"
           check_page "/.well-known/security.txt" "Contact: mailto:requests@bfab.io"
