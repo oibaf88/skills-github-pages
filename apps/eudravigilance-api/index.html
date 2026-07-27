@@ -21,7 +21,299 @@
 <section class="pane" id="standards"><div class="container grid"><article class="panel"><h2>Implementation map</h2><p>This is the minimum serious architecture for a lawful version:</p><div class="box"><table><thead><tr><th>Layer</th><th>Standard/source</th><th>App implication</th></tr></thead><tbody><tr><td>ICSR exchange</td><td>ICH E2B(R3), ISO ICSR</td><td>Use structured case fields; no arbitrary free-text-only model.</td></tr><tr><td>EU PV process</td><td>GVP Module VI, IX, XV, XVI</td><td>Separate ICSR processing, signal workflow, safety communication and RMMs.</td></tr><tr><td>EU data access</td><td>EudraVigilance Access Policy</td><td>Use only authorised data scope for each stakeholder group.</td></tr><tr><td>Spanish PV</td><td>AEMPS / SEFV-H / NotificaRAM</td><td>Respect national reporting pathway and public-health role.</td></tr><tr><td>Analytics</td><td>Disproportionality as screening</td><td>Display ROR/PRR as exploratory signal detection support only.</td></tr></tbody></table></div></article><aside class="panel"><h2>Source links</h2><p><a href="https://www.ema.europa.eu/en/human-regulatory-overview/research-development/pharmacovigilance-research-development/eudravigilance" target="_blank" rel="noopener noreferrer">EMA EudraVigilance</a></p><p><a href="https://www.ema.europa.eu/en/human-regulatory-overview/research-development/pharmacovigilance-research-development/eudravigilance/access-eudravigilance-data" target="_blank" rel="noopener noreferrer">EMA access to EudraVigilance data</a></p><p><a href="https://www.ema.europa.eu/en/human-regulatory/post-authorisation/pharmacovigilance/good-pharmacovigilance-practices" target="_blank" rel="noopener noreferrer">EMA GVP</a></p><p><a href="https://www.adrreports.eu/en/index.html" target="_blank" rel="noopener noreferrer">Public ADR reports</a></p><p><a href="https://www.aemps.gob.es/medicamentos-de-uso-humano/farmacovigilancia-de-medicamentos-de-uso-humano/" target="_blank" rel="noopener noreferrer">AEMPS farmacovigilancia</a></p></aside></div></section>
 </main><footer><div class="container"><p>© 2026 B. Fabio Mejías Fernández. Prototype only; not an official EudraVigilance tool.</p></div></footer>
 <script>
-const PROXY='https://zzgavefdyzbukbrowzot.supabase.co/functions/v1/ev-api-proxy';const el=id=>document.getElementById(id);document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));b.classList.add('active');el(b.dataset.tab).classList.add('active')});async function proxyStatus(){const r=await fetch(PROXY);el('proxy-output').textContent=JSON.stringify(await r.json(),null,2)}async function proxyCall(){let payload={};try{payload=JSON.parse(el('proxy-body').value||'{}')}catch(e){el('proxy-output').textContent='Invalid JSON payload';return}const r=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json','x-pv-proxy-token':el('proxy-token').value},body:JSON.stringify({path:el('proxy-path').value,method:el('proxy-method').value,payload})});el('proxy-output').textContent=JSON.stringify(await r.json(),null,2)}async function directCall(){try{const headers={Accept:'application/json'};if(el('direct-token').value)headers.Authorization='Bearer '+el('direct-token').value;const r=await fetch(el('direct-url').value,{headers});let t=await r.text();try{t=JSON.stringify(JSON.parse(t),null,2)}catch(_){}el('direct-output').textContent=t}catch(e){el('direct-output').textContent='Request failed, often because browser CORS is not allowed: '+e.message}}el('check-proxy').onclick=proxyStatus;el('call-proxy').onclick=proxyCall;el('call-direct').onclick=directCall;
-let rows=[],cols={};const sample=`drug,reaction,cases,seriousness,reporter\nDrug A,Headache,128,Non-serious,HCP\nDrug A,Nausea,96,Non-serious,Consumer\nDrug A,Anaphylactic reaction,18,Serious,HCP\nDrug B,Headache,90,Non-serious,Consumer\nDrug B,Nausea,33,Non-serious,HCP\nDrug B,Anaphylactic reaction,4,Serious,HCP\nDrug C,Headache,52,Non-serious,Consumer\nDrug C,Nausea,77,Non-serious,Consumer\nDrug C,Anaphylactic reaction,3,Serious,HCP`;function sep(s){return s.includes('\t')?'\t':','}function parse(t){const lines=t.trim().split(/\r?\n/).filter(Boolean);if(!lines.length)return[];const d=sep(lines[0]);const h=lines[0].split(d).map(x=>x.trim());return lines.slice(1).map(line=>{const c=line.split(d).map(x=>x.trim());const o={};h.forEach((k,i)=>o[k]=c[i]||'');return o})}function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'')}function find(h,names){const hs=h.map(x=>[x,norm(x)]);for(const name of names){const n=norm(name);const hit=hs.find(x=>x[1]===n||x[1].includes(n));if(hit)return hit[0]}return null}function num(v){const x=Number(String(v||'').replace(/[^0-9.]/g,''));return Number.isFinite(x)?x:0}function group(key,count){const m=new Map();if(!key||!count)return m;rows.forEach(r=>m.set(r[key]||'Unknown',(m.get(r[key]||'Unknown')||0)+num(r[count])));return new Map([...m.entries()].sort((a,b)=>b[1]-a[1]))}function fill(id,m){const body=el(id);body.innerHTML='';[...m.entries()].slice(0,12).forEach(([k,v])=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${k}</td><td>${v}</td>`;body.appendChild(tr)});if(!body.children.length)body.innerHTML='<tr><td colspan="2">No compatible column.</td></tr>'}function opts(id,vals){el(id).innerHTML='';vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el(id).appendChild(o)})}function analyse(){rows=parse(el('data').value);const h=rows.length?Object.keys(rows[0]):[];cols={drug:find(h,['drug','product','medicine','substance','activeingredient']),reaction:find(h,['reaction','event','adr','pt','preferredterm']),count:find(h,['cases','count','number','n','total']),serious:find(h,['seriousness','serious','category']),reporter:find(h,['reporter','source'])};el('rows').textContent=rows.length;el('cols').textContent=h.length;el('cases').textContent=cols.count?rows.reduce((a,r)=>a+num(r[cols.count]),0):'--';el('detected').textContent=`drug=${cols.drug||'not found'} · event=${cols.reaction||'not found'} · count=${cols.count||'not found'} · seriousness=${cols.serious||'not found'}`;fill('top-events',group(cols.reaction,cols.count));fill('seriousness',group(cols.serious,cols.count));if(cols.drug)opts('drug',[...new Set(rows.map(r=>r[cols.drug]).filter(Boolean))].sort());if(cols.reaction)opts('event',[...new Set(rows.map(r=>r[cols.reaction]).filter(Boolean))].sort())}function safe(x){return x===0?0.5:x}function calc(){if(!cols.drug||!cols.reaction||!cols.count){el('metrics').textContent='Need drug/product, reaction/event and count columns.';return}const d0=el('drug').value,e0=el('event').value;let a=0,b=0,c=0,d=0;rows.forEach(r=>{const v=num(r[cols.count]),isD=r[cols.drug]===d0,isE=r[cols.reaction]===e0;if(isD&&isE)a+=v;else if(isD)b+=v;else if(isE)c+=v;else d+=v});const aa=safe(a),bb=safe(b),cc=safe(c),dd=safe(d);const ror=(aa*dd)/(bb*cc),prr=(aa/(aa+bb))/(cc/(cc+dd));const se=Math.sqrt(1/aa+1/bb+1/cc+1/dd),lo=Math.exp(Math.log(ror)-1.96*se),hi=Math.exp(Math.log(ror)+1.96*se);el('metrics').textContent=`ROR ${ror.toFixed(2)} (95% CI ${lo.toFixed(2)}-${hi.toFixed(2)}); PRR ${prr.toFixed(2)}. Exploratory screening only.`;el('matrix').innerHTML=`<tr><th></th><th>${e0}</th><th>Other events</th></tr><tr><th>${d0}</th><td>${a}</td><td>${b}</td></tr><tr><th>Other drugs</th><td>${c}</td><td>${d}</td></tr>`}el('parse').onclick=analyse;el('sample').onclick=()=>{el('data').value=sample;analyse()};el('calc').onclick=calc;proxyStatus();
+const PROXY = 'https://zzgavefdyzbukbrowzot.supabase.co/functions/v1/ev-api-proxy'
+const el = (id) => document.getElementById(id)
+
+document.querySelectorAll('.tab').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach((item) => item.classList.remove('active'))
+    document.querySelectorAll('.pane').forEach((item) => item.classList.remove('active'))
+    button.classList.add('active')
+    el(button.dataset.tab).classList.add('active')
+  })
+})
+
+async function proxyStatus() {
+  const response = await fetch(PROXY)
+  el('proxy-output').textContent = JSON.stringify(await response.json(), null, 2)
+}
+
+async function proxyCall() {
+  let payload = {}
+  try {
+    payload = JSON.parse(el('proxy-body').value || '{}')
+  } catch {
+    el('proxy-output').textContent = 'Invalid JSON payload'
+    return
+  }
+
+  const response = await fetch(PROXY, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-pv-proxy-token': el('proxy-token').value
+    },
+    body: JSON.stringify({
+      path: el('proxy-path').value,
+      method: el('proxy-method').value,
+      payload
+    })
+  })
+  el('proxy-output').textContent = JSON.stringify(await response.json(), null, 2)
+}
+
+async function directCall() {
+  try {
+    const headers = { Accept: 'application/json' }
+    if (el('direct-token').value) {
+      headers.Authorization = 'Bearer ' + el('direct-token').value
+    }
+    const response = await fetch(el('direct-url').value, { headers })
+    let text = await response.text()
+    try {
+      text = JSON.stringify(JSON.parse(text), null, 2)
+    } catch {}
+    el('direct-output').textContent = text
+  } catch (error) {
+    el('direct-output').textContent =
+      'Request failed, often because browser CORS is not allowed: ' + error.message
+  }
+}
+
+el('check-proxy').addEventListener('click', proxyStatus)
+el('call-proxy').addEventListener('click', proxyCall)
+el('call-direct').addEventListener('click', directCall)
+
+let rows = []
+let cols = {}
+
+const sample = [
+  'drug,reaction,cases,seriousness,reporter',
+  'Drug A,Headache,128,Non-serious,HCP',
+  'Drug A,Nausea,96,Non-serious,Consumer',
+  'Drug A,Anaphylactic reaction,18,Serious,HCP',
+  'Drug B,Headache,90,Non-serious,Consumer',
+  'Drug B,Nausea,33,Non-serious,HCP',
+  'Drug B,Anaphylactic reaction,4,Serious,HCP',
+  'Drug C,Headache,52,Non-serious,Consumer',
+  'Drug C,Nausea,77,Non-serious,Consumer',
+  'Drug C,Anaphylactic reaction,3,Serious,HCP'
+].join('\n')
+
+function separator(text) {
+  return text.includes('\t') ? '\t' : ','
+}
+
+function parse(text) {
+  const lines = text.trim().split(/\r?\n/).filter(Boolean)
+  if (!lines.length) return []
+
+  const delimiter = separator(lines[0])
+  const headers = lines[0].split(delimiter).map((value) => value.trim())
+
+  return lines.slice(1).map((line) => {
+    const cells = line.split(delimiter).map((value) => value.trim())
+    const record = {}
+    headers.forEach((key, index) => {
+      record[key] = cells[index] || ''
+    })
+    return record
+  })
+}
+
+function normalise(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
+function find(headers, names) {
+  const normalisedHeaders = headers.map((header) => [header, normalise(header)])
+  for (const name of names) {
+    const normalisedName = normalise(name)
+    const hit = normalisedHeaders.find((header) => (
+      header[1] === normalisedName || header[1].includes(normalisedName)
+    ))
+    if (hit) return hit[0]
+  }
+  return null
+}
+
+function numberValue(value) {
+  const number = Number(String(value || '').replace(/[^0-9.]/g, ''))
+  return Number.isFinite(number) ? number : 0
+}
+
+function group(key, count) {
+  const values = new Map()
+  if (!key || !count) return values
+
+  rows.forEach((row) => {
+    const label = row[key] || 'Unknown'
+    values.set(label, (values.get(label) || 0) + numberValue(row[count]))
+  })
+
+  return new Map([...values.entries()].sort((left, right) => right[1] - left[1]))
+}
+
+function createCell(tagName, value) {
+  const cell = document.createElement(tagName)
+  cell.textContent = String(value ?? '')
+  return cell
+}
+
+function appendRow(tableBody, cells) {
+  const row = document.createElement('tr')
+  cells.forEach((cell) => row.appendChild(cell))
+  tableBody.appendChild(row)
+}
+
+function emptyTableRow(tableBody, message, columnCount = 2) {
+  const cell = createCell('td', message)
+  cell.colSpan = columnCount
+  const row = document.createElement('tr')
+  row.appendChild(cell)
+  tableBody.replaceChildren(row)
+}
+
+function fill(id, values) {
+  const tableBody = el(id)
+  tableBody.replaceChildren()
+
+  ;[...values.entries()].slice(0, 12).forEach(([key, value]) => {
+    appendRow(tableBody, [
+      createCell('td', key),
+      createCell('td', value)
+    ])
+  })
+
+  if (!tableBody.children.length) {
+    emptyTableRow(tableBody, 'No compatible column.')
+  }
+}
+
+function options(id, values) {
+  const select = el(id)
+  select.replaceChildren()
+
+  values.forEach((value) => {
+    const option = document.createElement('option')
+    option.value = value
+    option.textContent = value
+    select.appendChild(option)
+  })
+}
+
+function analyse() {
+  rows = parse(el('data').value)
+  const headers = rows.length ? Object.keys(rows[0]) : []
+
+  cols = {
+    drug: find(headers, ['drug', 'product', 'medicine', 'substance', 'activeingredient']),
+    reaction: find(headers, ['reaction', 'event', 'adr', 'pt', 'preferredterm']),
+    count: find(headers, ['cases', 'count', 'number', 'n', 'total']),
+    serious: find(headers, ['seriousness', 'serious', 'category']),
+    reporter: find(headers, ['reporter', 'source'])
+  }
+
+  el('rows').textContent = rows.length
+  el('cols').textContent = headers.length
+  el('cases').textContent = cols.count
+    ? rows.reduce((total, row) => total + numberValue(row[cols.count]), 0)
+    : '--'
+  el('detected').textContent = [
+    'drug=' + (cols.drug || 'not found'),
+    'event=' + (cols.reaction || 'not found'),
+    'count=' + (cols.count || 'not found'),
+    'seriousness=' + (cols.serious || 'not found')
+  ].join(' · ')
+
+  fill('top-events', group(cols.reaction, cols.count))
+  fill('seriousness', group(cols.serious, cols.count))
+
+  if (cols.drug) {
+    options('drug', [...new Set(rows.map((row) => row[cols.drug]).filter(Boolean))].sort())
+  }
+  if (cols.reaction) {
+    options('event', [...new Set(rows.map((row) => row[cols.reaction]).filter(Boolean))].sort())
+  }
+}
+
+function safe(number) {
+  return number === 0 ? 0.5 : number
+}
+
+function renderMatrix(drug, event, a, b, c, d) {
+  const tableBody = el('matrix')
+  tableBody.replaceChildren()
+
+  appendRow(tableBody, [
+    createCell('th', ''),
+    createCell('th', event),
+    createCell('th', 'Other events')
+  ])
+  appendRow(tableBody, [
+    createCell('th', drug),
+    createCell('td', a),
+    createCell('td', b)
+  ])
+  appendRow(tableBody, [
+    createCell('th', 'Other drugs'),
+    createCell('td', c),
+    createCell('td', d)
+  ])
+}
+
+function calculate() {
+  if (!cols.drug || !cols.reaction || !cols.count) {
+    el('metrics').textContent = 'Need drug/product, reaction/event and count columns.'
+    return
+  }
+
+  const selectedDrug = el('drug').value
+  const selectedEvent = el('event').value
+  let a = 0
+  let b = 0
+  let c = 0
+  let d = 0
+
+  rows.forEach((row) => {
+    const value = numberValue(row[cols.count])
+    const isDrug = row[cols.drug] === selectedDrug
+    const isEvent = row[cols.reaction] === selectedEvent
+
+    if (isDrug && isEvent) a += value
+    else if (isDrug) b += value
+    else if (isEvent) c += value
+    else d += value
+  })
+
+  const adjustedA = safe(a)
+  const adjustedB = safe(b)
+  const adjustedC = safe(c)
+  const adjustedD = safe(d)
+  const ror = (adjustedA * adjustedD) / (adjustedB * adjustedC)
+  const prr = (adjustedA / (adjustedA + adjustedB)) /
+    (adjustedC / (adjustedC + adjustedD))
+  const standardError = Math.sqrt(
+    1 / adjustedA + 1 / adjustedB + 1 / adjustedC + 1 / adjustedD
+  )
+  const low = Math.exp(Math.log(ror) - 1.96 * standardError)
+  const high = Math.exp(Math.log(ror) + 1.96 * standardError)
+
+  el('metrics').textContent =
+    'ROR ' + ror.toFixed(2) +
+    ' (95% CI ' + low.toFixed(2) + '-' + high.toFixed(2) +
+    '); PRR ' + prr.toFixed(2) +
+    '. Exploratory screening only.'
+
+  renderMatrix(selectedDrug, selectedEvent, a, b, c, d)
+}
+
+el('parse').addEventListener('click', analyse)
+el('sample').addEventListener('click', () => {
+  el('data').value = sample
+  analyse()
+})
+el('calc').addEventListener('click', calculate)
+proxyStatus()
 </script>
 </body></html>

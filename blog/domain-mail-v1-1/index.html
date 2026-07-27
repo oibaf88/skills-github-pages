@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Domain Mail v1.1 performance note on batching IMAP FETCH operations for mailbox summaries.">
+  <link rel="canonical" href="https://bfab.io/blog/domain-mail-v1-1/">
+  <meta property="og:title" content="Domain Mail v1.1: removing the IMAP N+1 path">
+  <meta property="og:description" content="Domain Mail v1.1 performance note on batching IMAP FETCH operations for mailbox summaries.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/domain-mail-v1-1/">
+  <title>Domain Mail v1.1: removing the IMAP N+1 path | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Domain Mail v1.1: removing the IMAP N+1 path","description":"Domain Mail v1.1 performance note on batching IMAP FETCH operations for mailbox summaries.","datePublished":"2026-07-22","dateModified":"2026-07-26","mainEntityOfPage":"https://bfab.io/blog/domain-mail-v1-1/","author":{"@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Performance milestone // Domain Mail</span></div>
+        <h1><span class="gradient-text">Domain Mail v1.1</span>: batch the mailbox</h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata">
+          <span class="pill">Merged milestone // <time datetime="2026-07-22">2026-07-22</time></span><span class="pill">Change // batch IMAP FETCH</span><span class="pill">Evidence // pull request #5</span><span class="pill">Release tag // none claimed</span>
+        </div>
+        <p class="lead">The mailbox summary path originally behaved like an N+1 query: one operation found message identifiers and additional fetches assembled each summary. v1.1 replaced that pattern with batched IMAP FETCH work.</p>
+        <div class="actions"><a class="button button-primary" href="https://github.com/oibaf88/email-client/pull/5" target="_blank" rel="noopener noreferrer">Inspect pull request #5</a><a class="button button-secondary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">Email client repository</a><a class="button button-secondary" href="/blog/domain-mail-v1-2/">Continue to v1.2</a></div>
+        <section class="content-card"><h2>The engineering change</h2><p>Batching message-summary fields reduces protocol round trips and keeps mailbox listing cost closer to the number of batches than the number of messages. The result is a narrower, measurable performance improvement without changing the visible mail workflow.</p></section><section class="content-card"><h2>Why it matters for product quality</h2><ul><li>Lower latency on inbox rendering, especially across remote mail servers.</li><li>Less connection chatter and fewer opportunities for partial per-message failure.</li><li>A clearer place to add pagination, caching and bounded mailbox windows later.</li><li>A concrete example of tracing a UI symptom back through an external protocol.</li></ul></section><section class="content-card"><h2>Repository truth</h2><p>Pull request #5 is the evidence for this milestone. The repository does not show a corresponding formal v1.1 tag or release, so this post describes a merged engineering milestone rather than inventing a packaged release.</p></section><section class="content-card"><h2>Next version</h2><p>The following iteration addresses a different risk: a public demo should not require or accidentally consume real mailbox credentials. v1.2 separates a synthetic showcase from live mode.</p></section>
+        <div class="actions"><a class="button button-primary" href="/blog/">All writing</a><a class="button button-secondary" href="/">Portfolio home</a></div>
+      </article>
+      <aside class="side-card side-card-featured" aria-label="Release summary">
+        <h2>Release summary</h2>
+        <div class="side-list">
+          <div><span>Milestone</span><strong>2026-07-22</strong></div><div><span>Bottleneck</span><strong>IMAP N+1</strong></div><div><span>Fix</span><strong>Batched FETCH</strong></div><div><span>Evidence</span><strong>Merged PR #5</strong></div><div><span>Release status</span><strong>No tag claimed</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>

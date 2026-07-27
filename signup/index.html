@@ -1,53 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Newsletter signup for B. Fabio Mejías Fernández eHealth developer portfolio." />
-  <title>Newsletter Signup | B. Fabio Mejías Fernández</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Subscribe to release notes from B. Fabio Mejías Fernández's digital health portfolio.">
+  <meta name="theme-color" content="#05080f">
+  <link rel="canonical" href="https://bfab.io/signup/">
+  <title>Newsletter | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .privacy-copy { color: var(--muted); font-size: .82rem; line-height: 1.6; }
+  </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container nav">
-      <a href="/" class="brand" aria-label="Homepage">
-        <span class="brand-mark">eH</span>
-        <span>B. Fabio Mejías Fernández</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/#about">About</a>
-        <a href="/#focus">Focus</a>
-        <a href="/#progress">Progress</a>
-        <a href="/#blog">Blog</a>
-        <a href="/#contact">Contact</a>
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/#approach">Approach</a><a href="/#evolution">Evolution</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <div class="container newsletter-layout">
       <section class="copy">
-        <div class="eyebrow">
-          <span class="eyebrow-dot"></span>
-          <span>Newsletter // Validation + database</span>
-        </div>
-        <h1><span class="gradient-text">Join</span> newsletter</h1>
-        <p class="lead">
-          Subscribe to receive notes about eHealth development, Python, digital health tools and clinical software experiments.
-          The form validates name and email before sending the subscription to a Python API.
-        </p>
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Release notes // occasional updates</span></div>
+        <h1>Follow the <span class="gradient-text">build history</span></h1>
+        <p class="lead">Receive concise notes when PsychApp, Domain Mail, the pharmacovigilance workbench or this portfolio reaches a meaningful new version.</p>
         <div class="notice">
-          <strong>Privacy note:</strong> this form only collects name and email for the newsletter. Do not submit health data.
-          The backend stores the subscription in a database and can later be extended with double opt-in.
+          <strong>Minimal collection:</strong> the form stores only your name, email address, consent time and the signup source. It does not collect passwords, health information or browser fingerprints.
         </div>
-        <div class="rules-card" aria-label="Validation rules">
-          <h2>Validation rules</h2>
+        <div class="rules-card" aria-label="Subscription principles">
+          <h2>What to expect</h2>
           <ul class="rules-list">
-            <li>Name must be greater than 2 characters.</li>
-            <li>Email must have a valid email format.</li>
-            <li>Consent checkbox must be accepted before submitting.</li>
-            <li>No password is requested or stored for newsletter subscription.</li>
+            <li>Product and engineering release notes, not high-frequency marketing.</li>
+            <li>Clear separation between prototypes, research work and validated products.</li>
+            <li>An unsubscribe route handled by contacting <a href="mailto:requests@bfab.io?subject=Newsletter%20unsubscribe">requests@bfab.io</a> until self-service controls are added.</li>
+            <li>No sale of subscriber data.</li>
           </ul>
         </div>
       </section>
@@ -55,31 +47,38 @@
       <section class="newsletter-card" aria-label="Newsletter signup form">
         <div class="form-header">
           <h2>Newsletter signup</h2>
-          <p>Validate input and send the subscription to the Python backend.</p>
+          <p>Consent is required and duplicate submissions do not overwrite an existing subscription record.</p>
         </div>
 
         <form id="newsletter-form" novalidate>
           <label for="name">
             Name
-            <input id="name" name="name" type="text" autocomplete="name" placeholder="B. Fabio" required />
-            <span class="helper">Minimum: 3 characters.</span>
+            <input id="name" name="name" type="text" autocomplete="name" minlength="3" maxlength="120" placeholder="B. Fabio" required>
+            <span class="helper">3–120 characters.</span>
           </label>
 
           <label for="email">
             Email
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="requests@bfab.io" required />
-            <span class="helper">Use a standard email format.</span>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="requests@bfab.io" required>
+            <span class="helper">Used only for portfolio release notes.</span>
           </label>
+
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
 
           <label class="checkbox-row" for="consent">
-            <input id="consent" name="consent" type="checkbox" required />
-            <span>I consent to receive the newsletter and to have my name and email stored for this purpose.</span>
+            <input id="consent" name="consent" type="checkbox" required>
+            <span>I consent to the storage of my name and email for portfolio release notes.</span>
           </label>
 
+          <p class="privacy-copy">See the <a href="/privacy/">privacy notice</a> for purpose, processors, retention and contact details. Do not submit health or confidential information.</p>
           <p id="error-message" class="error-message" aria-live="polite"></p>
 
           <div class="button-row">
-            <button class="button button-primary" type="submit">Subscribe</button>
+            <button class="button button-primary" id="submit-button" type="submit">Subscribe</button>
             <button class="button button-secondary" type="reset">Reset</button>
           </div>
         </form>
@@ -92,49 +91,41 @@
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>© 2026 B. Fabio Mejías Fernández. eHealth Developer Portfolio.</p>
-    </div>
-  </footer>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Built with explicit scope and version history.</p><div class="footer-links"><a href="/privacy/">Privacy</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
 
   <script>
     const NEWSLETTER_API_ENDPOINT = "https://skills-github-pages-2.onrender.com/subscribe";
 
+    const form = document.querySelector("#newsletter-form");
+    const nameInput = document.querySelector("#name");
+    const emailInput = document.querySelector("#email");
+    const websiteInput = document.querySelector("#website");
+    const consentInput = document.querySelector("#consent");
+    const submitButton = document.querySelector("#submit-button");
+    const errorMessage = document.querySelector("#error-message");
+    const resultCard = document.querySelector("#result-card");
+    const resultTitle = document.querySelector("#result-title");
+    const resultOutput = document.querySelector("#result-output");
+
     function validateName(name) {
-      return typeof name === "string" && name.trim().length > 2;
+      const normalized = typeof name === "string" ? name.trim() : "";
+      return normalized.length >= 3 && normalized.length <= 120;
     }
 
     function validateEmail(email) {
-      if (typeof email !== "string") return false;
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+      const normalized = typeof email === "string" ? email.trim() : "";
+      return normalized.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
     }
 
-    function validateNewsletterUser(name, email, consent) {
-      if (!validateName(name)) {
-        throw new Error("Please make sure your name is greater than 2 characters.");
-      }
-      if (!validateEmail(email)) {
-        throw new Error("Your email address is in the incorrect format, please enter a valid email.");
-      }
-      if (consent !== true) {
-        throw new Error("Please accept the newsletter consent checkbox before subscribing.");
-      }
-      return true;
+    function validateSubmission(name, email, consent) {
+      if (!validateName(name)) throw new Error("Enter a name between 3 and 120 characters.");
+      if (!validateEmail(email)) throw new Error("Enter a valid email address.");
+      if (consent !== true) throw new Error("Accept the consent checkbox before subscribing.");
     }
-
-    const form = document.getElementById("newsletter-form");
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const consentInput = document.getElementById("consent");
-    const errorMessage = document.getElementById("error-message");
-    const resultCard = document.getElementById("result-card");
-    const resultTitle = document.getElementById("result-title");
-    const resultOutput = document.getElementById("result-output");
 
     function setInputState(input, isValid) {
       input.classList.remove("valid", "invalid");
-      if (input.value.length === 0) return;
+      if (!input.value.length) return;
       input.classList.add(isValid ? "valid" : "invalid");
     }
 
@@ -143,82 +134,77 @@
       setInputState(emailInput, validateEmail(emailInput.value));
     }
 
-    function getApiErrorMessage(payload) {
-      if (!payload) return "Newsletter subscription failed.";
-      if (typeof payload.detail === "string") return payload.detail;
-      if (payload.detail && typeof payload.detail === "object") {
-        if (payload.detail.error_type || payload.detail.error_message) {
-          return `${payload.detail.error_type || "Error"}: ${payload.detail.error_message || "Unknown backend error."}`;
-        }
-        return JSON.stringify(payload.detail, null, 2);
-      }
-      if (typeof payload.message === "string") return payload.message;
-      if (typeof payload.error === "string") return payload.error;
-      return JSON.stringify(payload, null, 2);
+    function apiErrorMessage(payload) {
+      if (payload && typeof payload.error === "string") return payload.error;
+      if (payload && typeof payload.message === "string") return payload.message;
+      return "Newsletter subscription failed.";
     }
 
-    [nameInput, emailInput].forEach((input) => {
-      input.addEventListener("input", refreshInputStates);
-    });
+    [nameInput, emailInput].forEach((input) => input.addEventListener("input", refreshInputStates));
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-
       const name = nameInput.value;
       const email = emailInput.value;
       const consent = consentInput.checked;
 
       refreshInputStates();
       errorMessage.textContent = "";
+      resultCard.className = "result-card";
+      submitButton.disabled = true;
+      submitButton.textContent = "Subscribing…";
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
 
       try {
-        validateNewsletterUser(name, email, consent);
-
+        validateSubmission(name, email, consent);
         const response = await fetch(NEWSLETTER_API_ENDPOINT, {
           method: "POST",
           mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
+          signal: controller.signal,
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify({
             name: name.trim(),
             email: email.trim(),
-            consent: consent,
+            website: websiteInput.value,
+            consent,
             source: "bfab.io/signup"
           })
         });
 
         const responseText = await response.text();
         let payload = {};
-
         try {
           payload = responseText ? JSON.parse(responseText) : {};
         } catch {
-          payload = { message: responseText || "Newsletter subscription failed." };
+          payload = {};
         }
-
-        if (!response.ok) {
-          throw new Error(getApiErrorMessage(payload));
-        }
+        if (!response.ok) throw new Error(apiErrorMessage(payload));
 
         resultCard.className = "result-card visible success";
-        resultTitle.textContent = "subscribed correctly!";
-        resultOutput.textContent = "";
+        resultTitle.textContent = "Request recorded";
+        resultOutput.textContent = payload.message || "If eligible, the subscription has been recorded.";
+        form.reset();
+        refreshInputStates();
       } catch (error) {
+        const message = error.name === "AbortError"
+          ? "The newsletter service took too long to respond. Please try again."
+          : (error.message || "Newsletter subscription failed.");
         resultCard.className = "result-card visible failure";
         resultTitle.textContent = "Subscription failed";
-        resultOutput.textContent = error.message || "Newsletter subscription failed.";
-        errorMessage.textContent = error.message || "Newsletter subscription failed.";
+        resultOutput.textContent = message;
+        errorMessage.textContent = message;
+      } finally {
+        clearTimeout(timeout);
+        submitButton.disabled = false;
+        submitButton.textContent = "Subscribe";
       }
     });
 
     form.addEventListener("reset", () => {
       setTimeout(() => {
-        [nameInput, emailInput].forEach((input) => {
-          input.classList.remove("valid", "invalid");
-        });
-        consentInput.checked = false;
+        [nameInput, emailInput].forEach((input) => input.classList.remove("valid", "invalid"));
         errorMessage.textContent = "";
         resultCard.className = "result-card";
         resultTitle.textContent = "Result";

@@ -1,0 +1,5 @@
+Contact: mailto:requests@bfab.io
+Expires: 2027-07-26T23:59:59Z
+Preferred-Languages: en, es
+Canonical: https://bfab.io/.well-known/security.txt
+Policy: https://github.com/oibaf88/skills-github-pages/security/policy

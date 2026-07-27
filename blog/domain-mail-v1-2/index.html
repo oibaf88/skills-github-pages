@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Domain Mail v1.2 release-candidate note on separating synthetic showcase behavior from live IMAP and SMTP mode.">
+  <link rel="canonical" href="https://bfab.io/blog/domain-mail-v1-2/">
+  <meta property="og:title" content="Domain Mail v1.2: a safe public showcase">
+  <meta property="og:description" content="Domain Mail v1.2 release-candidate note on separating synthetic showcase behavior from live IMAP and SMTP mode.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/domain-mail-v1-2/">
+  <title>Domain Mail v1.2: a safe public showcase | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Domain Mail v1.2: a safe public showcase","description":"Domain Mail v1.2 release-candidate note on separating synthetic showcase behavior from live IMAP and SMTP mode.","datePublished":"2026-07-26","dateModified":"2026-07-26","mainEntityOfPage":"https://bfab.io/blog/domain-mail-v1-2/","author":{"@type":"Person","name":"B. Fabio Mejías Fernández","url":"https://bfab.io/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>Release candidate // Safe showcase</span></div>
+        <h1><span class="gradient-text">Domain Mail v1.2</span>: demo without credentials</h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata">
+          <span class="pill">Prepared // <time datetime="2026-07-26">2026-07-26</time></span><span class="pill">Mode // showcase | live</span><span class="pill">Public data // synthetic</span><span class="pill">Deployment // not claimed</span>
+        </div>
+        <p class="lead">v1.2 introduces an explicit product boundary: employers can inspect a realistic webmail workflow in showcase mode without the service parsing passwords, connecting to IMAP or SMTP, or touching Supabase.</p>
+        <div class="actions"><a class="button button-primary" href="https://github.com/oibaf88/email-client/tree/codex/email-client-v1.2.0" target="_blank" rel="noopener noreferrer">Review the v1.2 branch</a><a class="button button-secondary" href="https://github.com/oibaf88/email-client" target="_blank" rel="noopener noreferrer">Email client repository</a><a class="button button-secondary" href="/blog/domain-mail-v1-1/">Read v1.1</a></div>
+        <section class="content-card"><h2>Showcase mode</h2><ul><li>Starts with synthetic mailbox content and an explicit demonstration banner.</li><li>Does not parse or retain real mailbox passwords.</li><li>Does not open IMAP, SMTP or Supabase connections.</li><li>Simulates read, unread, delete, send and reset workflows for interface evaluation.</li></ul></section><section class="content-card"><h2>Live mode remains a separate trust boundary</h2><ul><li>Rotates the session on login and includes CSRF protection on authentication.</li><li>Fails closed on production secret and cookie configuration.</li><li>Adds request limits, CSP and security headers.</li><li>Exposes separate liveness and readiness endpoints for operations.</li></ul></section><section class="content-card"><h2>Deployment design</h2><p>The Render blueprint is intentionally showcase-only, uses one worker and contains no mail or Supabase secrets. This makes the public deployment contract safer and easier to audit.</p><p>At publication time the v1.2 branch is prepared but this post does not claim that the historical Render URL already runs it. The deployed commit and mode must be revalidated before labeling that URL v1.2.</p></section><section class="content-card"><h2>Why this is stronger portfolio evidence</h2><p>A safe showcase demonstrates product judgment as well as UI work: the public evaluator gets a useful experience, while live credentials and infrastructure stay outside the demonstration boundary.</p></section>
+        <div class="actions"><a class="button button-primary" href="/blog/">All writing</a><a class="button button-secondary" href="/">Portfolio home</a></div>
+      </article>
+      <aside class="side-card side-card-featured" aria-label="Release summary">
+        <h2>Release summary</h2>
+        <div class="side-list">
+          <div><span>Prepared</span><strong>2026-07-26</strong></div><div><span>Public mode</span><strong>Synthetic showcase</strong></div><div><span>Live protocols</span><strong>Isolated</strong></div><div><span>Render blueprint</span><strong>No mail secrets</strong></div><div><span>Deployment</span><strong>Requires verification</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>
