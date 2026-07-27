@@ -263,9 +263,7 @@ async function readLimitedRequestBody(request: Request): Promise<string> {
     if (totalBytes > MAX_REQUEST_BYTES) {
       try {
         await reader.cancel()
-      } catch {
-        // The size error remains authoritative if stream cancellation also fails.
-      }
+      } catch {}
       throw new RequestLimitError("Request body exceeded the configured limit")
     }
 
@@ -312,9 +310,7 @@ async function readLimitedBody(
       controller.abort()
       try {
         await reader.cancel()
-      } catch {
-        // The response limit error remains authoritative.
-      }
+      } catch {}
       throw new UpstreamLimitError("Upstream response exceeded the configured limit")
     }
 
