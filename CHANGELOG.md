@@ -12,7 +12,8 @@ Status: release candidate on `codex/portfolio-v2-20260726`. The version is only 
 - Public evidence-linked CV at `/cv/`.
 - Blog index and version notes for PsychApp, Domain Mail and Portfolio v2.
 - Honest PsychApp v0.1 retrospective preserving the original 2026-06-25 post.
-- `robots.txt`, `sitemap.xml`, this changelog and a security disclosure policy.
+- `robots.txt`, `sitemap.xml`, this changelog, a security disclosure policy and a newsletter privacy notice.
+- Python 3.14.6 quality gates for the backend, internal links and full Jekyll build.
 - Version-controlled hardened Supabase `ev-api-proxy` Edge Function and function configuration.
 
 ### Security
@@ -24,6 +25,8 @@ Status: release candidate on `codex/portfolio-v2-20260726`. The version is only 
 - DOM rendering with nodes and `textContent` for API and CSV-derived values.
 - Exact newsletter consent, bounded inputs, compatible Supabase fields and idempotent email upsert.
 - Generic internal errors while preserving normal HTTP error status codes.
+- Minimal newsletter records with no browser fingerprint and duplicate-safe insertion.
+- Restricted Supabase trigger-function execution and immutable function search paths.
 
 ### Removed
 
@@ -35,5 +38,4 @@ Status: release candidate on `codex/portfolio-v2-20260726`. The version is only 
 
 ### Retained deliberately
 
-- Both newsletter backend implementations until the active production service is independently verified.
 - Existing historical blog posts without rewriting their original claims or dates.
