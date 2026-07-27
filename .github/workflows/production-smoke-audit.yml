@@ -1,0 +1,67 @@
+name: Production smoke audit
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Verify bfab.io routes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_page() {
+            local route="$1"
+            local marker="$2"
+            local output
+            output="$(mktemp)"
+
+            for attempt in {1..12}; do
+              if curl --fail --silent --show-error --location --max-time 20 "https://bfab.io$route" -o "$output" \
+                && grep --fixed-strings --quiet "$marker" "$output"; then
+                printf 'PASS %s\n' "$route"
+                rm -f "$output"
+                return 0
+              fi
+              printf 'WAIT %s attempt %s/12\n' "$route" "$attempt"
+              sleep 10
+            done
+
+            printf 'FAIL %s missing marker: %s\n' "$route" "$marker"
+            head -c 600 "$output"
+            rm -f "$output"
+            return 1
+          }
+
+          check_page "/" "Clinical insight, production-minded software"
+          check_page "/blog/" "Writing & release notes"
+          check_page "/cv/" "Public CV"
+          check_page "/privacy/" "Privacy Notice"
+          check_page "/signup/" "Newsletter"
+          check_page "/blog/psychapp-v0-1-retrospective/" "PsychApp v0.1 retrospective"
+          check_page "/blog/psychapp-v0-2/" "PsychApp v0.2: rebuilding around clinical supervision"
+          check_page "/blog/domain-mail-v1/" "Domain Mail v1.0: from Python model to mail architecture"
+          check_page "/blog/domain-mail-v1-1/" "Domain Mail v1.1: removing the IMAP N+1 path"
+          check_page "/blog/domain-mail-v1-2/" "Domain Mail v1.2: a safe public showcase"
+          check_page "/blog/portfolio-v2/" "Portfolio v2.0: evidence, versions and explicit limits"
+          check_page "/blog/psychdeep/" "Historical context"
+          check_page "/blog/python-email-system/" "synthetic public showcase"
+          check_page "/blog/uservalidation/" "Small user validation function"
+          check_page "/apps/eudravigilance-api/" "EudraVigilance API Workbench"
+          check_page "/apps/public-pv-api/" "Public PV API"
+          check_page "/.well-known/security.txt" "Contact: mailto:requests@bfab.io"
+          check_page "/.well-known/microsoft-identity-association" "associatedApplications"
+          check_page "/sitemap.xml" "https://bfab.io/blog/portfolio-v2/"
+          check_page "/robots.txt" "Sitemap: https://bfab.io/sitemap.xml"
+
+          if curl --fail --silent --show-error --location "https://bfab.io/blog/uservalidation/" \
+            | grep --fixed-strings --quiet "&lt;!DOCTYPE html&gt;"; then
+            echo "FAIL /blog/uservalidation/ contains rendered legacy HTML source"
+            exit 1
+          fi
