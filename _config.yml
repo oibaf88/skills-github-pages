@@ -31,6 +31,7 @@ exclude:
   - app.py
   - Dockerfile
   - render.yaml
+  - vercel.json
   - requirements.txt
   - requirements-dev.txt
   - pyproject.toml
