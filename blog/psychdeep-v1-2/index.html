@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PsychDeep 1.2 current architecture and repository status: deterministic risk engine, patient-specific baselines, clinician correction, traceable LLM analysis and deployment boundaries.">
+  <link rel="canonical" href="https://bfab.io/blog/psychdeep-v1-2/">
+  <meta property="og:title" content="PsychDeep 1.2 — current architecture | B. Fabio Mejías Fernández">
+  <meta property="og:description" content="Current repository state, architecture, verification and clinical limits of PsychDeep 1.2.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://bfab.io/blog/psychdeep-v1-2/">
+  <title>PsychDeep 1.2 — current architecture | B. Fabio Mejías Fernández</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/blog-posts.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container post-layout">
+      <article class="post">
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>PsychDeep 1.2 // current architecture // repository state</span></div>
+        <h1>PsychDeep <span class="gradient-text">1.2</span></h1>
+        <div class="post-meta post-meta-panel" aria-label="Post metadata summary">
+          <span class="pill">Updated // <time datetime="2026-08-26">2026-08-26</time></span>
+          <span class="pill">Status // active development prototype</span>
+          <span class="pill">Domain // digital mental health</span>
+          <span class="pill">Source // master branch</span>
+        </div>
+
+        <p class="lead">PsychDeep 1.2 is a research and development prototype for longitudinal self-report, professional follow-up and risk monitoring in stimulant-use and chemsex contexts. Its central design decision is that language models may converse, extract structured signals and assist a clinician, but they do <strong>not</strong> decide the risk level. The final 0–4 level comes from an explicit deterministic rule engine whose inputs and calculation trace remain inspectable.</p>
+
+        <div class="actions">
+          <a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">PsychDeep ↗</a>
+          <a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+          <a class="button button-secondary" href="/blog/psychdeep/">Original 2026-06 concept note</a>
+        </div>
+
+        <section class="content-card">
+          <h2>What is implemented now</h2>
+          <p>The current master branch is substantially different from the early PsychApp prototypes documented in June and July. It contains a patient-facing application, professional views for therapists and supervisors, clinical-administration functions, longitudinal check-ins, diary and chat data, a safety plan, a grounding/urge-surfing interface, audit trails and a deterministic risk pipeline.</p>
+          <ul>
+            <li><strong>17 deterministic risk rules.</strong> Each assessment persists the selected rule, the evidence used and an immutable calculation trace rather than asking an LLM to produce a clinical severity label.</li>
+            <li><strong>Three LLM roles.</strong> A conversational agent, one merged structured analyser for linguistic and psychosocial information, and a read-only clinical copilot for the therapist.</li>
+            <li><strong>Patient-specific baselines.</strong> Linguistic scores can be interpreted both against absolute thresholds and against the person's own history. The relative signal supplements rather than replaces absolute safety thresholds.</li>
+            <li><strong>Facts remain separate from inferences.</strong> Explicit declarations and clinician-confirmed information are stored separately from model-derived signals.</li>
+            <li><strong>Clinician correction is first-class.</strong> A therapist can refute a model inference; the signal stops contributing to subsequent calculations while the original row, source text and correction remain available for audit.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>The August reconfiguration</h2>
+          <p>A six-phase sequence merged into <code>master</code> on 25 August 2026. The work was driven partly by a concrete false positive: future-oriented language about changing life for the better was interpreted as a possible farewell. Instead of simply lowering sensitivity, the implementation changed the information architecture around the model.</p>
+          <ul>
+            <li><strong>LLM endpoint control was hardened.</strong> Runtime redirection is disabled by default in the hosted blueprint and write controls are restricted to clinical administrators.</li>
+            <li><strong>Model configuration became role-specific.</strong> Conversation, analysis and clinical copilot can record and use their own model settings while sharing one active endpoint configuration.</li>
+            <li><strong>Two duplicate text-analysis calls became one.</strong> Linguistic and psychosocial extraction now share a structured analyser, reducing provider calls while preserving both output contracts and their traceability.</li>
+            <li><strong>The analyser now knows the patient's baseline and accumulated profile.</strong> It can distinguish a globally high score from a value that is unusual for that specific person.</li>
+            <li><strong>False-positive control became explicit.</strong> Change talk, future plans and context-sensitive leave-taking are handled more carefully, and a clinician can directly refute a linguistic inference.</li>
+            <li><strong>The conversational agent gained continuity without receiving raw engine internals.</strong> It can use confirmed facts, the safety plan, recent check-ins, a clinician-editable portrait and a small agenda of open threads. That agenda is dropped entirely in higher-risk crisis states.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Why the engine remains deterministic</h2>
+          <p>The LLM layer is useful for language interpretation and interface behaviour, but those are precisely the components most sensitive to model choice, prompt wording and provider behaviour. PsychDeep therefore stores model provenance and keeps the final alert cascade in ordinary application code.</p>
+          <p>This does not make the system clinically validated. A deterministic rule can still be poorly designed, a model can still miss or invent a linguistic signal, and thresholds can still be wrong for a real population. The gain is narrower: the path from input to alert can be reproduced, inspected, challenged and tested.</p>
+        </section>
+
+        <section class="content-card">
+          <h2>False positives, human review and auditability</h2>
+          <p>PsychDeep treats a model inference as something that can be wrong. Refuting it does not delete history: the original signal stays attached to its source, a corrective fact records why it no longer counts and the engine is re-evaluated from the remaining active evidence. That keeps both the machine's original reading and the human correction visible.</p>
+          <p>The same principle applies to patient profiles. The therapist can edit the accumulated portrait, open conversational threads and the interpretation of a personal baseline. Those edits guide future dialogue but are not silently converted into risk evidence.</p>
+        </section>
+
+        <section class="content-card">
+          <h2>Deployment and data boundary</h2>
+          <p>The repository contains a Render blueprint for a FastAPI API and a static React/Vite frontend, backed by PostgreSQL on Supabase. The hosted configuration names <code>psychdeep.bfab.io</code> as a production frontend origin, disables demo-data seeding and keeps runtime LLM endpoint override off by default.</p>
+          <p>The database deployment is reproducible from an empty project through ordered migrations and a verification script. Sensitive tables are designed around a dedicated backend role with forced row-level security and no direct PostgREST access for public application roles.</p>
+          <p><strong>Repository state and deployment state are not the same claim.</strong> This page documents the current <code>master</code> branch and its deployment configuration. DNS, hosting availability or a pending deploy can still differ temporarily from the repository. None of that changes the clinical status: this remains a development prototype.</p>
+        </section>
+
+        <section class="content-card">
+          <h2>Verification represented by the repository</h2>
+          <p>The final merged conversational-context phase reports <strong>285 passing backend tests</strong> together with clean TypeScript and Vite builds. The repository also now contains CI jobs for backend tests, frontend compilation/build and applying, reapplying and verifying the database migrations against a disposable PostgreSQL instance shaped around the intended Supabase role model.</p>
+          <p>Those checks are engineering evidence, not clinical validation. They test software contracts and regressions; they do not establish sensitivity, specificity, calibration, outcome benefit or medical-device performance.</p>
+        </section>
+
+        <section class="content-card">
+          <h2>What is not released yet</h2>
+          <p>A separate draft pull request introduces a new PsychDeep visual mark and reuses its wave geometry as the application icon and breathing pacer. Because that work is still a draft rather than part of <code>master</code>, it is deliberately not described here as a released feature.</p>
+        </section>
+
+        <section class="content-card">
+          <h2>Clinical limits</h2>
+          <ul>
+            <li><strong>Not a validated medical device.</strong> The project has not undergone prospective clinical validation or regulatory conformity assessment.</li>
+            <li><strong>Not a diagnostic system.</strong> Model outputs and deterministic scores do not establish psychiatric diagnoses or causal explanations.</li>
+            <li><strong>Not an emergency service.</strong> Server-owned crisis messaging and escalation logic are safety features inside a prototype, not a substitute for emergency assessment or care.</li>
+            <li><strong>Model output remains fallible.</strong> The analyser can miss a relevant marker or produce a false signal; model provenance and human correction exist because that failure mode is expected.</li>
+            <li><strong>Thresholds are implementation choices.</strong> Traceability makes them visible; it does not make them clinically validated.</li>
+          </ul>
+        </section>
+
+        <div class="actions">
+          <a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">Open PsychDeep ↗</a>
+          <a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Inspect master ↗</a>
+          <a class="button button-secondary" href="/blog/">All notes</a>
+        </div>
+      </article>
+
+      <aside class="side-card side-card-featured" aria-label="Project summary">
+        <h2>Current state</h2>
+        <div class="side-list">
+          <div><span>Version</span><strong>PsychDeep 1.2</strong></div>
+          <div><span>Repository branch</span><strong>master</strong></div>
+          <div><span>Risk engine</span><strong>17 deterministic rules</strong></div>
+          <div><span>LLM roles</span><strong>Conversation · analyser · copilot</strong></div>
+          <div><span>Data</span><strong>PostgreSQL / Supabase</strong></div>
+          <div><span>Hosting target</span><strong>Render · psychdeep.bfab.io</strong></div>
+          <div><span>Clinical status</span><strong>Development prototype</strong></div>
+          <div><span>Updated</span><strong>2026-08-26</strong></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+</body>
+</html>

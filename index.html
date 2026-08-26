@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="B. Fabio Mejías Fernández — physician and Clinical Pharmacology resident in Madrid. Personal site documenting work in digital health, pharmacovigilance, software, health data and applied AI.">
+  <meta name="description" content="B. Fabio Mejías Fernández — physician and Clinical Pharmacology resident in Madrid. Personal site documenting current work in digital health, pharmacovigilance, software, health data and applied AI.">
   <meta name="theme-color" content="#05080f">
   <link rel="canonical" href="https://bfab.io/">
   <meta property="og:title" content="B. Fabio Mejías Fernández">
-  <meta property="og:description" content="Medicine, clinical pharmacology, digital health, software and health-data projects.">
+  <meta property="og:description" content="Medicine, clinical pharmacology, digital health, software and health-data projects, with current implementation status and limitations.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bfab.io/">
   <title>B. Fabio Mejías Fernández | Physician & Clinical Pharmacology</title>
@@ -31,7 +31,7 @@
         <div class="hero-copy">
           <div class="eyebrow"><span class="eyebrow-dot"></span><span>Medicine · Clinical pharmacology · Digital health · Software</span></div>
           <h1>B. Fabio<br><span class="gradient-text">Mejías Fernández</span></h1>
-          <p class="hero-text">I am a <strong>physician and Clinical Pharmacology resident</strong> in Madrid. Alongside clinical training, I work on software and data projects related to digital health, pharmacovigilance and applied AI. This site documents those projects, their current state, the technical decisions behind them and their limitations.</p>
+          <p class="hero-text">I am a <strong>physician and Clinical Pharmacology resident</strong> in Madrid. Alongside clinical training, I build software and data projects around digital health, pharmacovigilance and applied AI. This site tracks what is actually implemented, what is still experimental and where the technical or clinical limits are.</p>
           <div class="actions">
             <a class="button button-primary" href="#work">Projects</a>
             <a class="button button-secondary" href="/cv/">CV</a>
@@ -42,12 +42,12 @@
           <div class="profile-frame"><img src="/source/fabio-profile.jpg?v=20260726" alt="Portrait of B. Fabio Mejías Fernández" loading="eager" decoding="async"></div>
           <p class="status-label">Professional profile</p>
           <h2>Current areas of work</h2>
-          <p>Clinical pharmacology, pharmacovigilance, digital health applications, health data, software development and exploratory uses of AI in healthcare.</p>
+          <p>Clinical pharmacology, pharmacovigilance, digital health applications, health data, software engineering and exploratory uses of AI in healthcare.</p>
           <div class="meta-list">
             <div class="meta-item"><span>Location</span><strong>Madrid, EU</strong></div>
             <div class="meta-item"><span>Clinical field</span><strong>Clinical pharmacology</strong></div>
             <div class="meta-item"><span>Technical field</span><strong>Digital health & software</strong></div>
-            <div class="meta-item"><span>Updated</span><strong>2026-08-18</strong></div>
+            <div class="meta-item"><span>Updated</span><strong>2026-08-26</strong></div>
           </div>
         </aside>
       </div>
@@ -58,7 +58,7 @@
         <div class="proof-item"><strong>Medicine</strong><span>Physician and Clinical Pharmacology resident.</span></div>
         <div class="proof-item"><strong>Software</strong><span>Python, FastAPI, Flask, React, TypeScript and SQL.</span></div>
         <div class="proof-item"><strong>Data & infrastructure</strong><span>PostgreSQL, Supabase, Render and GitHub Actions.</span></div>
-        <div class="proof-item"><strong>Documentation</strong><span>Repositories, release notes and technical notes.</span></div>
+        <div class="proof-item"><strong>Current focus</strong><span>PsychDeep 1.2: auditable longitudinal risk-support architecture.</span></div>
       </div>
     </div>
 
@@ -69,9 +69,9 @@
           <p class="section-note">CLINICAL + TECHNICAL WORK</p>
         </div>
         <div class="cards">
-          <article class="card"><div class="card-icon">01</div><h3>Clinical pharmacology</h3><p>Drug safety, pharmacovigilance, therapeutics, clinical evidence and the interpretation of medication-related data.</p></article>
-          <article class="card"><div class="card-icon">02</div><h3>Software development</h3><p>Web applications, APIs, databases and deployment, with particular attention to systems used around healthcare information.</p></article>
-          <article class="card"><div class="card-icon">03</div><h3>Health data & AI</h3><p>Exploratory work with longitudinal data, structured and unstructured clinical information, statistical signals and AI-assisted interfaces.</p></article>
+          <article class="card"><div class="card-icon">01</div><h3>Clinical pharmacology</h3><p>Drug safety, pharmacovigilance, therapeutics, clinical evidence and interpretation of medication-related data.</p></article>
+          <article class="card"><div class="card-icon">02</div><h3>Software development</h3><p>Web applications, APIs, databases, testing and deployment, with particular attention to systems handling health information.</p></article>
+          <article class="card"><div class="card-icon">03</div><h3>Health data & AI</h3><p>Exploratory work with longitudinal data, structured and unstructured information, deterministic clinical rules and AI-assisted interfaces.</p></article>
         </div>
       </div>
     </section>
@@ -79,23 +79,24 @@
     <section id="work">
       <div class="container">
         <div class="section-head">
-          <div><h2 class="section-title">Projects</h2><p class="section-intro">These are current or recent projects. The descriptions refer to what is implemented now and distinguish prototypes from clinically validated systems.</p></div>
+          <div><h2 class="section-title">Projects</h2><p class="section-intro">Current or recent public projects, described according to repository state rather than aspirational scope. Experimental systems are labelled as such.</p></div>
           <p class="section-note">CURRENT PUBLIC WORK</p>
         </div>
         <div class="project-grid">
           <article class="project-card">
             <div class="project-top">
               <div class="project-mark">Ψ</div>
-              <div><h3>PsychApp / PsychDeep <span class="gradient-text">1.2</span></h3><p class="project-summary">A development and research project for longitudinal self-report, professional follow-up and risk monitoring in stimulant-use and chemsex contexts. It combines patient, therapist/supervisor and clinical-administration interfaces with a deterministic risk engine and AI-assisted text analysis. Risk calculations and model-derived signals are kept traceable to their source data. It is not a validated medical device or diagnostic system.</p></div>
-              <span class="status-pill status-research">Development prototype</span>
+              <div><h3>PsychDeep <span class="gradient-text">1.2</span></h3><p class="project-summary">A development and research prototype for longitudinal self-report, professional follow-up and risk monitoring in stimulant-use and chemsex contexts. The current architecture combines patient and professional interfaces, a deterministic 0–4 risk engine, a three-role LLM layer and traceable source evidence. The LLM can extract, converse and assist review, but it does not decide the alert level. It is not a validated medical device, diagnostic system or emergency service.</p></div>
+              <span class="status-pill status-research">Active development prototype</span>
             </div>
             <div class="stack"><span class="tag">React + TypeScript</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL / Supabase</span><span class="tag">Anthropic API</span><span class="tag">Render</span></div>
             <div class="project-meta">
-              <div><span>Interfaces</span><strong>Patient, therapist, supervisor and clinical administration</strong></div>
-              <div><span>Risk logic</span><strong>Deterministic and auditable rule engine</strong></div>
-              <div><span>Recent work</span><strong>Therapist evidence views and psychosocial-context extraction</strong></div>
+              <div><span>Risk model</span><strong>17 deterministic rules with immutable calculation traces</strong></div>
+              <div><span>Current AI architecture</span><strong>Conversation · merged text analyser · read-only clinical copilot</strong></div>
+              <div><span>Recent work</span><strong>Personal linguistic baselines, clinician refutation, context-aware dialogue and reproducible CI</strong></div>
             </div>
-            <div class="actions"><a class="button button-primary" href="https://psychapp.bfab.io" target="_blank" rel="noopener noreferrer">Live app ↗</a><a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a></div>
+            <p class="project-summary"><strong>Repository state · 2026-08-25:</strong> the latest merged sequence adds a per-patient profile and baseline, reduces duplicate LLM calls, hardens model configuration, fixes a documented false-positive pathway, lets clinicians overrule model inferences without deleting their audit trail, and gives the conversational agent structured continuity without exposing raw risk-engine internals. The final phase reported 285 passing backend tests plus clean TypeScript/Vite builds. A separate visual-identity PR remains draft and is not presented here as released.</p>
+            <div class="actions"><a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">PsychDeep ↗</a><a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a><a class="button button-secondary" href="/blog/psychdeep-v1-2/">Current architecture note</a></div>
           </article>
 
           <article class="project-card">
@@ -133,19 +134,19 @@
 
     <section id="approach">
       <div class="container">
-        <div class="section-head"><div><h2 class="section-title">How I work on these projects</h2><p class="section-intro">I use the clinical problem to define the scope, then work through the data model, application logic, interface and deployment. In health-related software I try to keep technical behaviour, uncertainty and limitations visible rather than treating the interface as the whole product.</p></div></div>
+        <div class="section-head"><div><h2 class="section-title">How I work on these projects</h2><p class="section-intro">I use the clinical problem to define scope, then work through the data model, application logic, interface, testing and deployment. In health-related software I try to keep technical behaviour, uncertainty and limitations visible rather than treating the interface as the whole product.</p></div></div>
         <div class="split">
           <div class="principles">
             <div class="principle"><strong>1. Define scope and limitations</strong>Specify intended use, users, data sources, exclusions and safety boundaries before adding automation.</div>
-            <div class="principle"><strong>2. Build end to end</strong>Connect interface, API, database and deployment so integration problems appear early.</div>
-            <div class="principle"><strong>3. Check the deployed system</strong>Compare the running service with the repository and configuration instead of assuming local behaviour carries over unchanged.</div>
-            <div class="principle"><strong>4. Document changes</strong>Keep technical notes and release history so decisions, limitations and changes remain inspectable.</div>
+            <div class="principle"><strong>2. Separate inference from authority</strong>Use model outputs as inspectable signals while keeping clinical or risk decisions in deterministic, reviewable logic where the project requires it.</div>
+            <div class="principle"><strong>3. Build end to end</strong>Connect interface, API, database and deployment so integration problems appear early.</div>
+            <div class="principle"><strong>4. Test the deployed contract</strong>Schema verification, CI, migration idempotence and source traceability matter as much as a local green screen.</div>
           </div>
           <div class="metric-grid">
             <div class="metric"><strong>Clinical</strong><span>Safety, pharmacology, evidence and human review.</span></div>
             <div class="metric"><strong>Data</strong><span>Sources, schemas, longitudinal signals and interpretation.</span></div>
             <div class="metric"><strong>Engineering</strong><span>APIs, frontend, backend, databases, tests and deployment.</span></div>
-            <div class="metric"><strong>Security</strong><span>Credentials, access control, origin boundaries and data exposure.</span></div>
+            <div class="metric"><strong>Security</strong><span>Credentials, access control, RLS, origin boundaries and data exposure.</span></div>
           </div>
         </div>
       </div>
@@ -153,13 +154,13 @@
 
     <section id="evolution">
       <div class="container">
-        <div class="section-head"><div><h2 class="section-title">Recent development history</h2><p class="section-intro">A short chronology of the projects represented on this site.</p></div><a class="button button-secondary" href="/blog/">Technical notes</a></div>
+        <div class="section-head"><div><h2 class="section-title">Recent development history</h2><p class="section-intro">A short chronology of the public projects represented on this site.</p></div><a class="button button-secondary" href="/blog/">Technical notes</a></div>
         <div class="timeline">
-          <article class="timeline-item"><time datetime="2026-08-15">2026-08-15</time><h3>PsychApp 1.2 — professional views and psychosocial context</h3><p>Expanded the therapist-facing evidence views and added structured psychosocial-context extraction with traceable source text and deterministic use in the risk pipeline.</p><div class="actions"><a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a></div></article>
+          <article class="timeline-item"><time datetime="2026-08-25">2026-08-25</time><h3>PsychDeep 1.2 — patient-specific analysis and corrective clinical control</h3><p>Merged a six-phase reconfiguration: safer LLM endpoint control, role-specific model settings, one merged analyser, personal linguistic baselines, false-positive correction with clinician refutation, context-aware conversational continuity and a real test workflow.</p><div class="actions"><a class="button button-secondary" href="/blog/psychdeep-v1-2/">Current architecture note</a><a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a></div></article>
+          <article class="timeline-item"><time datetime="2026-08-22">2026-08-22</time><h3>PsychDeep — reproducible Supabase schema</h3><p>Added a bootstrap migration, idempotent deployment sequence and verification contract so an empty project can reproduce the backend schema and RLS posture instead of relying on historical create_all state.</p></article>
           <article class="timeline-item"><time datetime="2026-07-27">2026-07-27</time><h3>Domain Mail v1.2.0</h3><p>Separated the public synthetic showcase from the private mail mode and added deployment and test hardening.</p><div class="actions"><a class="button button-secondary" href="/blog/domain-mail-v1-2/">Technical note</a></div></article>
           <article class="timeline-item"><time datetime="2026-07-27">2026-07-27</time><h3>bfab.io portfolio revision</h3><p>Consolidated the portfolio, CV, technical notes, deployment configuration and public endpoints.</p><div class="actions"><a class="button button-secondary" href="/blog/portfolio-v2/">Technical note</a></div></article>
           <article class="timeline-item"><time datetime="2026-06-28">2026-06-28</time><h3>Pharmacovigilance workbench</h3><p>Published the public aggregate workflow and separated it from restricted EudraVigilance access.</p><div class="actions"><a class="button button-secondary" href="/blog/eudravigilance-api/">Technical note</a></div></article>
-          <article class="timeline-item"><time datetime="2026-06-19">2026-06-19</time><h3>Python Email System</h3><p>An object-oriented Python exercise that later developed into the Domain Mail project.</p><div class="actions"><a class="button button-secondary" href="/blog/python-email-system/">Original note</a></div></article>
         </div>
       </div>
     </section>
@@ -171,25 +172,14 @@
       </div>
     </section>
 
-    <section id="writing">
-      <div class="container">
-        <div class="section-head"><div><h2 class="section-title">Technical notes</h2><p class="section-intro">Notes on project changes, architecture, implementation details and limitations.</p></div><a class="button button-secondary" href="/blog/">All notes</a></div>
-        <div class="cards">
-          <article class="card"><div class="card-icon">@</div><h3><a href="/blog/domain-mail-v1-2/">Domain Mail v1.2</a></h3><p>Public showcase isolation, private mail mode and deployment hardening.</p></article>
-          <article class="card"><div class="card-icon">PV</div><h3><a href="/blog/eudravigilance-api/">Pharmacovigilance workbench</a></h3><p>Public aggregate analysis, openFDA access and boundaries around restricted data.</p></article>
-          <article class="card"><div class="card-icon">BF</div><h3><a href="/blog/portfolio-v2/">Portfolio v2</a></h3><p>Changes to the site structure, documentation, deployment and public endpoints.</p></article>
-        </div>
-      </div>
-    </section>
-
     <section id="contact">
       <div class="container contact-box">
-        <div><p class="status-label">Madrid, European Union</p><h2 class="section-title">Contact</h2><p>For professional, academic or technical contact related to clinical pharmacology, digital health, software or health-data projects.</p></div>
-        <div class="actions"><a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a><a class="button button-secondary" href="https://github.com/oibaf88" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a class="button button-secondary" href="/signup/">Newsletter</a></div>
+        <div><p class="status-label">Contact // Madrid, European Union</p><h2 class="section-title">Clinical software, pharmacovigilance and applied AI</h2><p>For roles, collaborations or technical conversations about the work documented here.</p></div>
+        <div class="actions"><a class="button button-primary" href="mailto:requests@bfab.io">requests@bfab.io</a><a class="button button-secondary" href="https://github.com/oibaf88" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
       </div>
     </section>
   </main>
 
-  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández.</p><div class="footer-links"><a href="/blog/">Notes</a><a href="/cv/">CV</a><a href="/.well-known/security.txt">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
 </body>
 </html>
