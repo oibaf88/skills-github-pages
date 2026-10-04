@@ -113,11 +113,11 @@ The proxy is for lawful, authorised access. Public pages must not claim that res
 
 ## Project history
 
-### PsychApp
+### PsychDeep
 
-- **v0.1 milestone — 2026-06-25:** first PsychDeep concept.
-- **v0.2.0 — 2026-07-23/26:** clinician-supervised research POC, synthetic data, explicit uncertainty and safety controls.
-- The current project is not a medical device, diagnostic service or crisis tool.
+- **PsychApp / early PsychDeep milestones — 2026-06-25 to 2026-07-26:** historical clinician-supervised research prototypes and synthetic-data demonstrations.
+- **PsychDeep 3 — current line:** current development repository `oibaf88/psychDeep-3`, with vNext longitudinal analytics, deterministic safety, clinician-reviewable model signals and replaceable inference.
+- The current project is a development prototype, not a validated medical device, diagnostic service or crisis tool.
 
 ### Domain Mail
 
