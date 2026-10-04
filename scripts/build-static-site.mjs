@@ -99,6 +99,7 @@ const requiredFiles = [
   ".well-known/security.txt",
   "404.html",
   "blog/index.html",
+  "blog/psychdeep-3/index.html",
   "cv/index.html",
   "index.html",
   "privacy/index.html",
