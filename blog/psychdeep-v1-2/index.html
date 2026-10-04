@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,follow">
-  <meta name="description" content="PsychDeep current architecture and repository status as of 2026-10-04: deterministic safety, canonical longitudinal analytics, clinician review, model provenance and local LM Studio inference through an authenticated tunnel.">
+  <meta name="description" content="Historical PsychDeep 1.2 architecture note. Superseded by PsychDeep 3.">
   <link rel="canonical" href="https://bfab.io/blog/psychdeep-v1-2/">
   <meta property="og:title" content="PsychDeep 1.2 — historical architecture note | B. Fabio Mejías Fernández">
-  <meta property="og:description" content="Current repository state, architecture, verification and clinical limits of PsychDeep 1.2.">
+  <meta property="og:description" content="Historical PsychDeep 1.2 milestone. The current project is PsychDeep 3.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://bfab.io/blog/psychdeep-v1-2/">
-  <title>PsychDeep 1.2 — current architecture | B. Fabio Mejías Fernández</title>
+  <title>PsychDeep 1.2 — historical architecture note | B. Fabio Mejías Fernández</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/blog-posts.css">
 </head>
@@ -19,134 +19,42 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="B. Fabio home"><span class="brand-mark">BF</span><span>B. Fabio Mejías Fernández</span></a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a>
-      </nav>
+      <nav class="nav-links" aria-label="Primary navigation"><a href="/#work">Work</a><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="/#contact">Contact</a></nav>
     </div>
   </header>
-
   <main id="main">
     <div class="container post-layout">
       <article class="post">
-        <div class="eyebrow"><span class="eyebrow-dot"></span><span>ARCHIVED // PsychDeep 1.2 // historical architecture</span></div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span>ARCHIVED // PsychDeep 1.2</span></div>
         <h1>PsychDeep <span class="gradient-text">1.2</span></h1>
         <div class="post-meta post-meta-panel" aria-label="Post metadata summary">
-          <span class="pill">Updated // <time datetime="2026-10-04">2026-10-04</time></span>
-          <span class="pill">Status // active development prototype</span>
-          <span class="pill">Domain // digital mental health</span>
-          <span class="pill">Source // master branch · 2026-10-04</span>
+          <span class="pill">Historical milestone // 2026-08-26</span>
+          <span class="pill">Status // superseded</span>
+          <span class="pill">Current line // PsychDeep 3</span>
         </div>
-
-        <p class="lead">PsychDeep remains a research and development prototype for longitudinal self-report, professional follow-up and risk monitoring. The current <code>master</code> branch has moved beyond the August architecture note: safety remains deterministic, longitudinal analytics now use a canonical <code>Observation → FeatureValue → BaselineVersion → ChangeSignal</code> pipeline, professional views distinguish change signals from risk, and local LM Studio inference can use the model actually loaded on the operator machine through the approved Cloudflare tunnel. The project is still not clinically validated or a medical device.</p>
-
-        <div class="actions">
-          <a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">PsychDeep ↗</a>
-          <a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a>
-          <a class="button button-secondary" href="/blog/psychdeep/">Original 2026-06 concept note</a>
-        </div>
-
+        <p class="lead">This page is intentionally preserved as historical documentation of an earlier PsychDeep architecture. It is <strong>not</strong> the current project status and is not used as the canonical description of the system.</p>
         <section class="content-card">
-          <h2>What is implemented now</h2>
-          <p><strong>Repository state at 2026-10-04:</strong> master contains the September/October vNext work and the latest merged fixes. This page deliberately reports the repository state, not a claim that every deployment target is currently serving that exact commit.</p>
-          <p>The current master branch is substantially different from the early PsychApp prototypes documented in June and July. It contains a patient-facing application, professional views for therapists and supervisors, clinical-administration functions, longitudinal check-ins, diary and chat data, a safety plan, a grounding/urge-surfing interface, audit trails and a deterministic risk pipeline.</p>
-          <ul>
-            <li><strong>17 deterministic risk rules.</strong> Each assessment persists the selected rule, the evidence used and an immutable calculation trace rather than asking an LLM to produce a clinical severity label.</li>
-            <li><strong>Three LLM roles.</strong> A conversational agent, one merged structured analyser for linguistic and psychosocial information, and a read-only clinical copilot for the therapist.</li>
-            <li><strong>Patient-specific baselines.</strong> Linguistic scores can be interpreted both against absolute thresholds and against the person's own history. The relative signal supplements rather than replaces absolute safety thresholds.</li>
-            <li><strong>Facts remain separate from inferences.</strong> Explicit declarations and clinician-confirmed information are stored separately from model-derived signals.</li>
-            <li><strong>Clinician correction is first-class.</strong> A therapist can refute a model inference; the signal stops contributing to subsequent calculations while the original row, source text and correction remain available for audit.</li>
-          </ul>
+          <h2>Current project</h2>
+          <p>The current product line is <strong>PsychDeep 3</strong>. Its master branch contains the later vNext transition, canonical longitudinal analytics, a separate presentation of change versus deterministic safety risk, clinician-reviewable model signals, administrator-only provider selection and a supported local LM Studio inference path.</p>
+          <div class="actions"><a class="button button-primary" href="/blog/psychdeep-3/">Read the current PsychDeep 3 architecture note</a><a class="button button-secondary" href="https://github.com/oibaf88/psychDeep-3" target="_blank" rel="noopener noreferrer">Current repository ↗</a></div>
         </section>
-
         <section class="content-card">
-          <h2>What changed after the August note</h2>
-          <ul>
-            <li><strong>Canonical longitudinal analytics are now separated from safety.</strong> The merged G2 pipeline computes <code>FeatureValue</code>, <code>BaselineVersion</code> and <code>ChangeSignal</code> from observations, while deterministic risk remains on its own safety endpoint. A change signal is not a risk level.</li>
-            <li><strong>Professional views now expose the canonical change signal separately from professional risk.</strong> This reduces the chance of presenting an analytic transition as if it were a clinical alert.</li>
-            <li><strong>The patient-facing experience was refreshed.</strong> Hoy and Tendencias were redesigned around current state, proportionate next action, personal trajectory and visible missingness; the Regular wave was changed to a pronounced rise → peak → fall sequence with layered motion.</li>
-            <li><strong>Model-provider support expanded.</strong> Claude defaults were moved to Sonnet 4.6 and a first-party OpenAI Responses API path was added, with <code>gpt-5.6-luna</code> as the default model in the Render configuration when an OpenAI server-side key is supplied.</li>
-            <li><strong>Local LM Studio inference now follows the live model catalog.</strong> The account can use the model currently loaded in LM Studio instead of a pinned historical id. The Cloudflare tunnel path uses an authenticated operator credential and a stable <code>PsychDeep-API/1</code> user agent; a challenge or unavailable model fails closed rather than silently falling back.</li>
-            <li><strong>Recent merge fixes restored master operability.</strong> PR #156 restored missing serializer/logging imports and a clinical-view lookup helper; the resulting backend suite was reported at 467 passed plus 47 subtests in the fix PR, while the local-LM merge reported 480 passed before the later collection fixes.</li>
-          </ul>
+          <h2>Why this page remains</h2>
+          <p>Earlier architecture decisions are useful for understanding how the project evolved. This page is therefore retained for traceability, but it is marked <code>noindex</code> and excluded from the sitemap so search engines and visitors are directed to PsychDeep 3.</p>
         </section>
-
-        <section class="content-card">
-          <h2>The August reconfiguration</h2>
-          <p>A six-phase sequence merged into <code>master</code> on 25 August 2026. The work was driven partly by a concrete false positive: future-oriented language about changing life for the better was interpreted as a possible farewell. Instead of simply lowering sensitivity, the implementation changed the information architecture around the model.</p>
-          <ul>
-            <li><strong>LLM endpoint control was hardened.</strong> Runtime redirection is disabled by default in the hosted blueprint and write controls are restricted to clinical administrators.</li>
-            <li><strong>Model configuration became role-specific.</strong> Conversation, analysis and clinical copilot can record and use their own model settings while sharing one active endpoint configuration.</li>
-            <li><strong>Two duplicate text-analysis calls became one.</strong> Linguistic and psychosocial extraction now share a structured analyser, reducing provider calls while preserving both output contracts and their traceability.</li>
-            <li><strong>The analyser now knows the patient's baseline and accumulated profile.</strong> It can distinguish a globally high score from a value that is unusual for that specific person.</li>
-            <li><strong>False-positive control became explicit.</strong> Change talk, future plans and context-sensitive leave-taking are handled more carefully, and a clinician can directly refute a linguistic inference.</li>
-            <li><strong>The conversational agent gained continuity without receiving raw engine internals.</strong> It can use confirmed facts, the safety plan, recent check-ins, a clinician-editable portrait and a small agenda of open threads. That agenda is dropped entirely in higher-risk crisis states.</li>
-          </ul>
-        </section>
-
-        <section class="content-card">
-          <h2>Why the engine remains deterministic</h2>
-          <p>The LLM layer is useful for language interpretation and interface behaviour, but those are precisely the components most sensitive to model choice, prompt wording and provider behaviour. PsychDeep therefore stores model provenance and keeps the final alert cascade in ordinary application code.</p>
-          <p>This does not make the system clinically validated. A deterministic rule can still be poorly designed, a model can still miss or invent a linguistic signal, and thresholds can still be wrong for a real population. The gain is narrower: the path from input to alert can be reproduced, inspected, challenged and tested.</p>
-        </section>
-
-        <section class="content-card">
-          <h2>False positives, human review and auditability</h2>
-          <p>PsychDeep treats a model inference as something that can be wrong. Refuting it does not delete history: the original signal stays attached to its source, a corrective fact records why it no longer counts and the engine is re-evaluated from the remaining active evidence. That keeps both the machine's original reading and the human correction visible.</p>
-          <p>The same principle applies to patient profiles. The therapist can edit the accumulated portrait, open conversational threads and the interpretation of a personal baseline. Those edits guide future dialogue but are not silently converted into risk evidence.</p>
-        </section>
-
-        <section class="content-card">
-          <h2>Deployment and data boundary</h2>
-          <p>The repository contains a Render blueprint for a FastAPI API and a static React/Vite frontend, backed by PostgreSQL on Supabase. The hosted configuration names <code>psychdeep.bfab.io</code> as a production frontend origin, disables demo-data seeding and keeps runtime LLM endpoint override off by default.</p>
-          <p>The database deployment is reproducible from an empty project through ordered migrations and a verification script. Sensitive tables are designed around a dedicated backend role with forced row-level security and no direct PostgREST access for public application roles.</p>
-          <p><strong>Repository state and deployment state are not the same claim.</strong> This page documents the current <code>master</code> branch and its deployment configuration. DNS, hosting availability or a pending deploy can still differ temporarily from the repository. None of that changes the clinical status: this remains a development prototype.</p>
-        </section>
-
-        <section class="content-card">
-          <h2>Verification represented by the repository</h2>
-          <p>The August phase originally reported <strong>285 passing backend tests</strong>. Since then the repository has undergone substantial vNext work and further regression fixes. The latest repository evidence available on 2026-10-04 includes a backend suite reported at <strong>467 passed plus 47 subtests</strong> in PR #156, and the local-LM provider merge reported <strong>480 passed</strong> before subsequent master collection fixes. These are engineering test results, not clinical validation.</p>
-          <p>Those checks are engineering evidence, not clinical validation. They test software contracts and regressions; they do not establish sensitivity, specificity, calibration, outcome benefit or medical-device performance.</p>
-        </section>
-
-        <section class="content-card">
-          <h2>What is not established yet</h2>
-          <p>The repository still describes PsychDeep as a prototype. The current branch does not establish prospective clinical validity, calibration, sensitivity/specificity, clinical outcome benefit or regulatory conformity. The local-inference architecture is an implemented engineering path, not evidence that a local model is clinically equivalent to a hosted model. A separate older draft visual-identity branch is not used here as evidence of a released feature.</p>
-        </section>
-
-        <section class="content-card">
-          <h2>Clinical limits</h2>
-          <ul>
-            <li><strong>Not a validated medical device.</strong> The project has not undergone prospective clinical validation or regulatory conformity assessment.</li>
-            <li><strong>Not a diagnostic system.</strong> Model outputs and deterministic scores do not establish psychiatric diagnoses or causal explanations.</li>
-            <li><strong>Not an emergency service.</strong> Server-owned crisis messaging and escalation logic are safety features inside a prototype, not a substitute for emergency assessment or care.</li>
-            <li><strong>Model output remains fallible.</strong> The analyser can miss a relevant marker or produce a false signal; model provenance and human correction exist because that failure mode is expected.</li>
-            <li><strong>Thresholds are implementation choices.</strong> Traceability makes them visible; it does not make them clinically validated.</li>
-          </ul>
-        </section>
-
-        <div class="actions">
-          <a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">Open PsychDeep ↗</a>
-          <a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Inspect master ↗</a>
-          <a class="button button-secondary" href="/blog/">All notes</a>
-        </div>
       </article>
-
-      <aside class="side-card side-card-featured" aria-label="Project summary">
-        <h2>Current state</h2>
+      <aside class="side-card side-card-featured" aria-label="Archive metadata">
+        <h2>Archive</h2>
         <div class="side-list">
-          <div><span>Version</span><strong>PsychDeep 1.2</strong></div>
-          <div><span>Repository branch</span><strong>master</strong></div>
-          <div><span>Safety / risk</span><strong>Deterministic, versioned engine</strong></div>
-          <div><span>Inference</span><strong>Cloud providers + local LM Studio path</strong></div>
-          <div><span>Data</span><strong>PostgreSQL / Supabase</strong></div>
-          <div><span>Hosting target</span><strong>Render · psychdeep.bfab.io</strong></div>
-          <div><span>Clinical status</span><strong>Historical architecture note</strong></div>
-          <div><span>Updated</span><strong>2026-10-04</strong></div>
+          <div><span>Project</span><strong>PsychDeep</strong></div>
+          <div><span>Historical version</span><strong>1.2</strong></div>
+          <div><span>Milestone date</span><strong>2026-08-26</strong></div>
+          <div><span>Current line</span><strong>PsychDeep 3</strong></div>
+          <div><span>Indexing</span><strong>Noindex</strong></div>
         </div>
       </aside>
     </div>
   </main>
-
-  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Scope, status and limitations are documented.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="https://github.com/oibaf88/skills-github-pages/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
+  <footer><div class="container footer-grid"><p>© 2026 B. Fabio Mejías Fernández. Historical project documentation.</p><div class="footer-links"><a href="/blog/">Writing</a><a href="/cv/">CV</a><a href="mailto:requests@bfab.io">Contact</a></div></div></footer>
 </body>
 </html>
