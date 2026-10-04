@@ -92,10 +92,10 @@
             <div class="stack"><span class="tag">React + TypeScript</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL / Supabase</span><span class="tag">Anthropic API</span><span class="tag">Render</span></div>
             <div class="project-meta">
               <div><span>Risk model</span><strong>17 deterministic rules with immutable calculation traces</strong></div>
-              <div><span>Current AI architecture</span><strong>Conversation · merged text analyser · read-only clinical copilot</strong></div>
-              <div><span>Recent work</span><strong>Personal linguistic baselines, clinician refutation, context-aware dialogue and reproducible CI</strong></div>
+              <div><span>Current AI architecture</span><strong>Conversation · structured analyser · clinical copilot · replaceable inference</strong></div>
+              <div><span>Recent work</span><strong>Canonical longitudinal analytics, separate change/risk views, local LM Studio path and UI refresh</strong></div>
             </div>
-            <p class="project-summary"><strong>Repository state · 2026-08-25:</strong> the latest merged sequence adds a per-patient profile and baseline, reduces duplicate LLM calls, hardens model configuration, fixes a documented false-positive pathway, lets clinicians overrule model inferences without deleting their audit trail, and gives the conversational agent structured continuity without exposing raw risk-engine internals. The final phase reported 285 passing backend tests plus clean TypeScript/Vite builds. A separate visual-identity PR remains draft and is not presented here as released.</p>
+            <p class="project-summary"><strong>Repository state · 2026-10-04:</strong> the current master branch has moved into the vNext architecture. Longitudinal analytics now follow the canonical Observation → FeatureValue → BaselineVersion → ChangeSignal pipeline, professional views distinguish change signals from deterministic safety risk, the patient experience has been refreshed, provider support includes an OpenAI path and an authenticated local LM Studio route, and recent merges restored the backend test/startup path after regression fixes. The project remains a development prototype; engineering test results do not constitute clinical validation.</p>
             <div class="actions"><a class="button button-primary" href="https://psychdeep.bfab.io" target="_blank" rel="noopener noreferrer">PsychDeep ↗</a><a class="button button-secondary" href="https://github.com/oibaf88/psychapp-1.2" target="_blank" rel="noopener noreferrer">Repository ↗</a><a class="button button-secondary" href="/blog/psychdeep-v1-2/">Current architecture note</a></div>
           </article>
 
